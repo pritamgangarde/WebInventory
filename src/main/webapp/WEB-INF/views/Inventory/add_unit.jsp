@@ -1,0 +1,159 @@
+
+<html>
+<head><%@ page language="java"
+	 contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+</head>
+<body>
+	<spring:url value="/addGodown" var="addGodwnurl" />
+	<spring:url value="/addGodown" var="godownDeleteurl" />
+	<jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
+	<div id="wrapper">
+
+		<!-- Navigation -->
+
+		<!-- Page Content -->
+		<div id="page-wrapper">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">Add Unit</h1>
+					</div>
+
+					<br> <br>
+					<form:form class="mws-form" Commandname="addGodowan"
+						name="addGodownForm" id="myForm" modelAttribute="addGodowan"
+						action="${addGodwnurl}" method="post">
+
+
+						<div class="row">
+							<div>
+								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
+							</div>
+							<div class="col-xs-3">
+								<label>Unit Name</label><input type="text" id="unitName"
+									name="unitName" class="form-control" placeholder="Unit Name">
+								<input type="hidden" id="unitId" name="unitId">
+							</div>
+
+							<div class="col-xs-3">
+								<label>Description</label><input type="text" id="description"
+									name="description" class="form-control"
+									placeholder="Description">
+							</div>
+
+
+
+						</div>
+
+						<br>
+						<br>
+
+						<div class="container">
+
+							<button type="submit" id="save" name="save"
+								class="btn btn-primary">Save</button>
+							
+							<!--  	<button type="submit" class="btn btn-info">Update</button>-->
+						</div>
+						
+					</form:form>
+					<!-- /.row -->
+				</div>
+
+				<!-- /.container-fluid -->
+				<br> <br>
+
+				<div class="row">
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-default">
+								<div class="panel-heading">All Unit</div>
+								<!-- /.panel-heading -->
+								<div class="col-xs-12">
+									<table id="dataTable" class="display">
+
+
+										<thead>
+											<tr>
+												<th>Sr. No.</th>
+												<th>Unit Name</th>
+												<th>Action</th>
+
+											</tr>
+										</thead>
+
+
+										<tbody>
+
+
+											<tr class="gradeA odd" role="row">
+												<td class="sorting_1"></td>
+												<td></td>
+
+												<td class="center">
+												<a href="#" onclick=""><img
+														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Edit
+												</a>&nbsp;
+												<a href="#" onclick=""><img
+														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Delete
+												</a>&nbsp;
+												
+												
+												</td>
+												
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+							<!-- /.panel -->
+						</div>
+						<!-- /.col-lg-12 -->
+					</div>
+					<!-- /.panel-body -->
+				</div>
+				<!-- /.panel -->
+			</div>
+			<!-- /.col-lg-12 -->
+		</div>
+
+	</div>
+	<!-- /#page-wrapper -->
+</body>
+
+</html>
+<script type="text/javascript">
+	$('#dataTable').dataTable({
+		"bJQueryUI" : true,
+		"sPaginationType" : "full_numbers",
+		"sDom" : 'T<"clear">lfrtip<"clear spacer">T'
+
+	});
+</script>
+<script>
+	$("#update12").prop('disabled', false);
+	function getGodownDetails(godownId, godownname, address1, sate, city,
+			pinno, phoneno, incharge) {
+
+		$("#addgodowanid").val(godownId);
+		$("#addgodowanName").val(godownname);
+		$("#addressLine1").val(address1);
+		$("#state").val(sate);
+		$("#city").val(city);
+		$("#pinno").val(pinno);
+		$("#phoneno").val(phoneno);
+		$("#Incharge").val(incharge);
+		$("#save").prop('disabled', true);
+		$("#update12").prop('disabled', false);
+	}
+</script>

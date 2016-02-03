@@ -22,6 +22,7 @@ import com.freemind.dao.LoginDao;
 import com.freemind.model.UserModel;
 
 @Repository("loginDao")
+@Transactional
 public class LoginDaoImpl implements LoginDao, UserDetailsService {
 
 	@Autowired

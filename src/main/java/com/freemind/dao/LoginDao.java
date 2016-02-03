@@ -2,8 +2,6 @@ package com.freemind.dao;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.freemind.model.UserModel;
-
 public interface LoginDao {
 
 	 public UserDetails loadUserByUsername(String username);

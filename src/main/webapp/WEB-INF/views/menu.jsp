@@ -7,9 +7,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- add link in controller -->
 <spring:url value="/addGodown" var="addGodownUrl" />
-<spring:url value="/addProduct" var="addProductUrl" />
 <spring:url value="/addcategory" var="addcategoryUrl" />
-<spring:url value="/addvat" var="addvatUrl" />
+<spring:url value="/addUnit" var="addUnitUrl" />
+
+<spring:url value="/addProduct" var="addProductUrl" />
+<spring:url value="/addVat" var="addvatUrl" />
 <spring:url value="/addVendor" var="addvendorUrl" />
 <spring:url value="/addproject" var="addprojectUrl" />
 <spring:url value="/addprn" var="addPRNUrl" />
@@ -243,6 +245,12 @@
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addcategoryUrl}"><spring:message code="label.menu.addCategory" /> </a></li>
 						</c:if>
+						
+						<c:if test="${fn:contains(permissionList, 'Add Category' ) || sessionScope.userName=='admin'}">
+							<c:set var="showMenu" value="true" />
+							<li><a href="${addUnitUrl}"><spring:message code="label.menu.addUnit" /> </a></li>
+						</c:if>
+						
 						<c:if test="${fn:contains(permissionList, 'Add Vat' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addvatUrl}"><spring:message code="label.menu.addVat" /></a></li>
