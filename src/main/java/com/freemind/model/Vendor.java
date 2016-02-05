@@ -10,21 +10,28 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GODOWN")
-public class Godown {
+@Table(name = "VENDOR")
+public class Vendor {
+
 	@Id
-	@Column(name = "ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ID")
 	int id;
 
-	@Column(name = "NAME")
-	String name;
+	@Column(name = "VENDOR_NAME")
+	String customerName;
 
-	@Column(name = "DESCRIPTION")
-	String description;
+	@Column(name = "ADDRESS")
+	String address;
 
-	@Column(name = "LOCATION")
-	String location;
+	@Column(name = "MOBILE_NO")
+	String mobileNo;
+
+	@Column(name = "LANDLINE_NO")
+	String landlineNo;
+
+	@Column(name = "EMAIL_ID")
+	String emailId;
 
 	@Column(name = "CITY")
 	String city;
@@ -35,17 +42,11 @@ public class Godown {
 	@Column(name = "PINCODE")
 	String pincode;
 
-	@Column(name = "LANDLINE_NO")
-	String landLineNo;
+	@Column(name = "TIN_NO")
+	String tinNo;
 
-	@Column(name = "MOBILE_NO")
-	String mobileNo;
-
-	@Column(name = "INCHARGE_ID")
-	int incharge;
-
-	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active;
+	@Column(name = "IS_ACTIVE")
+	boolean isActive;
 	
 	@Column(name = "CREATED_BY")
 	int createdBy;
@@ -67,28 +68,44 @@ public class Godown {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getMobileNo() {
+		return mobileNo;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getLandlineNo() {
+		return landlineNo;
+	}
+
+	public void setLandlineNo(String landlineNo) {
+		this.landlineNo = landlineNo;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 
 	public String getCity() {
@@ -115,36 +132,20 @@ public class Godown {
 		this.pincode = pincode;
 	}
 
-	public String getLandLineNo() {
-		return landLineNo;
+	public String getTinNo() {
+		return tinNo;
 	}
 
-	public void setLandLineNo(String landLineNo) {
-		this.landLineNo = landLineNo;
-	}
-
-	public String getMobileNo() {
-		return mobileNo;
-	}
-
-	public void setMobileNo(String mobileNo) {
-		this.mobileNo = mobileNo;
-	}
-
-	public int getIncharge() {
-		return incharge;
-	}
-
-	public void setIncharge(int incharge) {
-		this.incharge = incharge;
+	public void setTinNo(String tinNo) {
+		this.tinNo = tinNo;
 	}
 
 	public boolean isActive() {
-		return active;
+		return isActive;
 	}
 
-	public void setActive(boolean active) {
-		this.active = active;
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public int getCreatedBy() {
