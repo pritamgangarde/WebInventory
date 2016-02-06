@@ -24,15 +24,6 @@ public class Customer {
 	@Column(name = "ADDRESS")
 	String address;
 
-	@Column(name = "MOBILE_NO")
-	String mobileNo;
-
-	@Column(name = "LANDLINE_NO")
-	String landlineNo;
-
-	@Column(name = "EMAIL_ID")
-	String emailId;
-
 	@Column(name = "CITY")
 	String city;
 
@@ -42,9 +33,18 @@ public class Customer {
 	@Column(name = "PINCODE")
 	String pincode;
 
+	@Column(name = "MOBILE_NO")
+	String mobileNo;
+
+	@Column(name = "LANDLINE_NO")
+	String landlineNo;
+
+	@Column(name = "EMAIL_ID")
+	String emailId;
+
 	@Column(name = "DEFAULTER")
 	boolean defaulter;
-	
+
 	@Column(name = "CREATED_BY")
 	int createdBy;
 

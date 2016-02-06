@@ -13,6 +13,6 @@ public class GodownController {
 
 	@RequestMapping(value = "/addGodown", method = RequestMethod.GET)
 	public ModelAndView godown(Model model, HttpServletRequest request) {
-		return new ModelAndView("Inventory/add_godown");
+		return new ModelAndView("Inventory/Godown");
 	}
 }

@@ -26,38 +26,43 @@ import com.freemind.model.CategoryModel;
 @RequestMapping("/addcategory")
 public class CategoryController {
 	@Autowired
-	 CategoryService categoryService;
+	CategoryService categoryService;
 	@Autowired
 	private MessageSource messageSource;
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showCategory( Model uiModel,ModelMap model,HttpServletRequest httpServletRequest) { 
-     List<CategoryModel>addCategorylist=categoryService.listCategory();
-     uiModel.addAttribute("addCategorylist", addCategorylist);
-      return new ModelAndView("Inventory/add_category");
-	}
-	
-	
-	@RequestMapping(method = RequestMethod.POST)
-    public ModelAndView addCategory(@ModelAttribute("addCategory")@Valid CategoryModel categorymodel,BindingResult bindingResult, Model uiModel, 
-    		HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
-		    categoryService.saveCategory(categorymodel);
-		    List<CategoryModel>addCategorylist=categoryService.listCategory();
-		    uiModel.addAttribute("addCategorylist", addCategorylist);
-		    uiModel.addAttribute("msgType","1");
-			uiModel.addAttribute("msg","Category Added Successfully....!!!!");
-		    return new ModelAndView("Inventory/add_category");
-   }
 
-	@RequestMapping(value="{id}" ,params="Deletecategorye" ,method = RequestMethod.GET)
-	public ModelAndView deleteCompany(@PathVariable("id") Integer id,Model uiModel ,HttpServletRequest httpServletRequest) {
-		CategoryModel categorymodel=categoryService.categoryListById(id);
+	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView showCategory(Model uiModel, ModelMap model,
+			HttpServletRequest httpServletRequest) {
+		List<CategoryModel> addCategorylist = categoryService.listCategory();
+		uiModel.addAttribute("addCategorylist", addCategorylist);
+		return new ModelAndView("Inventory/Category");
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ModelAndView addCategory(
+			@ModelAttribute("addCategory") @Valid CategoryModel categorymodel,
+			BindingResult bindingResult, Model uiModel,
+			HttpServletRequest httpServletRequest,
+			RedirectAttributes redirectAttributes, Locale locale) {
+		categoryService.saveCategory(categorymodel);
+		List<CategoryModel> addCategorylist = categoryService.listCategory();
+		uiModel.addAttribute("addCategorylist", addCategorylist);
+		uiModel.addAttribute("msgType", "1");
+		uiModel.addAttribute("msg", "Category Added Successfully....!!!!");
+		return new ModelAndView("Inventory/Category");
+	}
+
+	@RequestMapping(value = "{id}", params = "Deletecategorye", method = RequestMethod.GET)
+	public ModelAndView deleteCompany(@PathVariable("id") Integer id,
+			Model uiModel, HttpServletRequest httpServletRequest) {
+		CategoryModel categorymodel = categoryService.categoryListById(id);
 		categorymodel.setActive(true);
 		categoryService.updateCategory(categorymodel);
-		List<CategoryModel>addCategorylist=categoryService.listCategory();
+		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);
-		uiModel.addAttribute("msgType","3");
-		uiModel.addAttribute("msg","Category Deleted Successfully....!!!!");
-		return new ModelAndView("Inventory/add_category");
-		 
+		uiModel.addAttribute("msgType", "3");
+		uiModel.addAttribute("msg", "Category Deleted Successfully....!!!!");
+		return new ModelAndView("Inventory/Category");
+
 	}
 }

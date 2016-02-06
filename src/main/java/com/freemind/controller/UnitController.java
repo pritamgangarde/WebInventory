@@ -13,6 +13,6 @@ public class UnitController {
 	
 	@RequestMapping(value="/addUnit", method=RequestMethod.GET)
 	public ModelAndView addUnit(Model model,HttpServletRequest request){
-		return new ModelAndView("Inventory/add_unit");
+		return new ModelAndView("Inventory/Unit");
 	}
 }

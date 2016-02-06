@@ -19,10 +19,19 @@ public class Vendor {
 	int id;
 
 	@Column(name = "VENDOR_NAME")
-	String customerName;
+	String vendorName;
 
 	@Column(name = "ADDRESS")
 	String address;
+	
+	@Column(name = "CITY")
+	String city;
+
+	@Column(name = "STATE")
+	String state;
+
+	@Column(name = "PINCODE")
+	String pincode;
 
 	@Column(name = "MOBILE_NO")
 	String mobileNo;
@@ -33,21 +42,14 @@ public class Vendor {
 	@Column(name = "EMAIL_ID")
 	String emailId;
 
-	@Column(name = "CITY")
-	String city;
-
-	@Column(name = "STATE")
-	String state;
-
-	@Column(name = "PINCODE")
-	String pincode;
+	
 
 	@Column(name = "TIN_NO")
 	String tinNo;
 
 	@Column(name = "IS_ACTIVE")
 	boolean isActive;
-	
+
 	@Column(name = "CREATED_BY")
 	int createdBy;
 
@@ -68,12 +70,12 @@ public class Vendor {
 		this.id = id;
 	}
 
-	public String getCustomerName() {
-		return customerName;
+	public String getVendorName() {
+		return vendorName;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setVendorName(String vendorName) {
+		this.vendorName = vendorName;
 	}
 
 	public String getAddress() {

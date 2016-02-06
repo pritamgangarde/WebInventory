@@ -1,5 +1,5 @@
 <html>
-<%@ page language="java"  contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -23,8 +23,7 @@
 		<div id="page-wrapper">
 			<div class="container-fluid">
 				<form:form class="mws-form" Commandname="addVat" name="addVatForm"
-					id="myForm" modelAttribute="addVat" action="${addVaturl}"
-					method="post">
+					id="myForm" modelAttribute="addVat" method="post">
 					<div class="row">
 						<div class="col-lg-12">
 							<h1 class="page-header">Add Vat</h1>
@@ -32,10 +31,10 @@
 								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 							</div>
 
-							<div class="col-xs-3">
+							<div class="col-xs-3" >
 								<label>Vat(%)</label><input type="text" id="vatPercent"
 									name="vatPercent" class="form-control"
-									placeholder="Category Name">
+									placeholder="Vat Percent">
 							</div>
 
 						</div>
@@ -45,14 +44,11 @@
 					<br>
 
 					<div class="container">
-						<button type="sumbit" id="save" name="save"
-							class="btn btn-primary">Save</button>
-						<c:set var="showEdit" value="false" />
-						<c:if
-							test="${fn:contains(sessionScope.permissionList, 'Update Vat' ) || sessionScope.userName=='admin'}">
-							<c:set var="showEdit" value="true" />
-							<button type="submit" class="btn btn-info">Update</button>
-						</c:if>
+					<input type="submit" class="btn btn-primary" value="Save">
+					<!--  	<button type="button" id="save" name="save"
+							class="btn btn-primary">Save</button> --> 
+
+
 					</div>
 					<input type="text" id="vatId" name="vatId" class="form-control"
 						style="visibility: hidden">
@@ -81,10 +77,8 @@
 											<td class="sorting_1"></td>
 											<td></td>
 
-											<td class="center"><a href="#"
-												onclick=""><img
-													src="">
-											</a></td>
+											<td class="center"><a href="#" onclick=""><img
+													src=""> </a></td>
 
 										</tr>
 									</tbody>

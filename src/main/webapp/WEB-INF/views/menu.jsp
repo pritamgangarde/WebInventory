@@ -9,9 +9,11 @@
 <spring:url value="/addGodown" var="addGodownUrl" />
 <spring:url value="/addcategory" var="addcategoryUrl" />
 <spring:url value="/addUnit" var="addUnitUrl" />
+<spring:url value="/addVat" var="addvatUrl" />
+<spring:url value="/addServiceTax" var="addServiceTax" />
+
 
 <spring:url value="/addProduct" var="addProductUrl" />
-<spring:url value="/addVat" var="addvatUrl" />
 <spring:url value="/addVendor" var="addvendorUrl" />
 <spring:url value="/addproject" var="addprojectUrl" />
 <spring:url value="/addprn" var="addPRNUrl" />
@@ -255,6 +257,12 @@
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addvatUrl}"><spring:message code="label.menu.addVat" /></a></li>
 						</c:if>
+						
+						<c:if test="${fn:contains(permissionList, 'Add Vat' ) || sessionScope.userName=='admin'}">
+							<c:set var="showMenu" value="true" />
+							<li><a href="${addServiceTax}"><spring:message code="label.menu.addVat" /></a></li>
+						</c:if>
+						
 						<c:if test="${fn:contains(permissionList, 'Add Product' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addProductUrl}"><spring:message code="label.menu.addProduct"/></a></li>
