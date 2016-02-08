@@ -1,7 +1,7 @@
 
 <html>
 <head><%@ page language="java"
-	 contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+	contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -23,7 +23,9 @@
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Add Unit</h1>
+						<h1 class="page-header">
+							<spring:message code="label.page.addUnit" />
+						</h1>
 					</div>
 
 					<br> <br>
@@ -37,15 +39,16 @@
 								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 							</div>
 							<div class="col-xs-3">
-								<label>Unit Name</label><input type="text" id="unitName"
-									name="unitName" class="form-control" placeholder="Unit Name">
-								<input type="hidden" id="unitId" name="unitId">
+								<label><spring:message code="label.page.unitName" /></label><input
+									type="text" id="unitName" name="unitName" class="form-control"
+									placeholder="<spring:message code="label.page.unitName" />"> <input type="hidden"
+									id="unitId" name="unitId">
 							</div>
 
 							<div class="col-xs-3">
-								<label>Description</label><input type="text" id="description"
-									name="description" class="form-control"
-									placeholder="Description">
+								<label><spring:message code="label.page.description" /></label><input
+									type="text" id="description" name="description"
+									class="form-control" placeholder="<spring:message code="label.page.description" />">
 							</div>
 
 
@@ -58,11 +61,18 @@
 						<div class="container">
 
 							<button type="submit" id="save" name="save"
-								class="btn btn-primary">Save</button>
-							
+								class="btn btn-primary">
+								<spring:message code="label.page.saveButton" />
+							</button>
+							<button type="submit" class="btn btn-info">
+								<spring:message code="label.page.updateButton" />
+							</button>
+							<button type="reset" class="btn btn-info">
+								<spring:message code="label.page.clear" />
+							</button>
 							<!--  	<button type="submit" class="btn btn-info">Update</button>-->
 						</div>
-						
+
 					</form:form>
 					<!-- /.row -->
 				</div>
@@ -75,7 +85,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">All Unit</div>
+								<div class="panel-heading"><spring:message code="label.page.allUnit" /></div>
 								<!-- /.panel-heading -->
 								<div class="col-xs-12">
 									<table id="dataTable" class="display">
@@ -83,9 +93,9 @@
 
 										<thead>
 											<tr>
-												<th>Sr. No.</th>
-												<th>Unit Name</th>
-												<th>Action</th>
+												<th><spring:message code="label.page.srno" /></th>
+												<th><spring:message code="label.page.unitName" /></th>
+												<th><spring:message code="label.page.action" /></th>
 
 											</tr>
 										</thead>
@@ -98,17 +108,12 @@
 												<td class="sorting_1"></td>
 												<td></td>
 
-												<td class="center">
-												<a href="#" onclick=""><img
+												<td class="center"><a href="#" onclick=""><img
 														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Edit
-												</a>&nbsp;
-												<a href="#" onclick=""><img
+												</a>&nbsp; <a href="#" onclick=""><img
 														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Delete
-												</a>&nbsp;
-												
-												
-												</td>
-												
+												</a>&nbsp;</td>
+
 											</tr>
 
 										</tbody>

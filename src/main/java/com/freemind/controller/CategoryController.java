@@ -33,6 +33,7 @@ public class CategoryController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showCategory(Model uiModel, ModelMap model,
 			HttpServletRequest httpServletRequest) {
+		System.out.println(uiModel);
 		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);
 		return new ModelAndView("Inventory/Category");
@@ -44,6 +45,7 @@ public class CategoryController {
 			BindingResult bindingResult, Model uiModel,
 			HttpServletRequest httpServletRequest,
 			RedirectAttributes redirectAttributes, Locale locale) {
+		System.out.println("abc :: "+categorymodel);
 		categoryService.saveCategory(categorymodel);
 		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);

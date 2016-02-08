@@ -260,7 +260,7 @@
 						
 						<c:if test="${fn:contains(permissionList, 'Add Vat' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
-							<li><a href="${addServiceTax}"><spring:message code="label.menu.addVat" /></a></li>
+							<li><a href="${addServiceTax}"><spring:message code="label.page.serviceTax" /></a></li>
 						</c:if>
 						
 						<c:if test="${fn:contains(permissionList, 'Add Product' ) || sessionScope.userName=='admin'}">

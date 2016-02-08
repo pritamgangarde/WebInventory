@@ -24,7 +24,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<!--style="background:#23527C;color:#FFFFFF;"-->
-						<h1 class="page-header">Add Category</h1>
+						<h1 class="page-header"><spring:message code="label.page.addCategory" /></h1>
 					</div>
 
 					<br> <br>
@@ -36,13 +36,13 @@
 								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 							</div>
 							<div class="col-xs-3">
-								<label>Category Name</label><input type="text" id="categoryName"
-									name="categoryName" class="form-control" placeholder="Name">
+								<label><spring:message code="label.page.categoryName" /></label><input type="text" id="categoryName"
+									name="categoryName" class="form-control" placeholder="<spring:message code="label.page.categoryName" />">
 								<input type="hidden" id="categoryId" name="categoryId">
 							</div>
 
 							<div class="col-xs-3">
-								<label>Description</label><input type="text" id="categoryDescription" name="categoryDescription" class="form-control" placeholder="Category Name">
+								<label><spring:message code="label.page.description" /></label><input type="text" id="categoryDescription" name="categoryDescription" class="form-control" placeholder="<spring:message code="label.page.description" />">
 							</div>
 
 
@@ -53,12 +53,19 @@
 						<br>
 
 					<div class="container">
-					<button type="submit" id="save" name="save" class="btn btn-primary">Save</button>
+					<button type="submit" id="save" name="save"
+								class="btn btn-primary">
+								<spring:message code="label.page.saveButton" />
+							</button>
 					<c:set var="showEdit" value="false" />
 							<c:if test="${fn:contains(sessionScope.permissionList, 'Update Category' ) || sessionScope.userName=='admin'}">
 									<c:set var="showEdit" value="true" />
-									<button type="submit" class="btn btn-info">Update</button>
+									<c:set var="showDelete" value="true" />
+									<button type="submit" class="btn btn-info"><spring:message code="label.page.updateButton" /></button>
 						</c:if>
+						<button type="reset" class="btn btn-info">
+								<spring:message code="label.page.clear" />
+							</button>
 					</div>
 					<input type="text" id="categoryId" name ="categoryId" class="form-control" value="0" style="visibility: hidden"  >
                    </form:form>
@@ -72,7 +79,7 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">All Category</div>
+								<div class="panel-heading"><spring:message code="label.page.allCategory" /></div>
 								<!-- /.panel-heading -->
 								<div class="col-xs-12">
 									<table id="dataTable" class="display">
@@ -80,10 +87,10 @@
 
 										<thead>
 											<tr>
-												<th>Sr. No.</th>
-												<th>Category Name</th>
-												<th>Description</th>
-												<th>Action</th>
+												<th><spring:message code="label.page.srno" /></th>
+												<th><spring:message code="label.page.categoryName" /></th>
+												<th><spring:message code="label.page.description" /></th>
+												<th><spring:message code="label.page.action" /></th>
 
 											</tr>
 										</thead>

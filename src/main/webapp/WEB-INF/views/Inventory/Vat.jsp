@@ -26,15 +26,18 @@
 					id="myForm" modelAttribute="addVat" method="post">
 					<div class="row">
 						<div class="col-lg-12">
-							<h1 class="page-header">Add Vat</h1>
+							<h1 class="page-header">
+								<spring:message code="label.page.addVat" />
+							</h1>
 							<div>
 								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 							</div>
 
-							<div class="col-xs-3" >
-								<label>Vat(%)</label><input type="text" id="vatPercent"
-									name="vatPercent" class="form-control"
-									placeholder="Vat Percent">
+							<div class="col-xs-3">
+								<label><spring:message code="label.page.addVat" />(%)</label><input
+									type="text" id="vatPercent" name="vatPercent"
+									class="form-control"
+									placeholder="<spring:message code="label.page.addVat" /> %">
 							</div>
 
 						</div>
@@ -44,9 +47,15 @@
 					<br>
 
 					<div class="container">
-					<input type="submit" class="btn btn-primary" value="Save">
-					<!--  	<button type="button" id="save" name="save"
-							class="btn btn-primary">Save</button> --> 
+						<button type="submit" id="save" name="save"
+							class="btn btn-primary">
+							<spring:message code="label.page.saveButton" />
+						</button>
+						<button type="reset" class="btn btn-info">
+							<spring:message code="label.page.clear" />
+						</button>
+						<!--  	<button type="button" id="save" name="save"
+							class="btn btn-primary">Save</button> -->
 
 
 					</div>
@@ -60,14 +69,16 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="panel panel-default">
-							<div class="panel-heading">Vat</div>
+							<div class="panel-heading">
+								<spring:message code="label.page.addVat" />
+							</div>
 							<div class="col-xs-12">
 								<table id="dataTable" class="display">
 									<thead>
 										<tr>
-											<th>Sr. No.</th>
-											<th>Vat Percent</th>
-											<th>Action</th>
+											<th><spring:message code="label.page.srno" /></th>
+											<th><spring:message code="label.page.addVat" /> (%)</th>
+											<th><spring:message code="label.page.action" /></th>
 
 										</tr>
 									</thead>

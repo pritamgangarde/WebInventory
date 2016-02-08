@@ -24,8 +24,11 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<!--style="background:#23527C;color:#FFFFFF;"-->
-						<h1 class="page-header">Add Godown</h1>
+						<h1 class="page-header">
+							<spring:message code="label.menu.addGodown" />
+						</h1>
 					</div>
+
 
 					<br> <br>
 					<form:form class="mws-form" Commandname="addGodowan"
@@ -38,28 +41,36 @@
 								<jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 							</div>
 							<div class="col-xs-3">
-								<label>Godown Name</label><input type="text" id="godownName"
-									name="godownName" class="form-control" placeholder="Name">
+								<label><spring:message code="label.page.godownName" /></label><input
+									type="text" id="godownName" name="godownName"
+									class="form-control"
+									placeholder="<spring:message code="label.page.godownName" />">
 								<input type="hidden" id="godownId" name="godownId">
 							</div>
 
 							<div class="col-xs-3">
-								<label>Description</label><input type="text" id="description"
-									name="description" class="form-control"
-									placeholder="Description">
+								<label><spring:message code="label.page.description" /></label><input
+									type="text" id="description" name="description"
+									class="form-control"
+									placeholder="<spring:message code="label.page.description" />">
 							</div>
 
 							<div class="col-xs-3">
-								<label>Address Line1</label><input type="text" id="addressLine1"
-									name="addressLine1" class="form-control"
-									placeholder="Address Line1">
+								<label><spring:message code="label.page.address" /></label><input
+									type="text" id="addressLine1" name="addressLine1"
+									class="form-control"
+									placeholder="<spring:message code="label.page.address" />">
 
 							</div>
 
 							<div class="col-xs-3">
-								<label>State</label> <select id="state" name="state"
-									class="form-control" onchange="getCityFromState(this.value);">
-									<option value="0">---Select State---</option>
+								<label><spring:message code="label.page.state" /></label> <select
+									id="state" name="state" class="form-control"
+									style="height: 28px !important;"
+									onchange="getCityFromState(this.value);">
+									<option value="0">---
+										<spring:message code="label.page.selectState" />---
+									</option>
 									<!--  	<c:forEach items="${stateList}" var="state"
 											varStatus="theCount">
 											<option value="${state}">
@@ -70,9 +81,12 @@
 
 							</div>
 							<div class="col-xs-3">
-								<label>City</label> <select id="city" name="city"
+								<label><spring:message code="label.page.city" /></label> <select
+									id="city" name="city" style="height: 30px !important;"
 									class="form-control">
-									<option value="0">---Select City---</option>
+									<option value="0">---
+										<spring:message code="label.page.selectCity" />---
+									</option>
 									<!--  			<c:forEach items="${stateCityList}" var="stateCityList"
 										varStatus="theCount">
 										<option value="${stateCityList.cityName}">${stateCityList.cityName}</option>
@@ -81,23 +95,28 @@
 							</div>
 
 							<div class="col-xs-3">
-								<label>Pincode No.</label><input type="text" id="pincodeNo"
-									name="pincodeNo" class="form-control" placeholder="Pincode No.">
+								<label><spring:message code="label.page.pincode" /></label><input
+									type="text" id="pincodeNo" name="pincodeNo"
+									class="form-control"
+									placeholder="<spring:message code="label.page.pincode" />">
 							</div>
 							<div class="col-xs-3">
-								<label>Landline No.</label><input type="text" id="landLineNo"
-									name="landLineNo" class="form-control"
-									placeholder="Landline No.">
-							</div>
-
-							<div class="col-xs-3">
-								<label>Mobile No.</label><input type="text" id="mobileNo"
-									name="mobileNo" class="form-control" placeholder="Mobile No.">
+								<label><spring:message code="label.page.landlineNo" /></label><input
+									type="text" id="landLineNo" name="landLineNo"
+									class="form-control"
+									placeholder="<spring:message code="label.page.landlineNo" />">
 							</div>
 
 							<div class="col-xs-3">
-								<label>Incharge</label><input type="text" id="Incharge"
-									name="Incharge" class="form-control" placeholder="Incharge">
+								<label><spring:message code="label.page.mobileNo" /></label><input
+									type="text" id="mobileNo" name="mobileNo" class="form-control"
+									placeholder="<spring:message code="label.page.mobileNo" />">
+							</div>
+
+							<div class="col-xs-3">
+								<label><spring:message code="label.page.incharge" /></label><input
+									type="text" id="Incharge" name="Incharge" class="form-control"
+									placeholder="<spring:message code="label.page.incharge" />">
 								<input type="hidden" name="inchargeId" id="inchargeId">
 							</div>
 
@@ -109,13 +128,18 @@
 						<div class="container">
 
 							<button type="submit" id="save" name="save"
-								class="btn btn-primary">Save</button>
-							<c:set var="showEdit" value="false" />
-							<c:if
-								test="${fn:contains(sessionScope.permissionList, 'Update Godown' ) || sessionScope.userName=='admin'}">
-								<c:set var="showEdit" value="true" />
-								<button type="submit" class="btn btn-info">Update</button>
-							</c:if>
+								class="btn btn-primary">
+								<spring:message code="label.page.saveButton" />
+							</button>
+							<button type="submit" class="btn btn-info">
+								<spring:message code="label.page.updateButton" />
+							</button>
+
+							<button type="reset" class="btn btn-info">
+								<spring:message code="label.page.clear" />
+							</button>
+
+
 						</div>
 						<input type="text" id="addgodowanid" name="addgodowanid"
 							class="form-control" style="visibility: hidden">
@@ -131,7 +155,9 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading">All Godowns</div>
+								<div class="panel-heading">
+									<spring:message code="label.page.allGodown" />
+								</div>
 								<!-- /.panel-heading -->
 								<div class="col-xs-12">
 									<table id="dataTable" class="display">
@@ -139,46 +165,22 @@
 
 										<thead>
 											<tr>
-												<th>Sr. No.</th>
-												<th>Godown Name</th>
-												<c:if test="${showEdit}">
-													<th>Edit</th>
-												</c:if>
-												<c:set var="showDelete" value="false" />
-												<c:if
-													test="${fn:contains(sessionScope.permissionList, 'Delete Godown' ) || sessionScope.userName=='admin'}">
-													<c:set var="showDelete" value="true" />
-													<th>Delete</th>
-												</c:if>
+												<th><spring:message code="label.page.srno" /></th>
+												<th><spring:message code="label.page.godownName" /></th>
+												<th><spring:message code="label.page.description" /></th>
+												<th><spring:message code="label.page.action" /></th>
+
 											</tr>
 										</thead>
 
 
 										<tbody>
-											<%
-												int cnt = 1;
-											%>
-											<c:forEach var="addgodowanlist" items="${addgodowanlist}">
-
-												<tr class="gradeA odd" role="row">
-													<td class="sorting_1"><%=cnt++%></td>
-													<td>${addgodowanlist.addgodowanName}</td>
-													<c:if test="${showEdit}">
-														<td class="center"><a href="#"
-															onclick="getGodownDetails('${addgodowanlist.addgodowanId}','${addgodowanlist.addgodowanName}','${addgodowanlist.addressLine1}','${addgodowanlist.state}','${addgodowanlist.city}','${addgodowanlist.pinno}','${addgodowanlist.phoneno}','${addgodowanlist.incharge}')"><img
-																src="<%=request.getContextPath()%>/resources/images/edit-notes.png">
-														</a></td>
-													</c:if>
-													<c:if test="${showDelete}">
-														<security:authorize access="hasRole('ROLE_ADMIN')">
-															<td class="center"><a
-																href="${godownDeleteurl}/${addgodowanlist.addgodowanId}?Deletegodown"><img
-																	src="<%=request.getContextPath()%>/resources/images/DeleteRed.png"></a></td>
-														</security:authorize>
-													</c:if>
-												</tr>
-
-											</c:forEach>
+											<tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
 										</tbody>
 									</table>
 								</div>
