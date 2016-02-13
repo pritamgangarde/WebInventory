@@ -48,7 +48,7 @@ public class GodownDaoImpl implements GodownDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(godown);
+		session.saveOrUpdate(godown);
 		transaction.commit();
 		session.clear();
 		session.close();

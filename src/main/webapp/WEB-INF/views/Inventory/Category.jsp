@@ -125,8 +125,8 @@
 												<td>${addCategorylist.categoryDescription}</td>
 												<td class="center"><c:if test="${showEdit}">
 														<a href="#"
-															onclick="getCategoryDetails('${addCategorylist.categoryId}','${addCategorylist.categoryName}','${addCategorylist.categoryDescription}')"><img
-															src="<%=request.getContextPath()%>/resources/images/edit-notes.png">
+															onclick="getCategoryDetails('${addCategorylist.categoryId}','${addCategorylist.categoryName}','${addCategorylist.categoryDescription}')">
+															<img src="<%=request.getContextPath()%>/resources/images/edit-notes.png">
 														</a>
 													</c:if> <c:if test="${showDelete}">
 														<a
