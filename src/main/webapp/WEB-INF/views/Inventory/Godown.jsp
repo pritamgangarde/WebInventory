@@ -8,10 +8,32 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="security"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<spring:url value="/addGodown" var="viewGodownUrl" />
+<spring:url value="/addGodown" var="deleteGodownUrl" />
 </head>
+<script type="text/javascript">
+	function viewGodownDetails(id) {
+		$.ajax({
+
+			type : 'POST',
+			url : 'addGodown',
+			data : {
+				id : id
+			},
+			dataType : "json",
+			async:false,
+			cache:false,
+			success : function(data) {
+				alert(data);
+			},
+			error : function() {
+				alert("error");
+			}
+		});
+	}
+</script>
 <body>
-	<spring:url value="/addGodown" var="addGodwnurl" />
-	<spring:url value="/addGodown" var="godownDeleteurl" />
+	<spring:url value="/addGodown" var="addGodwnUrl" />
 	<jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 	<div id="wrapper">
@@ -31,9 +53,9 @@
 
 
 					<br> <br>
-					<form:form class="mws-form" Commandname="addGodowan"
-						name="addGodownForm" id="myForm" modelAttribute="addGodowan"
-						action="${addGodwnurl}" method="post">
+					<form:form class="mws-form" Commandname="addGodown"
+						name="addGodownForm" id="myForm" modelAttribute="addGodown"
+						action="${addGodwnUrl}" method="post">
 
 
 						<div class="row">
@@ -42,10 +64,9 @@
 							</div>
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.godownName" /></label><input
-									type="text" id="godownName" name="godownName"
-									class="form-control"
+									type="text" id="name" name="name" class="form-control"
 									placeholder="<spring:message code="label.page.godownName" />">
-								<input type="hidden" id="godownId" name="godownId">
+								<input type="hidden" id="id" name="id">
 							</div>
 
 							<div class="col-xs-3">
@@ -57,8 +78,7 @@
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.address" /></label><input
-									type="text" id="addressLine1" name="addressLine1"
-									class="form-control"
+									type="text" id="location" name="location" class="form-control"
 									placeholder="<spring:message code="label.page.address" />">
 
 							</div>
@@ -67,16 +87,15 @@
 								<label><spring:message code="label.page.state" /></label> <select
 									id="state" name="state" class="form-control"
 									style="height: 28px !important;"
-									onchange="getCityFromState(this.value);">
+									onchange="getCityNameByState(this.value);">
 									<option value="0">---
 										<spring:message code="label.page.selectState" />---
 									</option>
-									<!--  	<c:forEach items="${stateList}" var="state"
-											varStatus="theCount">
-											<option value="${state}">
-												${state}</option>
-										</c:forEach>
-										-->
+									<c:forEach items="${sessionScope.stateList}" var="state"
+										varStatus="theCount">
+										<option value="${state}">${state}</option>
+									</c:forEach>
+
 								</select>
 
 							</div>
@@ -87,17 +106,13 @@
 									<option value="0">---
 										<spring:message code="label.page.selectCity" />---
 									</option>
-									<!--  			<c:forEach items="${stateCityList}" var="stateCityList"
-										varStatus="theCount">
-										<option value="${stateCityList.cityName}">${stateCityList.cityName}</option>
-									</c:forEach> -->
+
 								</select>
 							</div>
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.pincode" /></label><input
-									type="text" id="pincodeNo" name="pincodeNo"
-									class="form-control"
+									type="text" id="pincode" name="pincode" class="form-control"
 									placeholder="<spring:message code="label.page.pincode" />">
 							</div>
 							<div class="col-xs-3">
@@ -115,9 +130,10 @@
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.incharge" /></label><input
-									type="text" id="Incharge" name="Incharge" class="form-control"
+									type="text" id="inchargeName" name="inchargeName"
+									class="form-control"
 									placeholder="<spring:message code="label.page.incharge" />">
-								<input type="hidden" name="inchargeId" id="inchargeId">
+								<input type="hidden" name="incharge" id="incharge">
 							</div>
 
 						</div>
@@ -141,8 +157,7 @@
 
 
 						</div>
-						<input type="text" id="addgodowanid" name="addgodowanid"
-							class="form-control" style="visibility: hidden">
+
 					</form:form>
 					<!-- /.row -->
 				</div>
@@ -175,12 +190,22 @@
 
 
 										<tbody>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-											</tr>
+											<c:forEach items="${godwonList}" var="godown"
+												varStatus="theCount">
+												<tr>
+													<td>${theCount.count}</td>
+													<td>${godown.name}</td>
+													<td>${godown.description}</td>
+													<td class="center">
+														<a	href="${viewGodownUrl}?id=${godown.id}">
+															<img src="<%=request.getContextPath()%>/resources/images/edit-notes.png"></img>
+														</a>
+														<a href="${deleteGodownUrl}?id=${godown.id}">
+															<img src="<%=request.getContextPath()%>/resources/images/DeleteRed.png"></img>
+														</a>
+													</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
 								</div>

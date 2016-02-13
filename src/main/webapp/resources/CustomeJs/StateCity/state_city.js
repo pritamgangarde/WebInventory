@@ -1,4 +1,4 @@
-function getCityFromState(state) 	
+/*function getCityFromState(state) 	
 {
 
 	$.ajax({
@@ -15,4 +15,23 @@ function getCityFromState(state)
 		}
 	});
 return false;
+}*/
+
+
+function getCityNameByState(stateName) {
+	$.ajax({
+		type : 'POST',
+		url : 'showCity.html',
+		data : {
+			stateName : stateName
+		},
+		async:false,
+		cache:false,
+		success : function(data) {
+			$('#city').html(data);
+		},
+		error : function() {
+			alert("error");
+		}
+	});
 }
