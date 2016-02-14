@@ -48,7 +48,9 @@ public class GodownController {
 
 
 	@RequestMapping(value = "{id}", params = "DeleteGodown", method = RequestMethod.GET)
+
 	public ModelAndView deleteGodown(@PathVariable("id") Integer id,
+
 			Model uiModel, HttpServletRequest httpServletRequest) {
 		Godown godownmodel =  godownService.getGodownById(id);
 		godownmodel.setActive(false);
