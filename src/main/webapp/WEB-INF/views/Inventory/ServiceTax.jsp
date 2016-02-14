@@ -9,8 +9,8 @@
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 
-<spring:url value="/addvat" var="addVaturl" />
-<spring:url value="/addvat" var="vatDeleteurl" />
+<spring:url value="/addServiceTax" var="addserviceTaxurl" />
+<spring:url value="/addServiceTax" var="serviceTaxDeleteurl" />
 </head>
 
 <body>
@@ -22,8 +22,8 @@
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="container-fluid">
-				<form:form class="mws-form" Commandname="addVat" name="addVatForm"
-					id="myForm" modelAttribute="addVat" method="post">
+				<form:form class="mws-form" Commandname="addServiceTax" name="addServiceTaxForm"
+					id="myForm" modelAttribute="addServiceTax" method="post">
 					<div class="row">
 						<div class="col-lg-12">
 							<h1 class="page-header">
@@ -35,7 +35,7 @@
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.serviceTax" />(%)</label><input
-									type="text" id="vatPercent" name="vatPercent"
+									type="text" id="serviceTaxPercent" name="serviceTaxPercent"
 									class="form-control"
 									placeholder="<spring:message code="label.page.serviceTax" /> (%)">
 							</div>
@@ -57,7 +57,7 @@
 
 
 					</div>
-					<input type="text" id="vatId" name="vatId" class="form-control"
+					<input type="text" id="id" name="id" class="form-control"
 						style="visibility: hidden">
 
 					<!-- /.row -->
@@ -79,14 +79,21 @@
 									</thead>
 									<tbody>
 
-										<tr class="gradeA odd" role="row">
-											<td class="sorting_1"></td>
-											<td></td>
 
-											<td class="center"><a href="#" onclick=""><img
-													src=""> </a></td>
+										<%
+											int cnt = 1;
+										%>
+										<c:forEach var="serviceTax" items="${serviceTaxlist}">
 
-										</tr>
+											<tr class="gradeA even" role="row">
+												<td class="sorting_1"><%=cnt++%></td>
+												<td>${serviceTax.serviceTaxPercent}</td>
+												<td class="center">
+												<a href="${serviceTaxDeleteurl}/${serviceTax.id}?DeleteServiceTax"><img
+															src="<%=request.getContextPath()%>/resources/images/DeleteRed.png"></a>
+												</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
