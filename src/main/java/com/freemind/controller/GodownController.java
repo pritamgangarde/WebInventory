@@ -1,6 +1,5 @@
 package com.freemind.controller;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.freemind.model.CategoryModel;
 import com.freemind.model.Godown;
 import com.freemind.services.GodownService;
 
@@ -48,14 +46,15 @@ public class GodownController {
 		return new ModelAndView("Inventory/Godown");
 	}
 
-	@RequestMapping(value = "{id}", params = "Deletecategorye", method = RequestMethod.GET)
-	public ModelAndView deleteCompany(@PathVariable("id") Integer id,
+
+	@RequestMapping(value = "{id}", params = "DeleteGodown", method = RequestMethod.GET)
+	public ModelAndView deleteGodown(@PathVariable("id") Integer id,
 			Model uiModel, HttpServletRequest httpServletRequest) {
 		Godown godownmodel =  godownService.getGodownById(id);
 		godownmodel.setActive(false);
 		godownService.update(godownmodel);
 		uiModel.addAttribute("godwonList", godownService.getAllGodownList());
-		uiModel.addAttribute("msgType", "3");
+		uiModel.addAttribute("msgType", "1");
 		uiModel.addAttribute("msg", "Category Deleted Successfully....!!!!");
 		return new ModelAndView("Inventory/Godown");
 

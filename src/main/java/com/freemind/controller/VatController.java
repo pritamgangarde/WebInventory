@@ -19,21 +19,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.freemind.model.CategoryModel;
-import com.freemind.model.Godown;
 import com.freemind.model.Vat;
 import com.freemind.services.VatService;
 
-@Controller("/addVat")
+@Controller
+@RequestMapping("/addVat")
 public class VatController {
 	@Autowired
 	VatService vatservice;
-	@Autowired
-	private MessageSource messageSource;
+	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView showVat(Model uiModel, ModelMap model,
 			HttpServletRequest httpServletRequest) {
-		System.out.println(uiModel);
 		List<Vat> vatList = vatservice.getAllVatList();
 		uiModel.addAttribute("vatlist", vatList);
 		return new ModelAndView("Inventory/Vat");
@@ -53,15 +50,15 @@ public class VatController {
 		return new ModelAndView("Inventory/Vat");
 	}
 	
-	@RequestMapping(value = "{id}", params = "deletevat", method = RequestMethod.GET)
+	@RequestMapping(value = "{id}", params = "Deletevat", method = RequestMethod.GET)
 	public ModelAndView deleteVat(@PathVariable("id") Integer id,
 			Model uiModel, HttpServletRequest httpServletRequest) {
 		
 		Vat godownmodel =  vatservice.getVatById(id);
 		godownmodel.setActive(false);
-		vatservice.update(godownmodel);
+		vatservice.save(godownmodel);
 		uiModel.addAttribute("vatlist", vatservice.getAllVatList());
-		uiModel.addAttribute("msgType", "3");
+		uiModel.addAttribute("msgType", "1");
 		uiModel.addAttribute("msg", "Vat Deleted Successfully....!!!!");
 		return new ModelAndView("Inventory/Vat");
 

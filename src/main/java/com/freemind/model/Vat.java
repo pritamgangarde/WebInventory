@@ -22,7 +22,7 @@ public class Vat {
 	double vatPercent;
 
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active;
+	boolean active=true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
