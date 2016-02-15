@@ -2,11 +2,12 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
-     <spring:url value="/addproductdelete"  var ="ProductDeleteurl"/>
+     <spring:url value="/addProduct"  var ="ProductDeleteurl"/>
+     <spring:url value="/addProduct"  var ="addProductUrl"/>
 <div id="wrapper">
 	
 	<!-- Navigation -->
@@ -19,54 +20,63 @@
 					<h1 class="page-header">Add Product</h1>
 				</div>
 				<!-- /.col-lg-12 -->
-				<form:form modelAttribute="product" action="/saveProduct"
-					method="post">
-					
-							<div class="row">
+				<form:form class="mws-form" Commandname="addProduct"
+						name="addProductForm" id="myForm" modelAttribute="addProduct"
+						action="${addProductUrl}" method="post">
+						<div class="row">
 							
 							 <div>
 						   <jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 						   </div>
 					 <div class="col-xs-3">
-							<label>Godowan</label>
-							  <select name="godowanModel" id="godowanModel" class="form-control" style="width:90%;">
+							<label><spring:message code="label.page.godownName" /></label>
+							  <select name="godowanObj" id=godowanObj class="form-control" style="width:90%;">
 														    <option>---Select Godown---- </option>
-													<c:forEach var="addgodowanlist" items="${addgodowanlist}">
-													    <option value="${addgodowanlist.addgodowanId}">${addgodowanlist.addgodowanName} </option>
+													<c:forEach var="godowan" items="${godownList}">
+													    <option value="${godowan.id}">${godowan.name} </option>
 													</c:forEach>
 							 </select>
 						</div>
 					 </div>
 					<div class="row">
 						<div class="col-xs-3">
-							<label>Product Code</label>
-							<form:input path="productCode" class="form-control"
-								placeholder="Product code" id="productCode" />
+							<label><spring:message code="label.page.productCode" /></label>
+							<input type="text" id="productCode" name="productCode" class="form-control"
+									placeholder="<spring:message code="label.page.productCode" />">
+							
 						</div>
 						<div class="col-xs-3">
-							<label>Name</label>
-							<form:input path="productName" class="form-control"
-								placeholder="Name" id="productName" />
+							<label><spring:message code="label.page.productName"/></label>
+							<input type="text" id="productName" name="productName" class="form-control"
+									placeholder="<spring:message code="label.page.productName"/>">
 						</div>
 						<div class="col-xs-3">
-							<label>Product Description</label>
-							<form:input path="productDisc" class="form-control"
-								placeholder="Product Description" id="productDis" />
+							<label><spring:message code="label.page.productDescription"/></label>
+							<input type="text" id="productDescription" name="productDescription" class="form-control"
+									placeholder="<spring:message code="label.page.productDescription"/>">
 							<!--<textarea class="form-control" rows="1"></textarea>-->
 						</div>
 						<div class="col-xs-3">
-							<label>Category</label>
+							<label><spring:message code="label.page.categoryName"/></label>
 							  <select name="categoryObj" id="categoryId" class="form-control" style="width:90%;">
 														    <option>---Select Category---- </option>
-													<c:forEach var="addCategorylist" items="${addCategorylist}">
-													    <option value="${addCategorylist.categoryId}">${addCategorylist.categoryName} </option>
+													<c:forEach var="category" items="${categoryList}">
+													    <option value="${category.categoryId}">${category.categoryName} </option>
 													</c:forEach>
 							 </select>
 						</div>
 
 						<div class="col-xs-3">
-							<label>Unit</label>
-							<form:select path="unit" class="form-control" id="unit">
+							<label><spring:message code="label.page.unitName"/></label>
+							
+							<select name= "unitObj" id="unitObj" class="form-control" style="width:90%;">
+														    <option>---Select Unit---- </option>
+													<c:forEach var="unit" items="${unitList}">
+													 <option value="${unit.id}">${unit.unitName} </option>
+													</c:forEach>
+							</select>
+							
+							<%-- <form:select path="unit" class="form-control" id="unitId">
 								<form:option value="">Select Unit</form:option>
 								<form:option value="Pieces">Pieces</form:option>
 								<form:option value="Kg">Kg</form:option>
@@ -74,39 +84,38 @@
 								<form:option value="Box">Box</form:option>
 								<form:option value="Gram">Gram</form:option>
 								<form:option value="Litre">Litre</form:option>
-							</form:select>
+							</form:select> --%>
 						</div>
 
 						<div class="col-xs-3">
-							<label>Purchase Price</label>
+							<label><spring:message code="label.page.saleRate"/></label>
 							<div class="form-group">
-								<label class="sr-only" for="">Purchase Rate</label>
+								<label class="sr-only" for=""><spring:message code="label.page.saleRate"/></label>
 								<div class="input-group">
-									<div class="input-group-addon">Rs.</div>
-									<form:input path="purchaseRate" class="form-control"
-										id="purchaseRate" placeholder="Amount" />
+									<div class="input-group-addon"><spring:message code="label.page.rs"/></div>
+									<input type="number" class="form-control"
+										id="saleRate" name="saleRate" placeholder="<spring:message code="label.page.amount"/>" />
 									<div class="input-group-addon">.00</div>
 								</div>
 							</div>
 						</div>
 						 <div class="col-xs-3">
-							<label>Product Quantity</label>
-							<form:input path="productQuantity" class="form-control"
-								placeholder="productQuantity" id="productQuantity" />
+							<label><spring:message code="label.page.productQuantity"/></label>
+							<input type="text" id="quantity" name="quantity"  class="form-control"
+								placeholder="<spring:message code="label.page.productQuantity"/>" />
 						</div> 
 						<div class="col-xs-3">
-							<label>Vat(%)</label>
-							<select name= "vatPercent" id="vatPercent" class="form-control" style="width:90%;">
+							<label><spring:message code="label.page.vat"/>(%)</label>
+							<select name= "vatObj" id="vatObj" class="form-control" style="width:90%;">
 														    <option>---Select Vat---- </option>
-													<c:forEach var="addVatlist" items="${addVatlist}">
-													 <option value="${addVatlist.vatPercent}">${addVatlist.vatPercent} </option>
+													<c:forEach var="vat" items="${vatList}">
+													 <option value="${vat.id}">${vat.vatPercent} </option>
 													</c:forEach>
 							</select>
 						</div>
 					</div>
 					<br>
 					<br>
-					<form:input path="productId" id="productId" type="hidden" />
 					<div class="container">
 						<button type="submit" class="btn btn-primary">Save</button>
 							<c:set var="showEdit" value="false" />
@@ -116,7 +125,7 @@
 						<button type="submit" class="btn btn-info">Update</button>
 						</c:if>
 					</div>
-          <!--  <input type="text" id="productId" name ="productId" class="form-control" value="0" style="visibility: hidden"  > -->
+            <input type="text" id="id" name ="id" class="form-control" value="0" style="visibility: hidden"  > 
 				</form:form>
 			</div>
 
@@ -131,24 +140,17 @@
 					<table id="dataTable" class="display">
 					<thead>
 						<tr>
-							<th>Sr. No.</th>
-							<th>Godown</th>
-							<th>Product Code</th>
-							<th>Product Name</th>
-							<th>Available Qty</th>
-							<c:if test="${showEdit}">
-							<th>Edit</th>
-							</c:if>
-							<c:set var="showDelete" value="false" />
-							<c:if
-									test="${fn:contains(sessionScope.permissionList, 'Delete Product' ) || sessionScope.userName=='admin'}">
-									<c:set var="showDelete" value="true" />
-							<th>Delete</th>
-							</c:if>
+							<th><spring:message code="label.page.srno" /></th>
+							<th><spring:message code="label.page.godownName"/></th>
+							<th><spring:message code="label.page.productCode"/></th>
+							<th><spring:message code="label.page.productName"/></th>
+							<th><spring:message code="label.page.availableQty"/></th>
+							<th><spring:message code="label.page.action" /></th>
+							
 						</tr>
 					</thead>
 					                  <tbody>
-												<c:forEach var="productObj" items="${productList }"
+												<%-- <c:forEach var="productObj" items="${productList }"
 													varStatus="theCount">
 													<tr class="gradeA odd" role="row">
 														<td class="sorting_1">${theCount.count }</td>
@@ -165,7 +167,7 @@
 														<td class="center"> <a href="addproductdelete.html?id=${ productObj.productId}"><img src="resources/images/DeleteRed.png"></a></td>
 														</c:if>
 													</tr>
-												</c:forEach>
+												</c:forEach> --%>
 											</tbody>
 				</table>
 					</div>

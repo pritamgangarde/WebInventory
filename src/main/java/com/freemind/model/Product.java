@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -29,18 +31,26 @@ public class Product implements Serializable {
 
 	@Column(name = "PRODUCT_NAME")
 	String productName;
-
+	
+	@Column(name = "PRODUCT_DESCR")
+	String productDescription;
+	
 	@Column(name = "QUANTITY")
 	int quantity;
 
-	@Column(name = "UNIT")
-	String unit;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="UNIT_ID",nullable=true)
+	Unit unitModel;
 
-	@Column(name = "VAT_PERC")
-	double vatPerc;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="VAT_ID",nullable=true)
+	Vat VatModel;
 
-	@Column(name = "SERVICE_TAX")
-	double serviceTax;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="SERVICE_TAX_ID",nullable=true)
+	ServiceTax serviceTax;
 
 	@Column(name = "SALE_RATE")
 	double saleRate;
@@ -57,8 +67,16 @@ public class Product implements Serializable {
 	@Column(name = "LAST_MODIFIED_DATE")
 	Date lastModifyDate;
 
-	@Column(name = "ACTIVITY_STATUS")
-	boolean activityStatus;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="GODWAN_ID",nullable=true)
+	Godown  godownModel;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="CATEGORY_ID",nullable=true)
+	CategoryModel categoryModel;
+	
+	@Column(name = "ACTIVITY_STATUS", nullable = false, columnDefinition = "boolean default true")
+	boolean activityStatus=true;
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Item> listItems;
@@ -101,30 +119,7 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 	}
 
-	public String getUnit() {
-		return unit;
-	}
-
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}
-
-	public double getVatPerc() {
-		return vatPerc;
-	}
-
-	public void setVatPerc(double vatPerc) {
-		this.vatPerc = vatPerc;
-	}
-
-	public double getServiceTax() {
-		return serviceTax;
-	}
-
-	public void setServiceTax(double serviceTax) {
-		this.serviceTax = serviceTax;
-	}
-
+	
 	public double getSaleRate() {
 		return saleRate;
 	}
@@ -197,5 +192,54 @@ public class Product implements Serializable {
 	public void setPurchaseDetailsList(List<PurchaseDetails> purchaseDetailsList) {
 		this.purchaseDetailsList = purchaseDetailsList;
 	}
+
+	public String getProductDescription() {
+		return productDescription;
+	}
+
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+
+	public Unit getUnitModel() {
+		return unitModel;
+	}
+
+	public void setUnitModel(Unit unitModel) {
+		this.unitModel = unitModel;
+	}
+
+	public Vat getVatModel() {
+		return VatModel;
+	}
+
+	public void setVatModel(Vat vatModel) {
+		VatModel = vatModel;
+	}
+
+	public ServiceTax getServiceTax() {
+		return serviceTax;
+	}
+
+	public void setServiceTax(ServiceTax serviceTax) {
+		this.serviceTax = serviceTax;
+	}
+
+	public Godown getGodownModel() {
+		return godownModel;
+	}
+
+	public void setGodownModel(Godown godownModel) {
+		this.godownModel = godownModel;
+	}
+
+	public CategoryModel getCategoryModel() {
+		return categoryModel;
+	}
+
+	public void setCategoryModel(CategoryModel categoryModel) {
+		this.categoryModel = categoryModel;
+	}
+
 
 }

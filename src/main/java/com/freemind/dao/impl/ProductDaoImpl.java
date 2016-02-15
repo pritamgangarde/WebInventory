@@ -26,9 +26,9 @@ public class ProductDaoImpl implements ProductDao {
 		Session session;
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<Product> listProduct = session.createCriteria(Product.class)
-				.list();
-
+		Criteria queryCriteria=session.createCriteria(Product.class);
+		queryCriteria.add(Restrictions.eq("activityStatus", true));
+		List<Product> listProduct = queryCriteria.list();
 		return listProduct;
 	}
 
@@ -48,7 +48,7 @@ public class ProductDaoImpl implements ProductDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(product);
+		session.saveOrUpdate(product);
 		transaction.commit();
 		session.clear();
 		session.close();
