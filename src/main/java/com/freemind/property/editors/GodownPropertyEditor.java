@@ -2,7 +2,6 @@ package com.freemind.property.editors;
 
 import java.beans.PropertyEditorSupport;
 
-import com.freemind.model.CategoryModel;
 import com.freemind.model.Godown;
 import com.freemind.services.GodownService;
 

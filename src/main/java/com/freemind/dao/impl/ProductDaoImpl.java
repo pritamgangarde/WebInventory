@@ -25,9 +25,9 @@ public class ProductDaoImpl implements ProductDao {
 	public List<Product> getAllProductList() {
 		Session session;
 		session = sessionFactory.openSession();
-		@SuppressWarnings("unchecked")
 		Criteria queryCriteria=session.createCriteria(Product.class);
 		queryCriteria.add(Restrictions.eq("activityStatus", true));
+		@SuppressWarnings("unchecked")
 		List<Product> listProduct = queryCriteria.list();
 		return listProduct;
 	}

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.freemind.dao.VatDao;
-import com.freemind.model.Unit;
 import com.freemind.model.Vat;
 
 @Repository("VatDao")
@@ -26,10 +25,10 @@ public class VatDaoImpl implements VatDao {
 	public List<Vat> getAllVatList() {
 		Session session;
 		session = sessionFactory.openSession();
-		@SuppressWarnings("unchecked")
 		
 		Criteria queryCriteria=session.createCriteria(Vat.class);
 		queryCriteria.add(Restrictions.eq("active", true));
+		@SuppressWarnings("unchecked")
 		List<Vat> listVat =queryCriteria.list();
 		return listVat;
 	}

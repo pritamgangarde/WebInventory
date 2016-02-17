@@ -2,7 +2,6 @@ package com.freemind.property.editors;
 
 import java.beans.PropertyEditorSupport;
 
-import com.freemind.model.Unit;
 import com.freemind.model.Vat;
 import com.freemind.services.VatService;
 

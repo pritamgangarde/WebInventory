@@ -19,9 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freemind.model.ServiceTax;
-import com.freemind.model.Vat;
 import com.freemind.services.ServiceTaxService;
-import com.freemind.services.VatService;
 
 
 @Controller

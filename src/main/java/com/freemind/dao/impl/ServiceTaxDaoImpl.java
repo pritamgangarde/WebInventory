@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.freemind.dao.ServiceTaxDao;
 import com.freemind.model.ServiceTax;
-import com.freemind.model.Unit;
 
 @Repository("ServiceTaxDao")
 @Transactional
@@ -26,10 +25,10 @@ public class ServiceTaxDaoImpl implements ServiceTaxDao {
 	public List<ServiceTax> getAllServiceTaxList() {
 		Session session;
 		session = sessionFactory.openSession();
-		@SuppressWarnings("unchecked")
 		 
 		Criteria queryCriteria=session.createCriteria(ServiceTax.class);
 		queryCriteria.add(Restrictions.eq("active", true));
+		@SuppressWarnings("unchecked")
 		List<ServiceTax> listServiceTax =queryCriteria.list();
 		return listServiceTax;
 	}
