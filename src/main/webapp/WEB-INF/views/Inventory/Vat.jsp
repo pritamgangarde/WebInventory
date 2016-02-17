@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 
-<spring:url value="/addvat" var="addVaturl" />
+<spring:url value="/saveVat" var="addVatUrl" />
 <spring:url value="/addvat" var="vatDeleteurl" />
 </head>
 
@@ -23,7 +23,8 @@
 		<div id="page-wrapper">
 			<div class="container-fluid">
 				<form:form class="mws-form" Commandname="addVat" name="addVatForm"
-					id="myForm" modelAttribute="addVat" method="post">
+					id="myForm" modelAttribute="addVat" method="POST"
+					action="${addVatUrl}">
 					<div class="row">
 						<div class="col-lg-12">
 							<h1 class="page-header">
@@ -47,10 +48,16 @@
 					<br>
 
 					<div class="container">
-						<button type="submit" id="save" name="save"
+						<button type="submit" id="save" name="Save"
 							class="btn btn-primary">
 							<spring:message code="label.page.saveButton" />
 						</button>
+
+						<button type="submit" id="save" name="Update"
+							class="btn btn-primary">
+							<spring:message code="label.page.updateButton" />
+						</button>
+
 						<button type="reset" class="btn btn-info">
 							<spring:message code="label.page.clear" />
 						</button>
@@ -78,20 +85,22 @@
 										<tr>
 											<th><spring:message code="label.page.srno" /></th>
 											<th><spring:message code="label.page.addVat" /> (%)</th>
+											<th><spring:message code="label.page.status" /></th>
 											<th><spring:message code="label.page.action" /></th>
 
 										</tr>
 									</thead>
 									<tbody>
+										<c:forEach items="${listVat}" varStatus="theCount" var="vat">
+											<tr class="gradeA odd" role="row">
+												<td class="sorting_1">${theCount.count}</td>
+												<td>${vat.vatPercent}</td>
+												<td>${vat.active == true ? 'Active' : 'Inactive'}</td>
+												<td class="center"><a href="#"> ${vat.active == true ? 'Inactive' : 'Active'}</a>
+												</td>
+											</tr>
 
-										<tr class="gradeA odd" role="row">
-											<td class="sorting_1"></td>
-											<td></td>
-
-											<td class="center"><a href="#" onclick=""><img
-													src=""> </a></td>
-
-										</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>

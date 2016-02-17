@@ -1,6 +1,6 @@
 package com.freemind.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,13 +22,13 @@ public class Vat {
 	double vatPercent;
 
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active;
+	boolean active=true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
 
 	@Column(name = "CREATED_DATE")
-	Date createdAt;
+	Timestamp createdDate = new Timestamp(new java.util.Date().getTime());
 
 	public int getId() {
 		return id;
@@ -62,12 +62,12 @@ public class Vat {
 		this.createdBy = createdBy;
 	}
 
-	public Date getCreatedAt() {
-		return createdAt;
+	public Timestamp getCreatedDate() {
+		return createdDate;
 	}
 
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
+	public void setCreatedDate(Timestamp createdDate) {
+		this.createdDate = createdDate;
 	}
 
 }

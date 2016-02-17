@@ -13,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -45,10 +44,10 @@ public class GodownController {
 		return new ModelAndView("Inventory/Godown");
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
-	public Godown viewGodown(@RequestParam("id") int id) {
-		return godownService.getGodownById(id);
-
-	}
+//	@RequestMapping(method = RequestMethod.POST)
+//	public Godown viewGodown(@RequestParam("id") int id) {
+//		return godownService.getGodownById(id);
+//
+//	}
 
 }
