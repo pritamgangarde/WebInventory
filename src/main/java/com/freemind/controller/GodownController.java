@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,11 +44,25 @@ public class GodownController {
 		model.addAttribute("godwonList", godownService.getAllGodownList());
 		return new ModelAndView("Inventory/Godown");
 	}
-
 //	@RequestMapping(method = RequestMethod.POST)
 //	public Godown viewGodown(@RequestParam("id") int id) {
 //		return godownService.getGodownById(id);
 //
 //	}
+
+	@RequestMapping(value = "{id}", params = "DeleteGodown", method = RequestMethod.GET)
+
+	public ModelAndView deleteGodown(@PathVariable("id") Integer id,
+
+			Model uiModel, HttpServletRequest httpServletRequest) {
+		Godown godownmodel =  godownService.getGodownById(id);
+		godownmodel.setActive(false);
+		godownService.update(godownmodel);
+		uiModel.addAttribute("godwonList", godownService.getAllGodownList());
+		uiModel.addAttribute("msgType", "1");
+		uiModel.addAttribute("msg", "Category Deleted Successfully....!!!!");
+		return new ModelAndView("Inventory/Godown");
+
+	}
 
 }

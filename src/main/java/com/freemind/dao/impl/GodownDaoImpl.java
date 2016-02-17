@@ -27,8 +27,9 @@ public class GodownDaoImpl implements GodownDao {
 		Session session;
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<Godown> listGodown = session.createCriteria(Godown.class).list();
-
+		Criteria queryCriteria= session.createCriteria(Godown.class);
+		queryCriteria.add(Restrictions.eq("active",true));
+		List<Godown> listGodown = queryCriteria.list();
 		return listGodown;
 	}
 
@@ -48,7 +49,7 @@ public class GodownDaoImpl implements GodownDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(godown);
+		session.saveOrUpdate(godown);
 		transaction.commit();
 		session.clear();
 		session.close();

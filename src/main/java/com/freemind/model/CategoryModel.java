@@ -36,7 +36,7 @@ public class CategoryModel {
 	Date lastModifyDate;
 
 	public boolean isActive() {
-		return active;
+		return active=true;
 	}
 
 	public void setActive(boolean active) {

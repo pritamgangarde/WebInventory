@@ -1,4 +1,3 @@
-
 <html>
 <head><%@ page language="java"
 	contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
@@ -11,27 +10,6 @@
 <spring:url value="/addGodown" var="viewGodownUrl" />
 <spring:url value="/addGodown" var="deleteGodownUrl" />
 </head>
-<script type="text/javascript">
-	function viewGodownDetails(id) {
-		$.ajax({
-
-			type : 'POST',
-			url : 'addGodown',
-			data : {
-				id : id
-			},
-			dataType : "json",
-			async:false,
-			cache:false,
-			success : function(data) {
-				alert(data);
-			},
-			error : function() {
-				alert("error");
-			}
-		});
-	}
-</script>
 <body>
 	<spring:url value="/addGodown" var="addGodwnUrl" />
 	<jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
@@ -197,10 +175,10 @@
 													<td>${godown.name}</td>
 													<td>${godown.description}</td>
 													<td class="center">
-														<a	href="${viewGodownUrl}?id=${godown.id}">
+														<a	href="#" onclick="getGodownDetails('${godown.id}','${godown.description}','${godown.name}','${godown.location}','${godown.state}', '${godown.city}' ,'${godown.pincode}', '${godown.landLineNo}', '${godown.mobileNo}','${godown.incharge}')">
 															<img src="<%=request.getContextPath()%>/resources/images/edit-notes.png"></img>
 														</a>
-														<a href="${deleteGodownUrl}?id=${godown.id}">
+														<a href="${deleteGodownUrl}/${godown.id}?DeleteGodown">
 															<img src="<%=request.getContextPath()%>/resources/images/DeleteRed.png"></img>
 														</a>
 													</td>
@@ -237,17 +215,19 @@
 </script>
 <script>
 	$("#update12").prop('disabled', false);
-	function getGodownDetails(godownId, godownname, address1, sate, city,
-			pinno, phoneno, incharge) {
+	function getGodownDetails(godownId,description, godownname, address1, sate, city,
+			pinno, landlineNo,phoneno, incharge) {
 
-		$("#addgodowanid").val(godownId);
-		$("#addgodowanName").val(godownname);
-		$("#addressLine1").val(address1);
+		$("#id").val(godownId);
+		$("#description").val(description);
+		$("#name").val(godownname);
+		$("#location").val(address1);
 		$("#state").val(sate);
 		$("#city").val(city);
-		$("#pinno").val(pinno);
-		$("#phoneno").val(phoneno);
-		$("#Incharge").val(incharge);
+		$("#pincode").val(pinno);
+		$("#landLineNo").val(landlineNo);
+		$("#mobileNo").val(phoneno);
+		$("#inchargeName").val(incharge);
 		$("#save").prop('disabled', true);
 		$("#update12").prop('disabled', false);
 	}

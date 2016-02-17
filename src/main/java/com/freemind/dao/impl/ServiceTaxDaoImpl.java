@@ -27,9 +27,10 @@ public class ServiceTaxDaoImpl implements ServiceTaxDao {
 		Session session;
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<ServiceTax> listServiceTax = session.createCriteria(
-				ServiceTax.class).list();
-
+		 
+		Criteria queryCriteria=session.createCriteria(ServiceTax.class);
+		queryCriteria.add(Restrictions.eq("active", true));
+		List<ServiceTax> listServiceTax =queryCriteria.list();
 		return listServiceTax;
 	}
 
@@ -37,7 +38,7 @@ public class ServiceTaxDaoImpl implements ServiceTaxDao {
 	public ServiceTax getServiceTaxById(int id) {
 		Session session;
 		session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Unit.class);
+		Criteria criteria = session.createCriteria(ServiceTax.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
 		ServiceTax serviceTax = (ServiceTax) criteria.uniqueResult();
 
@@ -49,7 +50,7 @@ public class ServiceTaxDaoImpl implements ServiceTaxDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(serviceTax);
+		session.saveOrUpdate(serviceTax);
 		transaction.commit();
 		session.clear();
 		session.close();

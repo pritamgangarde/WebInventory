@@ -27,8 +27,10 @@ public class VatDaoImpl implements VatDao {
 		Session session;
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<Vat> listVat = session.createCriteria(Vat.class).list();
-
+		
+		Criteria queryCriteria=session.createCriteria(Vat.class);
+		queryCriteria.add(Restrictions.eq("active", true));
+		List<Vat> listVat =queryCriteria.list();
 		return listVat;
 	}
 
@@ -36,7 +38,7 @@ public class VatDaoImpl implements VatDao {
 	public Vat getVatById(int id) {
 		Session session;
 		session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Unit.class);
+		Criteria criteria = session.createCriteria(Vat.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
 		Vat vat = (Vat) criteria.uniqueResult();
 
@@ -48,24 +50,13 @@ public class VatDaoImpl implements VatDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(vat);
+		session.saveOrUpdate(vat);
 		transaction.commit();
 		session.clear();
 		session.close();
 
 	}
 
-	@Override
-	public void update(Vat vat) {
-		Session session;
-		session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-		session.update(vat);
-		transaction.commit();
-		session.clear();
-		session.close();
-
-	}
 
 	@Override
 	public void deleteVatById(int id) {
@@ -79,6 +70,12 @@ public class VatDaoImpl implements VatDao {
 		session.clear();
 		session.close();
 
+	}
+
+	@Override
+	public void update(Vat vat) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
