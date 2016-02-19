@@ -36,8 +36,8 @@ public class UnitServiceImpl implements UnitService {
 	}
 
 	@Override
-	public void deleteUnitById(int id) {
-		unitDao.deleteUnitById(id);
+	public void deleteUnitById(int id, boolean status) {
+		unitDao.deleteUnitById(id, status);
 	}
 
 }

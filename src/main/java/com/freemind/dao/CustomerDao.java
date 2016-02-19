@@ -15,4 +15,8 @@ public interface CustomerDao {
 
 	public void deleteCustomerById(int id);
 
+	public void updateCustomerActivityStatus(int id, boolean status);
+
+	public void updateCustomerDefaulter(int id, boolean defaulter);
+
 }

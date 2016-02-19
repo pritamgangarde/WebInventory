@@ -1,6 +1,6 @@
 package com.freemind.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "VENDOR")
-public class Vendor {
+public class Vendors {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,11 +19,11 @@ public class Vendor {
 	int id;
 
 	@Column(name = "VENDOR_NAME")
-	String vendorName;
+	String vendorNames;
 
 	@Column(name = "ADDRESS")
 	String address;
-	
+
 	@Column(name = "CITY")
 	String city;
 
@@ -42,13 +42,11 @@ public class Vendor {
 	@Column(name = "EMAIL_ID")
 	String emailId;
 
-	
-
 	@Column(name = "TIN_NO")
 	String tinNo;
 
-	@Column(name = "IS_ACTIVE")
-	boolean isActive;
+	@Column(name = "IS_ACTIVE",nullable = false, columnDefinition = "boolean default true")
+	boolean active=true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
@@ -57,11 +55,13 @@ public class Vendor {
 	int modifyBy;
 
 	@Column(name = "INSERTION_DATE")
-	Date insertionDate;
+	Timestamp insertionDate = new Timestamp(new java.util.Date().getTime());
 
 	@Column(name = "LAST_MODIFIED_DATE")
-	Date lastModifyDate;
+	Timestamp lastModifyDate = new Timestamp(new java.util.Date().getTime());
 
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -70,12 +70,14 @@ public class Vendor {
 		this.id = id;
 	}
 
-	public String getVendorName() {
-		return vendorName;
+	
+
+	public String getVendorNames() {
+		return vendorNames;
 	}
 
-	public void setVendorName(String vendorName) {
-		this.vendorName = vendorName;
+	public void setVendorNames(String vendorNames) {
+		this.vendorNames = vendorNames;
 	}
 
 	public String getAddress() {
@@ -142,12 +144,13 @@ public class Vendor {
 		this.tinNo = tinNo;
 	}
 
+	
 	public boolean isActive() {
-		return isActive;
+		return active;
 	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	public int getCreatedBy() {
@@ -166,20 +169,22 @@ public class Vendor {
 		this.modifyBy = modifyBy;
 	}
 
-	public Date getInsertionDate() {
+	public Timestamp getInsertionDate() {
 		return insertionDate;
 	}
 
-	public void setInsertionDate(Date insertionDate) {
+	public void setInsertionDate(Timestamp insertionDate) {
 		this.insertionDate = insertionDate;
 	}
 
-	public Date getLastModifyDate() {
+	public Timestamp getLastModifyDate() {
 		return lastModifyDate;
 	}
 
-	public void setLastModifyDate(Date lastModifyDate) {
+	public void setLastModifyDate(Timestamp lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
 	}
+
+	
 
 }

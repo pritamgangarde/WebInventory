@@ -28,7 +28,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
 		List<Customer> listCustomer = session.createCriteria(Customer.class)
-				.list();
+				.add(Restrictions.eq("active", true)).list();
 
 		return listCustomer;
 	}
@@ -49,7 +49,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(customer);
+		session.saveOrUpdate(customer);
 		transaction.commit();
 		session.clear();
 		session.close();
@@ -75,6 +75,36 @@ public class CustomerDaoImpl implements CustomerDao {
 		Criteria criteria = session.createCriteria(Customer.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
 		session.delete((Unit) criteria.uniqueResult());
+		transaction.commit();
+		session.clear();
+		session.close();
+
+	}
+
+	@Override
+	public void updateCustomerActivityStatus(int id, boolean status) {
+		Session session;
+		session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Customer.class);
+		criteria.add(Restrictions.eq("id", new Integer(id)));
+		Customer customer = (Customer) criteria.uniqueResult();
+		customer.setActive(status);
+		transaction.commit();
+		session.clear();
+		session.close();
+
+	}
+
+	@Override
+	public void updateCustomerDefaulter(int id, boolean defaulter) {
+		Session session;
+		session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Criteria criteria = session.createCriteria(Customer.class);
+		criteria.add(Restrictions.eq("id", new Integer(id)));
+		Customer customer = (Customer) criteria.uniqueResult();
+		customer.setDefaulter(defaulter);
 		transaction.commit();
 		session.clear();
 		session.close();

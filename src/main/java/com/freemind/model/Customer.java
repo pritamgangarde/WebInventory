@@ -1,6 +1,6 @@
 package com.freemind.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,8 +42,11 @@ public class Customer {
 	@Column(name = "EMAIL_ID")
 	String emailId;
 
-	@Column(name = "DEFAULTER")
-	boolean defaulter;
+	@Column(name = "DEFAULTER",nullable = false, columnDefinition = "boolean default false")
+	boolean defaulter=false;
+
+	@Column(name = "IS_ACTIVE",nullable = false, columnDefinition = "boolean default true")
+	boolean active=true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
@@ -52,10 +55,10 @@ public class Customer {
 	int modifyBy;
 
 	@Column(name = "INSERTION_DATE")
-	Date insertionDate;
+	Timestamp insertionDate = new Timestamp(new java.util.Date().getTime());
 
 	@Column(name = "LAST_MODIFIED_DATE")
-	Date lastModifyDate;
+	Timestamp lastModifyDate = new Timestamp(new java.util.Date().getTime());
 
 	public int getId() {
 		return id;
@@ -153,20 +156,28 @@ public class Customer {
 		this.modifyBy = modifyBy;
 	}
 
-	public Date getInsertionDate() {
+	public Timestamp getInsertionDate() {
 		return insertionDate;
 	}
 
-	public void setInsertionDate(Date insertionDate) {
+	public void setInsertionDate(Timestamp insertionDate) {
 		this.insertionDate = insertionDate;
 	}
 
-	public Date getLastModifyDate() {
+	public Timestamp getLastModifyDate() {
 		return lastModifyDate;
 	}
 
-	public void setLastModifyDate(Date lastModifyDate) {
+	public void setLastModifyDate(Timestamp lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 }

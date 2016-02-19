@@ -41,4 +41,14 @@ public class CustomerServiceImpl implements CustomerService {
 		customerDao.deleteCustomerById(id);
 	}
 
+	@Override
+	public void updateCustomerActivityStatus(int id, boolean status) {
+		customerDao.updateCustomerActivityStatus(id, status);
+	}
+
+	@Override
+	public void updateCustomerDefaulter(int id, boolean defaulter) {
+		customerDao.updateCustomerDefaulter(id, defaulter);
+	}
+
 }

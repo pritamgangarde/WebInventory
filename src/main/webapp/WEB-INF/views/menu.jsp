@@ -8,13 +8,13 @@
 <!-- add link in controller -->
 <spring:url value="/addGodown" var="addGodownUrl" />
 <spring:url value="/addcategory" var="addcategoryUrl" />
-<spring:url value="/addUnit" var="addUnitUrl" />
+<spring:url value="/showUnit" var="addUnitUrl" />
 <spring:url value="/addVat" var="addvatUrl" />
 <spring:url value="/addServiceTax" var="addServiceTax" />
 
 
 <spring:url value="/addProduct" var="addProductUrl" />
-<spring:url value="/addVendor" var="addvendorUrl" />
+<spring:url value="/showVendor" var="showVendorUrl" />
 <spring:url value="/addproject" var="addprojectUrl" />
 <spring:url value="/addprn" var="addPRNUrl" />
 <spring:url value="/addprn/viewprn" var="viewaddPRNUrl" />
@@ -39,7 +39,7 @@
 <spring:url value="/addSaleBill" var="addSaleBillUrl" />
 <spring:url value="/addSaleBill/addCustomers" var="addClientUrl" />
 <spring:url value="/addUserPermission" var="userPermission" />
-
+<spring:url value="/addCustomer" var="showCustomerUrl" />
 <nav class="navbar navbar-default navbar-static-top" role="navigation"
 	style="margin-bottom: 0">
 	<div class="navbar-header">
@@ -270,12 +270,17 @@
 
 						<c:if test="${fn:contains(permissionList, 'Add Vendor' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
-							<li><a href="${addvendorUrl}"><spring:message code="label.menu.addVendor"/></a></li>
+							<li><a href="${showVendorUrl}"><spring:message code="label.menu.addVendor"/></a></li>
 						</c:if>
 						<c:if test="${fn:contains(permissionList, 'Import Product' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${importProduct}"><spring:message code="label.menu.importProduct"/> </a></li>
 						</c:if>
+						<c:if test="${fn:contains(permissionList, 'Add Vendor' ) || sessionScope.userName=='admin'}">
+							<c:set var="showMenu" value="true" />
+							<li><a href="${showCustomerUrl}"><spring:message code="label.menu.customer"/></a></li>
+						</c:if>
+						
 					</ul> <!-- /.nav-second-level --></li>
 
 				<c:if test="${not showMenu}">

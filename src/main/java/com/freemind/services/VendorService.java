@@ -2,17 +2,19 @@ package com.freemind.services;
 
 import java.util.List;
 
-import com.freemind.model.Vendor;
+import com.freemind.model.Vendors;
 
 public interface VendorService {
-	public List<Vendor> getAllVendorList();
+	public List<Vendors> getAllVendorList();
 
-	public Vendor getVendorById(int id);
+	public Vendors getVendorById(int id);
 
-	public void save(Vendor vendor);
+	public void save(Vendors vendor);
 
-	public void update(Vendor vendor);
+	public void update(Vendors vendor);
 
 	public void deleteVendorById(int id);
+
+	public void updateVendorStatus(int id, boolean status);
 
 }

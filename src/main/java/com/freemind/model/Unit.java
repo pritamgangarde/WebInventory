@@ -19,8 +19,11 @@ public class Unit {
 	@Column(name = "UNIT_NAME")
 	String unitName;
 
+	@Column(name = "DESCRIPTION")
+	String description;
+
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active;
+	boolean active=true;
 
 	public int getId() {
 		return id;
@@ -44,6 +47,14 @@ public class Unit {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

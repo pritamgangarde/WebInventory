@@ -13,5 +13,5 @@ public interface UnitDao {
 
 	public void update(Unit unit);
 
-	public void deleteUnitById(int id);
+	public void deleteUnitById(int id, boolean status);
 }

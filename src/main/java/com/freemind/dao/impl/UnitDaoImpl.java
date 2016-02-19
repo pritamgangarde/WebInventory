@@ -26,7 +26,8 @@ public class UnitDaoImpl implements UnitDao {
 		Session session;
 		session = sessionFactory.openSession();
 		@SuppressWarnings("unchecked")
-		List<Unit> listUnit = session.createCriteria(Unit.class).list();
+		List<Unit> listUnit = session.createCriteria(Unit.class)
+				.add(Restrictions.eq("active", new Boolean(true))).list();
 
 		return listUnit;
 	}
@@ -67,13 +68,16 @@ public class UnitDaoImpl implements UnitDao {
 	}
 
 	@Override
-	public void deleteUnitById(int id) {
+	public void deleteUnitById(int id, boolean status) {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Unit.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
-		session.delete((Unit) criteria.uniqueResult());
+
+		Unit unit = (Unit) criteria.uniqueResult();
+		unit.setActive(status);
+		session.update(unit);
 		transaction.commit();
 		session.clear();
 		session.close();

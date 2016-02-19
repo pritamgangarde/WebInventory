@@ -30,7 +30,7 @@ public class Purchase implements Serializable {
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "VENDOR_ID")
-	Vendor vendor;
+	Vendors vendor;
 
 	@Column(name = "PURCHASE_DATE")
 	Date purchaseDate;
@@ -84,11 +84,11 @@ public class Purchase implements Serializable {
 		this.puchaseBillNo = puchaseBillNo;
 	}
 
-	public Vendor getVendor() {
+	public Vendors getVendor() {
 		return vendor;
 	}
 
-	public void setVendor(Vendor vendor) {
+	public void setVendor(Vendors vendor) {
 		this.vendor = vendor;
 	}
 

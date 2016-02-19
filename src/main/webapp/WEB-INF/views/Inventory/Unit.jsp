@@ -10,8 +10,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 </head>
 <body>
-	<spring:url value="/addGodown" var="addGodwnurl" />
-	<spring:url value="/addGodown" var="godownDeleteurl" />
+	<spring:url value="/addUnit" var="addUnitUrl" />
+	<spring:url value="/deleteUnit" var="deleteUnitUrl" />
+	<spring:url value="/updateUnit" var="updateUnitUrl" />
 	<jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 	<div id="wrapper">
@@ -29,9 +30,9 @@
 					</div>
 
 					<br> <br>
-					<form:form class="mws-form" Commandname="addGodowan"
-						name="addGodownForm" id="myForm" modelAttribute="addGodowan"
-						action="${addGodwnurl}" method="post">
+					<form:form class="mws-form" Commandname="addUnit" name="addUnit"
+						id="myForm" modelAttribute="addUnit" action="${addUnitUrl}"
+						method="post">
 
 
 						<div class="row">
@@ -41,14 +42,15 @@
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.unitName" /></label><input
 									type="text" id="unitName" name="unitName" class="form-control"
-									placeholder="<spring:message code="label.page.unitName" />"> <input type="hidden"
-									id="unitId" name="unitId">
+									placeholder="<spring:message code="label.page.unitName" />">
+								<input type="hidden" id="unitId" name="unitId">
 							</div>
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.description" /></label><input
 									type="text" id="description" name="description"
-									class="form-control" placeholder="<spring:message code="label.page.description" />">
+									class="form-control"
+									placeholder="<spring:message code="label.page.description" />">
 							</div>
 
 
@@ -64,9 +66,7 @@
 								class="btn btn-primary">
 								<spring:message code="label.page.saveButton" />
 							</button>
-							<button type="submit" class="btn btn-info">
-								<spring:message code="label.page.updateButton" />
-							</button>
+							
 							<button type="reset" class="btn btn-info">
 								<spring:message code="label.page.clear" />
 							</button>
@@ -85,7 +85,9 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="panel panel-default">
-								<div class="panel-heading"><spring:message code="label.page.allUnit" /></div>
+								<div class="panel-heading">
+									<spring:message code="label.page.allUnit" />
+								</div>
 								<!-- /.panel-heading -->
 								<div class="col-xs-12">
 									<table id="dataTable" class="display">
@@ -103,18 +105,22 @@
 
 										<tbody>
 
+											<c:forEach items="${unitList}" var="unit"
+												varStatus="theCount">
+												<tr class="gradeA odd" role="row">
+													<td class="sorting_1">${theCount.count}</td>
+													<td>${unit.unitName}</td>
 
-											<tr class="gradeA odd" role="row">
-												<td class="sorting_1"></td>
-												<td></td>
+													<td class="center"><a
+														href="${updateUnitUrl}/${unit.id}/${unit.active}"> <img
+															src="<%=request.getContextPath()%>/resources/images/edit-notes.png">
+															${unit.active==true? 'Inactive' : 'Active'}
+													</a> &nbsp; <a href="${deleteUnitUrl}/${unit.id}"> <img
+															src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Delete
+													</a>&nbsp;</td>
 
-												<td class="center"><a href="#" onclick=""><img
-														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Edit
-												</a>&nbsp; <a href="#" onclick=""><img
-														src="<%=request.getContextPath()%>/resources/images/edit-notes.png">Delete
-												</a>&nbsp;</td>
-
-											</tr>
+												</tr>
+											</c:forEach>
 
 										</tbody>
 									</table>
