@@ -31,25 +31,23 @@ public class Product implements Serializable {
 
 	@Column(name = "PRODUCT_NAME")
 	String productName;
-	
+
 	@Column(name = "PRODUCT_DESCR")
 	String productDescription;
-	
+
 	@Column(name = "QUANTITY")
 	int quantity;
 
-	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="UNIT_ID",nullable=true)
+	@JoinColumn(name = "UNIT_ID", nullable = true)
 	Unit unitModel;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="VAT_ID",nullable=true)
-	Vat VatModel;
+	@JoinColumn(name = "VAT_ID", nullable = true)
+	Vat vat;
 
-	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="SERVICE_TAX_ID",nullable=true)
+	@JoinColumn(name = "SERVICE_TAX_ID", nullable = true)
 	ServiceTax serviceTax;
 
 	@Column(name = "SALE_RATE")
@@ -68,15 +66,15 @@ public class Product implements Serializable {
 	Date lastModifyDate;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="GODWAN_ID",nullable=true)
-	Godown  godownModel;
-	
+	@JoinColumn(name = "GODWAN_ID", nullable = true)
+	Godown godownModel;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="CATEGORY_ID",nullable=true)
+	@JoinColumn(name = "CATEGORY_ID", nullable = true)
 	CategoryModel categoryModel;
-	
+
 	@Column(name = "ACTIVITY_STATUS", nullable = false, columnDefinition = "boolean default true")
-	boolean activityStatus=true;
+	boolean activityStatus = true;
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<Item> listItems;
@@ -119,7 +117,6 @@ public class Product implements Serializable {
 		this.quantity = quantity;
 	}
 
-	
 	public double getSaleRate() {
 		return saleRate;
 	}
@@ -209,12 +206,12 @@ public class Product implements Serializable {
 		this.unitModel = unitModel;
 	}
 
-	public Vat getVatModel() {
-		return VatModel;
+	public Vat getVat() {
+		return vat;
 	}
 
-	public void setVatModel(Vat vatModel) {
-		VatModel = vatModel;
+	public void setVat(Vat vat) {
+		this.vat = vat;
 	}
 
 	public ServiceTax getServiceTax() {
@@ -240,6 +237,5 @@ public class Product implements Serializable {
 	public void setCategoryModel(CategoryModel categoryModel) {
 		this.categoryModel = categoryModel;
 	}
-
 
 }

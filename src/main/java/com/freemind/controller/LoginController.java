@@ -66,7 +66,7 @@ public class LoginController {
 		String content = " <select id='city' name='city' style='height: 30px !important; class='form-control'>";
 
 		content = content
-				+ "<option value='0'>---<spring:message code='label.page.city' />---</option>";
+				+ "<option value='0'>---Select City---</option>";
 
 		List<String> cityNameList = stateService
 				.getCityListByStateName(stateName);

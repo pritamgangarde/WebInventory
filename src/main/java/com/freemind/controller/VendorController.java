@@ -33,8 +33,8 @@ public class VendorController {
 
 	@RequestMapping(value = "/saveVendor", method = RequestMethod.POST)
 	public ModelAndView saveVendor(
-			@ModelAttribute("vendor") @Valid Vendors vendor, Model uiModel,
-			BindingResult bindingResult,
+			@ModelAttribute("vendor") @Valid Vendors vendor,
+			BindingResult bindingResult, Model uiModel,
 			RedirectAttributes redirectedAttribute,
 			HttpServletRequest httpServletRequest, Locale locale) {
 		vendorService.save(vendor);

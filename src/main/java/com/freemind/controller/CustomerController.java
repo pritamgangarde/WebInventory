@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freemind.model.Customer;
-import com.freemind.model.Vendors;
 import com.freemind.services.CustomerService;
 
 @Controller
@@ -35,8 +34,9 @@ public class CustomerController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView addCustomer(
-			@ModelAttribute("Customer") @Valid Customer customer, Model uiModel,
+			@ModelAttribute("Customer") @Valid Customer customer,
 			BindingResult bindingResult,
+			Model uiModel,
 			RedirectAttributes redirectedAttribute,
 			HttpServletRequest httpServletRequest, Locale locale) {
 		customerService.save(customer);
@@ -44,7 +44,7 @@ public class CustomerController {
 		uiModel.addAttribute("msgType1", "1");
 		uiModel.addAttribute("msg", "Customer Added Successfully!!!");
 
-		return new ModelAndView("redirect:/showCustomer");
+		return new ModelAndView("redirect:/addCustomer");
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "updateCustomerDefaulter/{id}/{status}")
