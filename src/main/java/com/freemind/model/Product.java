@@ -50,6 +50,10 @@ public class Product implements Serializable {
 	@JoinColumn(name = "SERVICE_TAX_ID", nullable = true)
 	ServiceTax serviceTax;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "GODWAN_ID", nullable = true)
+	 Godown godowanModel;
+
 	@Column(name = "SALE_RATE")
 	double saleRate;
 
@@ -65,9 +69,6 @@ public class Product implements Serializable {
 	@Column(name = "LAST_MODIFIED_DATE")
 	Date lastModifyDate;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "GODWAN_ID", nullable = true)
-	Godown godownModel;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CATEGORY_ID", nullable = true)
@@ -84,6 +85,14 @@ public class Product implements Serializable {
 
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<PurchaseDetails> purchaseDetailsList;
+
+	public Godown getGodowanModel() {
+		return godowanModel;
+	}
+
+	public void setGodowanModel(Godown godowanModel) {
+		this.godowanModel = godowanModel;
+	}
 
 	public int getId() {
 		return id;
@@ -220,14 +229,6 @@ public class Product implements Serializable {
 
 	public void setServiceTax(ServiceTax serviceTax) {
 		this.serviceTax = serviceTax;
-	}
-
-	public Godown getGodownModel() {
-		return godownModel;
-	}
-
-	public void setGodownModel(Godown godownModel) {
-		this.godownModel = godownModel;
 	}
 
 	public CategoryModel getCategoryModel() {

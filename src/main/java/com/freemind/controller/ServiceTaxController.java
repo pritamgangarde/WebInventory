@@ -26,11 +26,11 @@ import com.freemind.services.ServiceTaxService;
 @RequestMapping("addServiceTax")
 public class ServiceTaxController {
 
-	@RequestMapping(value = "/addServiceTax", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/addServiceTax", method = RequestMethod.GET)
 	public ModelAndView handleRequest(HttpServletRequest request,
 			Model model) throws Exception {
 		return new ModelAndView("Inventory/ServiceTax");
-	}
+	}*/
 	@Autowired
 	ServiceTaxService  serviceTaxservice;
 	

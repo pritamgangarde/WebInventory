@@ -33,7 +33,7 @@
 							  <select name="godowanObj" id=godowanObj class="form-control" style="width:90%;">
 														    <option>---Select Godown---- </option>
 													<c:forEach var="godowan" items="${godownList}">
-													    <option value="${godowan.id}">${godowan.name} </option>
+													      <option value="${godowan.id}">${godowan.name} </option>
 													</c:forEach>
 							 </select>
 						</div>
@@ -150,24 +150,24 @@
 						</tr>
 					</thead>
 					                  <tbody>
-												<%-- <c:forEach var="productObj" items="${productList }"
+												 <c:forEach var="productObj" items="${productList }"
 													varStatus="theCount">
 													<tr class="gradeA odd" role="row">
 														<td class="sorting_1">${theCount.count }</td>
-														<td>${ productObj.godowanModel.addgodowanName}</td>
+														<td>${ productObj.godowanModel.name}</td>
 														<td>${ productObj.productCode}</td>
 														<td>${ productObj.productName}</td>
-														<td>${ productObj.productQuantity}</td>
-														<c:if test="${showEdit}">
-														<td class="center"><a href="#"
-															onclick="fun('${ productObj.productId}','${productObj.productCode }','${productObj.productName }','${productObj.productDisc }','${productObj.godowanModel.addgodowanId }','${ productObj.productQuantity}','${productObj.purchaseRate }','${productObj.vatPercent }','${ productObj.categoryObj.categoryId}','${ productObj.unit}')"><img
+														<td>${ productObj.quantity}</td>
+														    <c:if test="${showEdit}">
+														<td clas="center"><a href="#"
+															onclick="fun('${ productObj.id}','${productObj.productCode }','${productObj.productName }','${productObj.productDescription }','${productObj.godowanModel.godowanId }','${ productObj.quantity}','${productObj.vat.vatPercent }','${ productObj.categoryModel.categoryId}','${ productObj.unitModel.id}')"><img
 																src="resources/images/edit-notes.png"></a></td>
 														</c:if>
 														<c:if test="${showDelete}">
-														<td class="center"> <a href="addproductdelete.html?id=${ productObj.productId}"><img src="resources/images/DeleteRed.png"></a></td>
+														<td class="center"> <a href="addproductdelete.html?id=${ productObj.id}"><img src="resources/images/DeleteRed.png"></a></td>
 														</c:if>
 													</tr>
-												</c:forEach> --%>
+												</c:forEach>
 											</tbody>
 				</table>
 					</div>
@@ -208,14 +208,13 @@
 </script>
 <script>
 	function fun(id, productCode, productName, productDisc, addgodowanName,
-			productQuantity, purchaseRate, vatPer, category,unit) {
+			productQuantity, vatPer, category,unit) {
 		$("#productId").val(id);
 		$("#productCode").val(productCode);
 		$("#productName").val(productName);
 		$("#productDis").val(productDisc);
 		$("#godowanModel").val(addgodowanName);
 		$("#productQuantity").val(productQuantity);
-		$("#purchaseRate").val(purchaseRate);
 		$("#vatPercent").val(vatPer);
 		$("#categoryId").val(category);
 

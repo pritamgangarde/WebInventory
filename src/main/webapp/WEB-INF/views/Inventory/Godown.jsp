@@ -54,68 +54,6 @@
 									placeholder="<spring:message code="label.page.description" />">
 							</div>
 
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.address" /></label><input
-									type="text" id="location" name="location" class="form-control"
-									placeholder="<spring:message code="label.page.address" />">
-
-							</div>
-
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.state" /></label> <select
-									id="state" name="state" class="form-control"
-									style="height: 28px !important;"
-									onchange="getCityNameByState(this.value);">
-									<option value="0">---
-										<spring:message code="label.page.selectState" />---
-									</option>
-									<c:forEach items="${sessionScope.stateList}" var="state"
-										varStatus="theCount">
-										<option value="${state}">${state}</option>
-									</c:forEach>
-
-								</select>
-
-							</div>
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.city" /></label> <select
-									id="city" name="city" style="height: 30px !important;"
-									class="form-control">
-									<option value="0">---
-										<spring:message code="label.page.selectCity" />---
-									</option>
-
-								</select>
-							</div>
-
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.pincode" /></label><input
-									type="text" id="pincode" name="pincode" class="form-control"
-									placeholder="<spring:message code="label.page.pincode" />">
-							</div>
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.landlineNo" /></label><input
-									type="text" id="landLineNo" name="landLineNo"
-									class="form-control"
-									placeholder="<spring:message code="label.page.landlineNo" />">
-							</div>
-
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.mobileNo" /></label><input
-									type="text" id="mobileNo" name="mobileNo" class="form-control"
-									placeholder="<spring:message code="label.page.mobileNo" />">
-							</div>
-
-							<div class="col-xs-3">
-								<label><spring:message code="label.page.incharge" /></label><input
-									type="text" id="inchargeName" name="inchargeName"
-									class="form-control"
-									placeholder="<spring:message code="label.page.incharge" />">
-								<input type="hidden" name="incharge" id="incharge">
-							</div>
-
-						</div>
-
 						<br>
 						<br>
 
@@ -175,7 +113,7 @@
 													<td>${godown.name}</td>
 													<td>${godown.description}</td>
 													<td class="center">
-														<a	href="#" onclick="getGodownDetails('${godown.id}','${godown.description}','${godown.name}','${godown.location}','${godown.state}', '${godown.city}' ,'${godown.pincode}', '${godown.landLineNo}', '${godown.mobileNo}','${godown.incharge}')">
+														<a	href="#" onclick="getGodownDetails('${godown.id}','${godown.description}','${godown.name}')">
 															<img src="<%=request.getContextPath()%>/resources/images/edit-notes.png"></img>
 														</a>
 														<a href="${deleteGodownUrl}/${godown.id}?DeleteGodown">
@@ -215,19 +153,11 @@
 </script>
 <script>
 	$("#update12").prop('disabled', false);
-	function getGodownDetails(godownId,description, godownname, address1, sate, city,
-			pinno, landlineNo,phoneno, incharge) {
+	function getGodownDetails(godownId,description, godownname) {
 
 		$("#id").val(godownId);
 		$("#description").val(description);
 		$("#name").val(godownname);
-		$("#location").val(address1);
-		$("#state").val(sate);
-		$("#city").val(city);
-		$("#pincode").val(pinno);
-		$("#landLineNo").val(landlineNo);
-		$("#mobileNo").val(phoneno);
-		$("#inchargeName").val(incharge);
 		$("#save").prop('disabled', true);
 		$("#update12").prop('disabled', false);
 	}

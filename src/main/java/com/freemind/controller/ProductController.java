@@ -55,19 +55,19 @@ public class ProductController {
 
 		binder.setRequiredFields(new String[] { "categoryObj" });
       
-		binder.registerCustomEditor(CategoryModel.class,
+		binder.registerCustomEditor(CategoryModel.class,"id",
 				new CategoryPropertyEditors(categoryService));
 		
 		binder.setRequiredFields(new String[] { "godowanObj" });
 		
-		binder.registerCustomEditor(Godown.class,
+		binder.registerCustomEditor(String.class,"godowanModel",
 				new GodownPropertyEditor(godownService));
 		
 		binder.setRequiredFields(new String[] { "unitObj" });
-		binder.registerCustomEditor(Unit.class,
+		binder.registerCustomEditor(Unit.class,"id",
 				new UnitPropertyEditor(unitService));
 		binder.setRequiredFields(new String[] { "vatObj" });
-		binder.registerCustomEditor(Vat.class,
+		binder.registerCustomEditor(Vat.class,"id",
 				new VatPropertyEditor(vatService));
 	}
 	private Model setModel(Model model){

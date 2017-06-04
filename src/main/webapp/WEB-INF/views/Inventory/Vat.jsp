@@ -9,7 +9,7 @@
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 
-<spring:url value="/saveVat" var="addVatUrl" />
+<spring:url value="/addVat" var="addVatUrl" />
 <spring:url value="/addvat" var="vatDeleteurl" />
 </head>
 
@@ -91,7 +91,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${listVat}" varStatus="theCount" var="vat">
+										<c:forEach items="${vatlist}" varStatus="theCount" var="vat">
 											<tr class="gradeA odd" role="row">
 												<td class="sorting_1">${theCount.count}</td>
 												<td>${vat.vatPercent}</td>

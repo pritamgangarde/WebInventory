@@ -24,8 +24,16 @@ public class Manufactured implements Serializable {
 	int id;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "ITEM_ID")
-	Item item;
+	@JoinColumn(name = "PRODUCT_ID")
+	Product product;
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "GODOWN_ID")
@@ -61,14 +69,6 @@ public class Manufactured implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
 	}
 
 	public Godown getGodown() {

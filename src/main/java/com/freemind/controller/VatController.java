@@ -43,8 +43,8 @@ public class VatController {
 			RedirectAttributes redirectAttributes, Locale locale) {
 
 		vatService.save(vatModel);
-		List<Vat> addCategorylist = vatService.getAllVatList();
-		uiModel.addAttribute("vatlist", addCategorylist);
+		List<Vat> vatlist = vatService.getAllVatList();
+		uiModel.addAttribute("vatlist", vatlist);
 		uiModel.addAttribute("msgType", "1");
 		uiModel.addAttribute("msg", "Vat Added Successfully....!!!!");
 		return new ModelAndView("Inventory/Vat");

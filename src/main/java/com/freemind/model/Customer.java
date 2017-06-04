@@ -27,17 +27,8 @@ public class Customer {
 	@Column(name = "CITY")
 	String city;
 
-	@Column(name = "STATE")
-	String state;
-
-	@Column(name = "PINCODE")
-	String pincode;
-
 	@Column(name = "MOBILE_NO")
 	String mobileNo;
-
-	@Column(name = "LANDLINE_NO")
-	String landlineNo;
 
 	@Column(name = "EMAIL_ID")
 	String emailId;
@@ -92,14 +83,6 @@ public class Customer {
 		this.mobileNo = mobileNo;
 	}
 
-	public String getLandlineNo() {
-		return landlineNo;
-	}
-
-	public void setLandlineNo(String landlineNo) {
-		this.landlineNo = landlineNo;
-	}
-
 	public String getEmailId() {
 		return emailId;
 	}
@@ -114,22 +97,6 @@ public class Customer {
 
 	public void setCity(String city) {
 		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getPincode() {
-		return pincode;
-	}
-
-	public void setPincode(String pincode) {
-		this.pincode = pincode;
 	}
 
 	public boolean isDefaulter() {
