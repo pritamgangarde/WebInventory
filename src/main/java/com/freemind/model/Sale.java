@@ -3,15 +3,7 @@ package com.freemind.model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @SuppressWarnings("serial")
 @Entity
@@ -31,11 +23,53 @@ public class Sale implements Serializable {
 	@Column(name = "TOTAL_AMOUNT")
 	double totalAmount;
 
+	@Column(name = "PAID_AMOUNT")
+	double paidAmount;
+
+	public double getPaidAmount() {
+		return paidAmount;
+	}
+
+	public void setPaidAmount(double paidAmount) {
+		this.paidAmount = paidAmount;
+	}
+
+	public void setNetAmount(double netAmount) {
+		this.netAmount = netAmount;
+	}
+
+	@Column(name = "NET_AMOUNT")
+
+	double netAmount;
+
+	@Column(name = "BALANCE_AMOUNT")
+	double balanceAmount;
+
+	public double getBalanceAmount() {
+		return balanceAmount;
+	}
+
+	public void setBalanceAmount(double balanceAmount) {
+		this.balanceAmount = balanceAmount;
+	}
+
+	public double getNetAmount() {
+		return netAmount;
+	}
+
 	@Column(name = "DISCOUNT_PERC")
 	double discountPerc;
 
 	@Column(name = "DISCOUNT_RS")
 	double discountRs;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CUSTOMER_ID", nullable = true)
+	Customer customer;
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 
 	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<SaleDetails> listSaleDetails;

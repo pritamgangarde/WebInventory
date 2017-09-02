@@ -49,7 +49,7 @@
 			<span class="icon-bar"></span> <span class="icon-bar"></span>
 		</button>
 		<a class="navbar-brand" href="/home"> <strong><spring:message
-								code="label.applicationName" /></strong>
+								code="label.page.ShopName" /></strong>
 				
 	</div>
 	<!-- /.navbar-header -->
@@ -238,11 +238,11 @@
 						class="fa fa-bar-chart-o fa-fw"></i> <spring:message code="label.menu.inventory" /><span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<c:if test="${fn:contains(permissionList, 'Add Godown' ) || sessionScope.userName=='admin'}">
+					<!--	<c:if test="${fn:contains(permissionList, 'Add Godown' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addGodownUrl}"><spring:message code="label.menu.addGodown" /></a></li>
 						</c:if>
-
+-->
 						<c:if test="${fn:contains(permissionList, 'Add Category' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addcategoryUrl}"><spring:message code="label.menu.addCategory" /> </a></li>
@@ -258,24 +258,26 @@
 							<li><a href="${addvatUrl}"><spring:message code="label.menu.addVat" /></a></li>
 						</c:if>
 						
-						<c:if test="${fn:contains(permissionList, 'Add Vat' ) || sessionScope.userName=='admin'}">
+					<!--	<c:if test="${fn:contains(permissionList, 'Add Vat' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addServiceTax}"><spring:message code="label.page.serviceTax" /></a></li>
 						</c:if>
 						
+						-->
 						<c:if test="${fn:contains(permissionList, 'Add Product' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addProductUrl}"><spring:message code="label.menu.addProduct"/></a></li>
 						</c:if>
 
-						<c:if test="${fn:contains(permissionList, 'Add Vendor' ) || sessionScope.userName=='admin'}">
+					<!--	<c:if test="${fn:contains(permissionList, 'Add Vendor' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${showVendorUrl}"><spring:message code="label.menu.addVendor"/></a></li>
 						</c:if>
 						<c:if test="${fn:contains(permissionList, 'Import Product' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${importProduct}"><spring:message code="label.menu.importProduct"/> </a></li>
-						</c:if>
+						</c:if>-->
+						
 						<c:if test="${fn:contains(permissionList, 'Add Vendor' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${showCustomerUrl}"><spring:message code="label.menu.customer"/></a></li>
@@ -291,7 +293,7 @@
 
 				<!-- Tax Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="tax"><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
+	<!--			<li id="tax"><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>
 						Tax<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<c:if test="${fn:contains(permissionList, 'Add Service Tax' ) || sessionScope.userName=='admin'}">
@@ -307,17 +309,17 @@
 							<c:set var="showMenu" value="true" />
 							<li><a href="import_export.php"><spring:message code="label.menu.addIEDuty"/></a></li>
 						</c:if>
-					</ul> <!-- /.nav-second-level --></li>
+					</ul> </li>
 
 				<c:if test="${not showMenu}">
 					<script>
 						$("#tax").addClass("hide");
 					</script>
-				</c:if>
+				</c:if> -->
 
 				<!-- Purchase Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="purchase"><a href="#"><i
+			<!--	<li id="purchase"><a href="#"><i
 						class="fa fa-bar-chart-o fa-fw"></i> Purchase<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -356,7 +358,7 @@
 							<c:set var="showMenu" value="true" />
 							<li><a href="delivery_challan.jsp">Delivery Challan</a></li>
 						</c:if>
-					</ul> <!-- /.nav-second-level --></li>
+					</ul> </li>-->
 
 				<c:if test="${not showMenu}">
 					<script>
@@ -366,15 +368,7 @@
 				
 					<!-- Project Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="project"><a href="#"><i
-						class="fa fa-bar-chart-o fa-fw"></i> Project<span class="fa arrow"></span></a>
-					<ul class="nav nav-second-level">
-						<c:if test="${fn:contains(permissionList, 'Add Project' ) || sessionScope.userName=='admin'}">
-							<c:set var="showMenu" value="true" />
-							<li><a href="${addprojectUrl}">Add Project</a></li>
-
-						</c:if>
-					</ul> <!-- /.nav-second-level --></li>
+				
 				<c:if test="${not showMenu}">
 					<script>
 						$("#project").addClass("hide");
@@ -383,7 +377,7 @@
 
 					<!-- Expenses Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="expenses"><a href="#"><i
+			<!-- 	<li id="expenses"><a href="#"><i
 						class="fa fa-bar-chart-o fa-fw"></i> Expenses<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -404,7 +398,7 @@
 							<li><a href="${viewExpensesUrl}">View Expenses</a></li>
 						</c:if>
 
-					</ul> <!-- /.nav-second-level --></li>
+					</ul> </li><!-- /.nav-second-level -->
 				<c:if test="${not showMenu}">
 					<script>
 						$("#expenses").addClass("hide");
@@ -413,7 +407,7 @@
 				
 					<!-- Manufacturing Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="manufacturing"><a href="#"><i
+			<!--	<li id="manufacturing"><a href="#"><i
 						class="fa fa-bar-chart-o fa-fw"></i> Manufacturing<span
 						class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
@@ -435,7 +429,7 @@
 							<li><a href="${addMuOutUrl}">Manufacturing Out</a></li>
 						</c:if>
 
-					</ul> <!-- /.nav-second-level --></li>
+					</ul> </li><!-- /.nav-second-level -->
 				<c:if test="${not showMenu}">
 					<script>
 						$("#manufacturing").addClass("hide");
@@ -444,15 +438,15 @@
 						<!-- Sale Menu -->
 				<c:set var="showMenu" value="false" />
 				<li id="sale"><a href="#"><i
-						class="fa fa-bar-chart-o fa-fw"></i> Sale<span class="fa arrow"></span></a>
+						class="fa fa-bar-chart-o fa-fw"></i> <spring:message code="label.page.bill"/><span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
-						<c:if test="${fn:contains(permissionList, 'Add Client/Customer' ) || sessionScope.userName=='admin'}">
+						<!--<c:if test="${fn:contains(permissionList, 'Add Client/Customer' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
 							<li><a href="${addClientUrl}">Client/Customer</a></li>
-						</c:if>
+						</c:if>-->
 						<c:if test="${fn:contains(permissionList, 'Add Sale Bill' ) || sessionScope.userName=='admin'}">
 							<c:set var="showMenu" value="true" />
-							<li><a href="${addSaleBillUrl}">Sale Bill</a></li>
+							<li><a href="${addSaleBillUrl}"><spring:message code="label.page.SaleBill"/></a></li>
 						</c:if>
 					</ul> <!-- /.nav-second-level --></li>
 				<c:if test="${not showMenu}">
@@ -463,7 +457,7 @@
 				
 						<!-- Setting Menu -->
 				<c:set var="showMenu" value="false" />
-				<li id="setting"><a href="#"><i
+		<!--		<li id="setting"><a href="#"><i
 						class="fa fa-bar-chart-o fa-fw"></i> Setting<span class="fa arrow"></span></a>
 					<ul class="nav nav-second-level">
 						<c:if test="${fn:contains(permissionList, 'Create Department' ) || sessionScope.userName=='admin'}">
@@ -484,7 +478,7 @@
 							<li><a href="${userPermission}">Assign Permission to
 									user</a></li>
 						</c:if>
-					</ul> <!-- /.nav-second-level --></li>
+					</ul> </li><!-- /.nav-second-level -->
 				<c:if test="${not showMenu}">
 					<script>
 						$("#setting").addClass("hide");

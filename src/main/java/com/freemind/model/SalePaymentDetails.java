@@ -24,8 +24,8 @@ public class SalePaymentDetails implements Serializable {
 	@Column(name = "ID")
 	int id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "SALE_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SALE_ID", nullable = true)
 	Sale sale;
 
 	@OneToOne(mappedBy = "salePaymentDetails", cascade = CascadeType.ALL)

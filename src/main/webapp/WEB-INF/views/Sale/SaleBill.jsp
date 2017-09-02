@@ -182,6 +182,35 @@
 </script>
 
 <script type="text/javascript">
+	function addSaleDetailsByID(productId,customerId,quantity,salePrice,saleOrderId) {
+
+    		$.getJSON('AddBillItem', {
+    			productId : productId,
+    			customerId:customerId,
+                quantity : quantity,
+                salePrice : salePrice,
+                saleOrderId :saleOrderId
+    		}, function(data) {
+    			//alert(data);
+    		});
+
+    		$.ajax({
+    			method : 'GET',
+    			url : 'AddBillItem',
+    			dataType : 'json',
+    			data : {
+    				productId : productId,
+    				customerId:customerId,
+    				quantity : quantity,
+    				salePrice : salePrice,
+    				saleOrderId :saleOrderId
+    			},
+    			success : function(data) {
+    				return data;
+    			}
+    		});
+}
+
 	function getCustomerDetailsById(id) {
 
 	  var filter = /^[0-9-+]+$/;
@@ -364,9 +393,9 @@ function getProductDetailsByCatId(id) {
 				<h1 class="page-header">Sale Bill</h1>
 			</div>
 		</div>
-		<form:form class="mws-form" Commandname="addProduct"
+		<form:form class="mws-form" Commandname="addBillAndPrint"
         						name="addProductForm" id="myForm" modelAttribute="addProduct"
-        						action="${addProductUrl}" method="post">
+        						action="addBillAndPrint" method="post">
 		<!-- Accordian Start -->
 		<div class="bs-example">
 			<div class="panel-group" id="accordion">
@@ -455,6 +484,7 @@ function getProductDetailsByCatId(id) {
 								<input type="hidden" name="vat" id="vat">
 								<input type="hidden" name="unit" id="unit">
 								<input type="hidden" name="allRow" id="allRow">
+								<input type="hidden" name="saleOrderId" id="saleOrderId">
 							</div>
 
 							<div class="col-xs-3">
@@ -564,6 +594,7 @@ function getProductDetailsByCatId(id) {
 							</c:forEach>
 						</select> <label for="serviceTaxAmount" id="serviceTaxAmount">0</label>
 					</div>
+
 					<div class="col-xs-9 PO">
 
 
@@ -610,6 +641,8 @@ function getProductDetailsByCatId(id) {
 			var vatText = $("#vat").val();
 			var quantityText = $("#quantity").val();
 			var salePriceText = $("#salePrice").val();
+			var saleOrderIdText=$("saleOrderId").val();
+			var customerIdText=$("#customerId").val()
 			total = Math.round((quantityText * salePriceText) * 100) / 100;
 
 			var totalAmountDeductedVatAmount = Math
@@ -617,17 +650,7 @@ function getProductDetailsByCatId(id) {
 
 			var vatAmountRs = Math
 					.round((total - totalAmountDeductedVatAmount) * 100) / 100;
-
-            saleData.push({
-                         "productId": productIdText,
-                         "quantity": productCodeText,
-                         "salePrice":salePriceText,
-                         "totalAmount":totalAmountDeductedVatAmount,
-                         "saleOrderID":""
-                     });
-            $("#allRow").val(saleData);
-            console.log(saleData)
-            console.log($("#allRow").val())
+            var data=addSaleDetailsByID(productIdText,customerIdText,quantityText,salePriceText,saleOrderIdText)
 			var table = document.getElementById("table2");
 			var rowCount = table.rows.length;
 			var row1 = rowCount;
@@ -719,20 +742,14 @@ function getProductDetailsByCatId(id) {
 				}
 			}
 
-			var serviceTaxPerc = $("#serviceTax").val();
-
-			
 			
 			var vatTaxPerc = $("#vatTax").val();
-			
 
-			var serviceTaxAmount = Math
-					.round((total * (serviceTaxPerc / 100)) * 100) / 100;
 			
 			var vatTaxAmount = Math.round((total * (vatTaxPerc / 100)) * 100) / 100;
 			
 			var netAmount = Math
-					.round((total + serviceTaxAmount + vatTaxAmount) * 100) / 100;
+					.round((total + vatTaxAmount) * 100) / 100;
 
 			
 			$("label[for='vatTaxAmount']").html(vatTaxAmount);

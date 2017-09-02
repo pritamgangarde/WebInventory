@@ -1,13 +1,9 @@
 package com.freemind.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMER")
@@ -39,6 +35,9 @@ public class Customer {
 
 	@Column(name = "MODIFIED_BY")
 	int modifyBy;
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	List<Sale> listSaleDetails;
 
 	@Column(name = "INSERTION_DATE")
 	Timestamp insertionDate = new Timestamp(new java.util.Date().getTime());

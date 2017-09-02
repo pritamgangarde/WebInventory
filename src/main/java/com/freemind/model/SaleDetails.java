@@ -22,12 +22,12 @@ public class SaleDetails implements Serializable {
 	@Column(name = "ID")
 	int id;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "SALE_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "SALE_ID", nullable = true)
 	Sale sale;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PRODUCT_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "PRODUCT_ID", nullable = true)
 	Product product;
 
 	@Column(name = "QUANTITY")

@@ -37,7 +37,8 @@ public class SaleBillController {
 	CategoryService categoryService;
 	@Autowired
 	SaleService saleService;
-
+	@Autowired
+	SaleDetailsService saleDetailsService;
 	@RequestMapping(value = "/addSaleBill", method = RequestMethod.GET)
 	public ModelAndView showSaleBill(Model uiModel, ModelMap model,
 									 HttpServletRequest httpServletRequest) {
@@ -78,12 +79,14 @@ public class SaleBillController {
 	@RequestMapping(value = "/AddBillItem", method = RequestMethod.GET, produces = "application/json")
 	public
 	@ResponseBody
-	int addBillItem(@RequestParam("productId") int id, @RequestParam("quantity") int quantity, @RequestParam("salePrice") double salePrice, @RequestParam("saleOrderId") int saleOrderId) {
+	SaleDetails addBillItem(@RequestParam("productId") int id, @RequestParam("customerId") int customerId , @RequestParam("quantity") int quantity, @RequestParam("salePrice") double salePrice, @RequestParam("saleOrderId") int saleOrderId) {
 		Sale sale = null;
+		Customer customer=customerService.getCustomerById(customerId);
 		if (saleOrderId != 0) {
 			sale = saleService.getSaleById(saleOrderId);
 		} else {
 			sale = new Sale();
+			sale.setCustomer(customer);
 			saleService.save(sale);
 		}
 		Product product = productService.getProductById(id);
@@ -92,26 +95,28 @@ public class SaleBillController {
 		saleDetails.setQuantity(quantity);
 		saleDetails.setSaleRate(salePrice);
 		saleDetails.setSale(sale);
-		return sale.getId();
+		saleDetailsService.save(saleDetails);
+		return saleDetails;
+	}
+
+	@RequestMapping(value = "/saveBill", method = RequestMethod.GET, produces = "application/json")
+	public
+	@ResponseBody
+	Sale saveBill(@RequestParam("saleOrderId") int saleOrderId,@RequestParam("totalAmount") double totalAmount,@RequestParam("netAmount") double netAmount,@RequestParam("paidAmount") double paidAmount) {
+			Sale sale = saleService.getSaleById(saleOrderId);
+			sale.setTotalAmount(paidAmount);
+			sale.setNetAmount(netAmount);
+			sale.setPaidAmount(paidAmount);
+			sale.setBalanceAmount(netAmount-paidAmount);
+			saleService.save(sale);
+			return sale;
 	}
 
 	@RequestMapping(value = "/deleteBillItem", method = RequestMethod.GET, produces = "application/json")
 	public
 	@ResponseBody
-	int deleteBillItem(@RequestParam("productId") int id, @RequestParam("quantity") int quantity, @RequestParam("salePrice") double salePrice, @RequestParam("saleOrderId") int saleOrderId) {
-		Sale sale = null;
-		if (saleOrderId != 0) {
-			sale = saleService.getSaleById(saleOrderId);
-		} else {
-			sale = new Sale();
-			saleService.save(sale);
-		}
-		Product product = productService.getProductById(id);
-		SaleDetails saleDetails = new SaleDetails();
-		saleDetails.setProduct(product);
-		saleDetails.setQuantity(quantity);
-		saleDetails.setSaleRate(salePrice);
-		saleDetails.setSale(sale);
-		return sale.getId();
+	void deleteBillItem(@RequestParam("saleDetailId") int id) {
+		saleDetailsService.deleteSaleDetailsById(id);
 	}
+
 }

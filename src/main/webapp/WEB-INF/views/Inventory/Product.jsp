@@ -17,7 +17,7 @@ https://github.com/lightswitch05/table-to-json
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1 class="page-header">Add Product</h1>
+					<h1 class="page-header"><spring:message code="label.menu.addProduct" /></h1>
 				</div>
 				<!-- /.col-lg-12 -->
 				<form:form class="mws-form" Commandname="addProduct"
@@ -93,12 +93,12 @@ https://github.com/lightswitch05/table-to-json
 					<br>
 					<br>
 					<div class="container">
-						<button type="submit" class="btn btn-primary">Save</button>
+						<button type="submit" class="btn btn-primary"><spring:message code="label.page.saveButton" /></button>
 							<c:set var="showEdit" value="false" />
 							<c:if
 									test="${fn:contains(sessionScope.permissionList, 'Update Product' ) || sessionScope.userName=='admin'}">
 									<c:set var="showEdit" value="true" />
-						<button type="submit" class="btn btn-info">Update</button>
+						<button type="submit" class="btn btn-info"><spring:message code="label.page.updateButton" /></button>
 						</c:if>
 					</div>
             <input type="text" id="id" name ="id" class="form-control" value="0" style="visibility: hidden"  > 
