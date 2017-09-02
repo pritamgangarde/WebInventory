@@ -9,6 +9,8 @@ public interface CustomerService {
 
 	public Customer getCustomerById(int id);
 
+	public Customer getCustomerByMobileNo(String id);
+
 	public void save(Customer customer);
 
 	public void update(Customer customer);

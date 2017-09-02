@@ -30,12 +30,6 @@ public class SaleDetails implements Serializable {
 	@JoinColumn(name = "PRODUCT_ID")
 	Product product;
 
-	@Column(name = "PRODUCT_CODE")
-	String productCode;
-
-	@Column(name = "PRODUCT_NAME")
-	String productName;
-
 	@Column(name = "QUANTITY")
 	int quantity;
 
@@ -73,22 +67,6 @@ public class SaleDetails implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public String getProductCode() {
-		return productCode;
-	}
-
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	public int getQuantity() {

@@ -42,7 +42,14 @@ public class ProductDaoImpl implements ProductDao {
 
 		return product;
 	}
-
+	@Override
+	public List<Product> getProductListByCatId(int id) {
+		Session session;
+		session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Product.class);
+		criteria.add(Restrictions.eq("categoryModel.id",new Integer(id)));
+		return criteria.list();
+	}
 	@Override
 	public void save(Product product) {
 		Session session;

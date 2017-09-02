@@ -53,21 +53,16 @@ public class ProductController {
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 
-		binder.setRequiredFields(new String[] { "categoryObj" });
+		binder.setRequiredFields(new String[] { "categoryModel" });
       
-		binder.registerCustomEditor(CategoryModel.class,"id",
+		binder.registerCustomEditor(CategoryModel.class,
 				new CategoryPropertyEditors(categoryService));
-		
-		binder.setRequiredFields(new String[] { "godowanObj" });
-		
-		binder.registerCustomEditor(String.class,"godowanModel",
-				new GodownPropertyEditor(godownService));
-		
-		binder.setRequiredFields(new String[] { "unitObj" });
-		binder.registerCustomEditor(Unit.class,"id",
+
+		binder.setRequiredFields(new String[] { "unitModel" });
+		binder.registerCustomEditor(Unit.class,
 				new UnitPropertyEditor(unitService));
-		binder.setRequiredFields(new String[] { "vatObj" });
-		binder.registerCustomEditor(Vat.class,"id",
+		binder.setRequiredFields(new String[] { "vat" });
+		binder.registerCustomEditor(Vat.class,
 				new VatPropertyEditor(vatService));
 	}
 	private Model setModel(Model model){
@@ -106,7 +101,6 @@ public class ProductController {
 
 
 	@RequestMapping(value = "{id}", params = "DeleteProduct", method = RequestMethod.GET)
-
 	public ModelAndView deleteProduct(@PathVariable("id") Integer id,
 			Model uiModel, HttpServletRequest httpServletRequest) {
 		Product productModel = productService.getProductById(id);

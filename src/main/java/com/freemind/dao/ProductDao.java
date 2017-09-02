@@ -9,6 +9,8 @@ public interface ProductDao {
 
 	public Product getProductById(int id);
 
+	public List<Product> getProductListByCatId(int id);
+
 	public void save(Product product);
 
 	public void update(Product product);

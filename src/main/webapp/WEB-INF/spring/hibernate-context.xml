@@ -33,7 +33,9 @@
         		<prop key="hibernate.jdbc.batch_size">20</prop>
         		<prop key="hibernate.connection.release_mode">AFTER_TRANSACTION</prop>
         		<prop key="hibernate.connection.release_mode">ON_CLOSE</prop>
-    
+                <prop key="hibernate.connection.characterEncoding">utf8</prop>
+                <prop key="hibernate.connection.CharSet">utf8</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
             </props>
         </property>
     </bean>

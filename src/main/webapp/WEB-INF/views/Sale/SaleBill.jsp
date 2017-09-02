@@ -2,6 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+ <script src="https://github.com/lightswitch05/table-to-json"></script>
 
 <head>
 
@@ -182,11 +183,21 @@
 
 <script type="text/javascript">
 	function getCustomerDetailsById(id) {
-		/*$.getJSON('/addSaleBill/getCustomerDetails', {
+
+	  var filter = /^[0-9-+]+$/;
+         if (id.match('[0-9]{10}')) {
+
+         }
+         else {
+            alert("कृपया वैध मोबाईल क्रमांक प्रविष्ट करा")
+             return false;
+         }
+
+		$.getJSON('getCustomerDetails', {
 			id : id
 		}, function(data) {
-			alert(data);
-		});*/
+			//alert(data);
+		});
 
 		$.ajax({
 			method : 'GET',
@@ -200,36 +211,66 @@
 				$("#customerId").val(data.id);
 				$("#customerName").val(data.customerName);
 				$("#mobileNo").val(data.mobileNo);
-				$("#landlineNo").val(data.landlineNo);
 				$("#address").val(data.address);
-				$("#state").val(data.state);
-				getCityNameByState(data.state);
-				$("#city").val(data.city);
-				$("#pincode").val(data.pincode);
-				$("#emailId").val(data.emailId);
-				document.getElementById("productCode").focus();
+				document.getElementById("customerName").focus();
 			}
 		});
 	}
 
 	function clearCustomerDetails() {
-		$("#customerId").val('');
 		$("#customerName").val('');
 		$("#mobileNo").val('');
-		$("#landlineNo").val('');
 		$("#address").val('');
-		$('#state').val("0");
-		$('#city').val("0");
-		$("#pincode").val('');
-		$("#emailId").val('');
+	}
+
+function getProductDetailsByCatId(id) {
+		$('#productNames').find("option").remove();
+		$.getJSON('getProductList', {
+			id : id
+		}, function(data) {
+
+		});
+
+		$.ajax({
+			method : 'GET',
+			url : 'getProductList',
+			dataType : 'json',
+			data : {
+				id : id
+			},
+			success : function(data) {
+                 $(data).each(function()
+                  {
+                      //this refers to the current item being iterated over
+
+                      var option = $('<option />');
+                      option.attr('value', this.id).text(this.productName);
+
+                      $('#productNames').append(option);
+                  });
+
+				/* $("#productId").val(data.id);
+				$("#productCode").val(data.productCode);
+				$("#productName").val(data.productName);
+				$("#unit").val(data.unitModel.unitName);
+				if (isInt(data.vat.vatPercent))
+					$("#vat").val(data.vat.vatPercent.toFixed(1));
+				else
+					$("#vat").val(data.vat.vatPercent);
+				$("#salePrice").val(data.saleRate);
+
+				document.getElementById("salePrice").focus();*/
+
+			}
+		});
 	}
 
 	function getProductDetailsById(id) {
-		/*$.getJSON('/addSaleBill/getCustomerDetails', {
+		$.getJSON('getProductDetails', {
 			id : id
 		}, function(data) {
 			alert(data);
-		});*/
+		});
 
 		$.ajax({
 			method : 'GET',
@@ -248,6 +289,7 @@
 				else
 					$("#vat").val(data.vat.vatPercent);
 				$("#salePrice").val(data.saleRate);
+				$("#availableQuantity").val(data.quantity);
 
 				document.getElementById("salePrice").focus();
 
@@ -322,6 +364,9 @@
 				<h1 class="page-header">Sale Bill</h1>
 			</div>
 		</div>
+		<form:form class="mws-form" Commandname="addProduct"
+        						name="addProductForm" id="myForm" modelAttribute="addProduct"
+        						action="${addProductUrl}" method="post">
 		<!-- Accordian Start -->
 		<div class="bs-example">
 			<div class="panel-group" id="accordion">
@@ -353,13 +398,8 @@
 										var="customer">
 										<option value="${customer.id}">${customer.customerName}&nbsp;&nbsp;&nbsp;${customer.mobileNo}</option>
 									</c:forEach>
-								</select> <input type="text" id="mobileNo" name="mobileNo"
-									class="form-control" placeholder="Mobile No.">
-							</div>
-							<div class="col-xs-3">
-								<label>Landline No.</label><input type="text" id="landlineNo"
-									name="landlineNo" class="form-control"
-									placeholder="Landline No.">
+								</select> <input type="number" id="mobileNo" name="mobileNo"
+									class="form-control" placeholder="Mobile No."  pattern="\d{3}[\-]\d{3}[\-]\d{4}" required>
 							</div>
 
 							<div class="col-xs-3">
@@ -367,34 +407,6 @@
 									name="address" class="form-control" placeholder="Address ">
 							</div>
 
-							<div class="col-xs-3">
-								<label>State</label> <select id="state" name="state"
-									class="form-control" onchange="getCityNameByState(this.value);">
-									<option value="0">---Select State---</option>
-									<c:forEach items="${sessionScope.stateList}" var="state"
-										varStatus="theCount">
-										<option value="${state}">${state}</option>
-									</c:forEach>
-								</select>
-
-							</div>
-							<div class="col-xs-3">
-								<label>City</label> <select id="city" name="city"
-									class="form-control">
-									<option value="0">---Select City---</option>
-
-								</select>
-							</div>
-							<div class="col-xs-3">
-								<label>Pincode No.</label><input type="text" id="pincode"
-									name="pincode" class="form-control" placeholder="Pincode No.">
-							</div>
-
-
-							<div class="col-xs-3">
-								<label>Email .</label><input type="text" id="emailId"
-									name="emailId" class="form-control" placeholder="Email Id ">
-							</div>
 
 						</div>
 						<div class="container"
@@ -404,9 +416,11 @@
 								class="btn btn-info">
 								<spring:message code="label.page.clear" />
 							</button>
-
-
-						</div>
+                            <button type="button" onclick="javascript:getCustomerDetailsById($('#mobileNo').val());"
+                                class="btn btn-info">
+                                <spring:message code="label.page.search" />
+                            </button>
+                        </div>
 					</div>
 
 				</div>
@@ -423,49 +437,24 @@
 					<div id="collapseOne1" class="panel-collapse collapse ">
 						<div class="panel-body">
 							<div class="col-xs-3">
-								<label>Product Code</label> <select id="productCodes"
-									style="display: none;">
-									<c:forEach varStatus="theCount" items="${productList}"
-										var="product">
-										<option value="${product.id}">${product.productCode}&nbsp;&nbsp;&nbsp;${product.productName}</option>
+								<label>Product Category</label> <select id="productCategory" onchange="getProductDetailsByCatId(this.value)">
+									<c:forEach varStatus="theCount" items="${categoryList}"
+										var="category">
+										<option value="${category.categoryId}">${category.categoryName}</option>
 									</c:forEach>
-								</select> <input type="text" id="productCode" name="productCode"
-									class="form-control" placeholder="Product Code"> <input
+								</select>  <input
 									type="hidden" name="productId" id="productId">
 
 							</div>
 							<div class="col-xs-3">
-								<label>Product Name</label> <select id="productNames"
-									style="display: none;">
-									<c:forEach varStatus="theCount" items="${productList}"
-										var="product">
-										<option value="${product.id}">${product.productName}</option>
-									</c:forEach>
-								</select> <input type="text" id="productName" name="productName"
-									class="form-control" placeholder="productName">
-							</div>
-
-							<div class="col-xs-3">
-								<label>Unit</label> <select id="unit" name="unit"
-									class="form-control">
-									<option value="0">---Select Unit---</option>
-									<c:forEach items="${unitList}" var="unit" varStatus="theCount">
-										<option value="${unit.unitName}">${unit.unitName}</option>
-									</c:forEach>
+								<label>Product Name</label> <select id="productNames" onchange="getProductDetailsById(this.value)">
+                                 <option>select Value</option>
 								</select>
-
-							</div>
-
-
-							<div class="col-xs-3">
-								<label>Vat(%)</label> <select id="vat" name="vat"
-									class="form-control" onchange="getCityFromState(this.value);">
-									<option value="0">---Select Vat---</option>
-									<c:forEach items="${vatList}" var="vat" varStatus="theCount">
-										<option value="${vat.vatPercent}">${vat.vatPercent}</option>
-									</c:forEach>
-								</select>
-
+								<input type="hidden" name="productName" id="productName">
+								<input type="hidden" name="productCode" id="productCode">
+								<input type="hidden" name="vat" id="vat">
+								<input type="hidden" name="unit" id="unit">
+								<input type="hidden" name="allRow" id="allRow">
 							</div>
 
 							<div class="col-xs-3">
@@ -473,10 +462,15 @@
 									name="salePrice" class="form-control" placeholder="Sale Price">
 							</div>
 							<div class="col-xs-3">
+                                <label>Available Quantity</label><input type="text" id="availableQuantity"
+                                    name="availableQuantity" class="form-control">
+                            </div>
+							<div class="col-xs-3">
 								<label>Quantity</label><input type="text" id="quantity"
 									name="quantity" class="form-control" placeholder="Quantity"
 									onkeydown="if (event.keyCode == 13)return addrow();">
 							</div>
+
 
 
 						</div>
@@ -602,10 +596,11 @@
 		<input type="submit" value="Submit" class="btn btn-success">
 	</div>
 	</table>
-
+    </form:form>
 	<!-- /.col-lg-12 -->
 
 	<script>
+	var saleData  = [];
 		function addrow() {
 
 			var productIdText = $("#productId").val();
@@ -623,6 +618,16 @@
 			var vatAmountRs = Math
 					.round((total - totalAmountDeductedVatAmount) * 100) / 100;
 
+            saleData.push({
+                         "productId": productIdText,
+                         "quantity": productCodeText,
+                         "salePrice":salePriceText,
+                         "totalAmount":totalAmountDeductedVatAmount,
+                         "saleOrderID":""
+                     });
+            $("#allRow").val(saleData);
+            console.log(saleData)
+            console.log($("#allRow").val())
 			var table = document.getElementById("table2");
 			var rowCount = table.rows.length;
 			var row1 = rowCount;

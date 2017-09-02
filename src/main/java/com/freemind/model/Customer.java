@@ -24,14 +24,9 @@ public class Customer {
 	@Column(name = "ADDRESS")
 	String address;
 
-	@Column(name = "CITY")
-	String city;
 
 	@Column(name = "MOBILE_NO")
 	String mobileNo;
-
-	@Column(name = "EMAIL_ID")
-	String emailId;
 
 	@Column(name = "DEFAULTER",nullable = false, columnDefinition = "boolean default false")
 	boolean defaulter=false;
@@ -83,21 +78,6 @@ public class Customer {
 		this.mobileNo = mobileNo;
 	}
 
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
 
 	public boolean isDefaulter() {
 		return defaulter;

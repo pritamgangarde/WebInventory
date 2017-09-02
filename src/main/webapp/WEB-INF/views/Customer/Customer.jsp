@@ -56,57 +56,13 @@
 								placeholder="<spring:message code="label.page.address" />">
 						</div>
 
-
-						<div class="col-xs-3">
-							<label>State</label> <select id="state" name="state"
-								class="form-control" style="height: 28px !important;"
-								onchange="getCityNameByState(this.value);">
-								<option value="0">---
-									<spring:message code="label.page.selectState" />---
-								</option>
-								<c:forEach items="${sessionScope.stateList}" var="state"
-									varStatus="theCount">
-									<option value="${state}">${state}</option>
-								</c:forEach>
-
-							</select>
-
-						</div>
-						<div class="col-xs-3">
-							<label>City</label> <select id="city" name="city"
-								style="height: 30px !important;" class="form-control">
-								<option value="0">---
-									<spring:message code="label.page.selectCity" />---
-								</option>
-
-							</select>
-						</div>
-
-						<div class="col-xs-3">
-							<label><spring:message code="label.page.pincode" /></label><input
-								type="text" id="pincode" name="pincode" class="form-control"
-								placeholder="<spring:message code="label.page.pincode" />">
-						</div>
-						<div class="col-xs-3">
+                        <div class="col-xs-3">
 							<label><spring:message code="label.page.mobileNo" /></label><input
 								type="text" id="mobileNo" name="mobileNo" class="form-control"
 								placeholder="<spring:message code="label.page.mobileNo" />">
 						</div>
-						<div class="col-xs-3">
-							<label><spring:message code="label.page.landlineNo" /></label><input
-								type="text" id="landlineNo" name="landlineNo"
-								class="form-control"
-								placeholder="<spring:message code="label.page.landlineNo" />">
-						</div>
-						<div class="col-xs-3">
-							<label><spring:message code="label.page.email" /></label><input
-								type="text" id="emailId" name="emailId" class="form-control"
-								placeholder="<spring:message code="label.page.email" />">
-						</div>
 
-
-
-					</div>
+                    </div>
 					<!-- /.row -->
 					<br>
 					<br>
@@ -160,7 +116,7 @@
 												<td>${customer.mobileNo}</td>
 												<td>${customer.defaulter==true?'Defaulter':'Normal'}</td>
 												<td class="center"><a href="#"
-													onclick="viewCustomerDetails('${customer.id}','${customer.customerName}','${customer.address}','${customer.state}','${customer.city}', '${customer.pincode}', '${customer.mobileNo}', '${customer.landlineNo}' ,'${customer.emailId}')">
+													onclick="viewCustomerDetails('${customer.id}','${customer.customerName}','${customer.address}','${customer.mobileNo}')">
 														<img
 														src="<%=request.getContextPath()%>/resources/images/edit-notes.png"></img>
 												</a> <a href="${deleteCustomerUrl}/${customer.id}"> <img
@@ -205,17 +161,11 @@
 </script>
 <script>
 	$("#update12").prop('disabled', false);
-	function viewCustomerDetails(customerId, customerName, address, state, city,
-			pincode, mobileNo, landlineNo, emailId) {
+	function viewCustomerDetails(customerId, customerName, address, mobileNo,) {
 		$("#id").val(customerId);
 		$("#customerName").val(customerName);
 		$("#address").val(address);
-		$("#state").val(state);
-		$("#city").val(city);
-		$("#pincode").val(pincode);
 		$("#mobileNo").val(mobileNo);
-		$("#landlineNo").val(landlineNo);
-		$("#emailId").val(emailId);
 		$("#save").prop('disabled', true);
 		$("#update12").prop('disabled', false);
 	}

@@ -24,6 +24,10 @@ public class ProductServiceImpl implements ProductService {
 	public Product getProductById(int id) {
 		return productDao.getProductById(id);
 	}
+	@Override
+	public List<Product> getProductListByCatId(int id){
+		return productDao.getProductListByCatId(id);
+	}
 
 	@Override
 	public void save(Product product) {

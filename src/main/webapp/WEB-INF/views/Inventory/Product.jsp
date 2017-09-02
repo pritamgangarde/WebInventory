@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-
+https://github.com/lightswitch05/table-to-json
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
      <spring:url value="/addProduct"  var ="ProductDeleteurl"/>
@@ -28,23 +28,8 @@
 							 <div>
 						   <jsp:include page="/WEB-INF/views/messagesBlock.jsp"></jsp:include>
 						   </div>
-					 <div class="col-xs-3">
-							<label><spring:message code="label.page.godownName" /></label>
-							  <select name="godowanObj" id=godowanObj class="form-control" style="width:90%;">
-														    <option>---Select Godown---- </option>
-													<c:forEach var="godowan" items="${godownList}">
-													      <option value="${godowan.id}">${godowan.name} </option>
-													</c:forEach>
-							 </select>
-						</div>
 					 </div>
 					<div class="row">
-						<div class="col-xs-3">
-							<label><spring:message code="label.page.productCode" /></label>
-							<input type="text" id="productCode" name="productCode" class="form-control"
-									placeholder="<spring:message code="label.page.productCode" />">
-							
-						</div>
 						<div class="col-xs-3">
 							<label><spring:message code="label.page.productName"/></label>
 							<input type="text" id="productName" name="productName" class="form-control"
@@ -58,7 +43,7 @@
 						</div>
 						<div class="col-xs-3">
 							<label><spring:message code="label.page.categoryName"/></label>
-							  <select name="categoryObj" id="categoryId" class="form-control" style="width:90%;">
+							  <select name="categoryModel" id="categoryModel" class="form-control" style="width:90%;">
 														    <option>---Select Category---- </option>
 													<c:forEach var="category" items="${categoryList}">
 													    <option value="${category.categoryId}">${category.categoryName} </option>
@@ -69,22 +54,13 @@
 						<div class="col-xs-3">
 							<label><spring:message code="label.page.unitName"/></label>
 							
-							<select name= "unitObj" id="unitObj" class="form-control" style="width:90%;">
+							<select name= "unitModel" id="unitModel" class="form-control" style="width:90%;">
 														    <option>---Select Unit---- </option>
 													<c:forEach var="unit" items="${unitList}">
 													 <option value="${unit.id}">${unit.unitName} </option>
 													</c:forEach>
 							</select>
-							
-							<%-- <form:select path="unit" class="form-control" id="unitId">
-								<form:option value="">Select Unit</form:option>
-								<form:option value="Pieces">Pieces</form:option>
-								<form:option value="Kg">Kg</form:option>
-								<form:option value="Meter">Meter</form:option>
-								<form:option value="Box">Box</form:option>
-								<form:option value="Gram">Gram</form:option>
-								<form:option value="Litre">Litre</form:option>
-							</form:select> --%>
+
 						</div>
 
 						<div class="col-xs-3">
@@ -106,7 +82,7 @@
 						</div> 
 						<div class="col-xs-3">
 							<label><spring:message code="label.page.vat"/>(%)</label>
-							<select name= "vatObj" id="vatObj" class="form-control" style="width:90%;">
+							<select name= "vat" id="vat" class="form-control" style="width:90%;">
 														    <option>---Select Vat---- </option>
 													<c:forEach var="vat" items="${vatList}">
 													 <option value="${vat.id}">${vat.vatPercent} </option>
@@ -141,12 +117,11 @@
 					<thead>
 						<tr>
 							<th><spring:message code="label.page.srno" /></th>
-							<th><spring:message code="label.page.godownName"/></th>
 							<th><spring:message code="label.page.productCode"/></th>
-							<th><spring:message code="label.page.productName"/></th>
+						    <th><spring:message code="label.page.productName"/></th>
 							<th><spring:message code="label.page.availableQty"/></th>
-							<th><spring:message code="label.page.action" /></th>
-							
+							<th><spring:message code="label.page.saleRate"/></th>
+						    <th><spring:message code="label.page.action" /></th>
 						</tr>
 					</thead>
 					                  <tbody>
@@ -154,13 +129,13 @@
 													varStatus="theCount">
 													<tr class="gradeA odd" role="row">
 														<td class="sorting_1">${theCount.count }</td>
-														<td>${ productObj.godowanModel.name}</td>
-														<td>${ productObj.productCode}</td>
+														<td>${ productObj.id}</td>
 														<td>${ productObj.productName}</td>
 														<td>${ productObj.quantity}</td>
+														<td>${ productObj.saleRate}</td>
 														    <c:if test="${showEdit}">
 														<td clas="center"><a href="#"
-															onclick="fun('${ productObj.id}','${productObj.productCode }','${productObj.productName }','${productObj.productDescription }','${productObj.godowanModel.godowanId }','${ productObj.quantity}','${productObj.vat.vatPercent }','${ productObj.categoryModel.categoryId}','${ productObj.unitModel.id}')"><img
+															onclick="fun('${ productObj.id}','${productObj.productName }','${productObj.productDescription }','${ productObj.quantity}','${productObj.vat.id }','${ productObj.categoryModel.categoryId}','${ productObj.unitModel.id}','${ productObj.saleRate}')"><img
 																src="resources/images/edit-notes.png"></a></td>
 														</c:if>
 														<c:if test="${showDelete}">
@@ -207,44 +182,19 @@
 	
 </script>
 <script>
-	function fun(id, productCode, productName, productDisc, addgodowanName,
-			productQuantity, vatPer, category,unit) {
+	function fun(id, productName, productDisc,
+			productQuantity, vatPer, category,unit,saleRate) {
 		$("#productId").val(id);
-		$("#productCode").val(productCode);
 		$("#productName").val(productName);
-		$("#productDis").val(productDisc);
-		$("#godowanModel").val(addgodowanName);
-		$("#productQuantity").val(productQuantity);
-		$("#vatPercent").val(vatPer);
-		$("#categoryId").val(category);
+		$("#productDescription").val(productDisc);
+		$("#quantity").val(productQuantity);
+		$("#vat").val(vatPer);
+		$("#categoryModel").val(category);
+		$("#saleRate").val(saleRate);
+		$("#unitModel").val(unit);
 
-		 $("#godown option").each(function() {
-			if ($(this).attr("selected") == "selected") {
-				$(this).removeAttr("selected");
-			}
-		});
-		var selectedIndex = "";
-		$("#godown option").each(function() {
-			if ($(this).text() == addgodowanName) {
-				selectedIndex = $(this).val();
-				$(this).attr('selected', 'selected');
-			}
-		});
-		$("#godown").val(selectedIndex); 
-		
-		$("#unit option").each(function() {
-			if ($(this).attr("selected") == "selected") {
-				$(this).removeAttr("selected");
-			}
-		});
-		$("#unit option").each(function() {
-			if ($(this).text() == unit) {
-				selectedIndex = $(this).val();
-				$(this).attr('selected', 'selected');
-			}
-		});
-		$("#unit").val(selectedIndex);
-	};
+
+		 	};
 </script>
 <!-- /#wrapper -->
 

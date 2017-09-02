@@ -43,9 +43,6 @@ public class Sale implements Serializable {
 	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	List<SalePaymentDetails> listSalePaymentDetails;
 
-	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<SaleTaxDetails> listSaleTaxDetails;
-
 	public int getId() {
 		return id;
 	}
@@ -109,14 +106,6 @@ public class Sale implements Serializable {
 	public void setListSalePaymentDetails(
 			List<SalePaymentDetails> listSalePaymentDetails) {
 		this.listSalePaymentDetails = listSalePaymentDetails;
-	}
-
-	public List<SaleTaxDetails> getListSaleTaxDetails() {
-		return listSaleTaxDetails;
-	}
-
-	public void setListSaleTaxDetails(List<SaleTaxDetails> listSaleTaxDetails) {
-		this.listSaleTaxDetails = listSaleTaxDetails;
 	}
 
 }

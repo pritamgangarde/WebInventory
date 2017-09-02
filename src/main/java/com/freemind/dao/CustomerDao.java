@@ -9,6 +9,8 @@ public interface CustomerDao {
 
 	public Customer getCustomerById(int id);
 
+	public Customer getCustomerByMobileNo(String no);
+
 	public void save(Customer customer);
 
 	public void update(Customer customer);
