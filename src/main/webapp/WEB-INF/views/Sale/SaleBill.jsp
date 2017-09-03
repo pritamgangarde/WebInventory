@@ -210,6 +210,7 @@
         			}
         		});
     }
+
     function printSale(saleOrderId){
 
             		$.getJSON('printBill', {
@@ -640,7 +641,7 @@ function getProductDetailsByCatId(id) {
 				</div>
 				<div class="col-xs-9 PO">
 					<label>Paid Amount</label> <input type="text" id="paidAmount"
-						name="paidAmount" class="form-control " placeholder="Paid Amount">
+						name="paidAmount" class="form-control " placeholder="Paid Amount" onchange="calculateBalanceAmount()">
 				</div>
 				<div class="col-xs-9 PO">
                    <label>Balance Amount</label> <input type="text" id="balanceAmount"
@@ -699,8 +700,8 @@ function getProductDetailsByCatId(id) {
 
 	</div>
 	<div>
-		<input type="submit" value="save" class="btn btn-success" onclick("save()")>
-		<input type="submit" value="print" class="btn btn-success" onclick("print()")>
+		<input type="button" value="save" class="btn btn-success" onclick="saveBill()">
+		<input type="button" value="print" class="btn btn-success" onclick="print()">
 	</div>
 	</table>
 
@@ -708,13 +709,13 @@ function getProductDetailsByCatId(id) {
 
 	<script>
 	var saleData  = [];
-	    function save(){
+	    function saveBill(){
 	        var saleOrderIdText=$("saleOrderId").val();
 	        var totalAmountText=$("totalAmount").val();
 	        var netAmountText=$("netAmount").val();
 	        var paidAmountText=$("paidAmount").val();
 	        var balanceAmountText=$("balanceAmount").val();
-	        var data=saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText);
+	        saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText);
 	    }
 
 	    function print(){
@@ -727,7 +728,22 @@ function getProductDetailsByCatId(id) {
             $("#availableQuantity").val("");
             $("#quantity").val("");
             $("#productCategory").val("select Category");
-            $("#productNames").val("select Product");
+            $('#productNames').val("select Product");
+            //var defaultOption = '<option>select Product</option>';
+            //$('#productNames').append(defaultOption);
+       }
+
+       function calculateBalanceAmount() {
+
+             if($("#netAmount").val() > 0 && $("#paidAmount").val() > 0) {
+                var balanceAmt = 0;
+                balanceAmt = Integer.parseInt($("#netAmount").val()) - Integer.parseInt($("#paidAmount").val());
+                $("#balanceAmount").val(balanceAmt);
+             } else {
+                alert("NetAmount  and / or PaidAmount is not correct");
+             }
+
+
        }
 
 		function addrow() {
@@ -823,11 +839,11 @@ function getProductDetailsByCatId(id) {
 				});
 			});*/
 
-			   $("#productNames").val("select product");
+			    $("#productNames").val("select Product").focus();
                 $("#salePrice").val("");
                 $("#availableQuantity").val("");
                 $("#quantity").val("");
-                $("#productNames").focus();
+
 
             } else {
                 alert("Please select Customer");
