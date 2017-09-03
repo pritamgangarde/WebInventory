@@ -63,6 +63,10 @@ public class Sale implements Serializable {
 	@Column(name = "DISCOUNT_RS")
 	double discountRs;
 
+	public Customer getCustomer() {
+		return customer;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "CUSTOMER_ID", nullable = true)
 	Customer customer;

@@ -182,6 +182,56 @@
 </script>
 
 <script type="text/javascript">
+	function saveSale(saleOrderId,totalAmount,netAmount,paidAmount,balanceAmount){
+
+        		$.getJSON('saveBill', {
+        			saleOrderId : saleOrderId,
+        			totalAmount:totalAmount,
+                    netAmount : netAmount,
+                    paidAmount : paidAmount,
+                    balanceAmount :balanceAmount
+        		}, function(data) {
+        			//alert(data);
+        		});
+
+        		$.ajax({
+        			method : 'GET',
+        			url : 'saveBill',
+        			dataType : 'json',
+        			data : {
+        				saleOrderId : saleOrderId,
+                        totalAmount:totalAmount,
+                        netAmount : netAmount,
+                        paidAmount : paidAmount,
+                        balanceAmount :balanceAmount
+        			},
+        			success : function(data) {
+        				return data;
+        			}
+        		});
+    }
+    function printSale(saleOrderId){
+
+            		$.getJSON('printBill', {
+            			saleOrderId : saleOrderId
+            		}, function(data) {
+            			//alert(data);
+            		});
+
+            		$.ajax({
+            			method : 'GET',
+            			url : 'printBill',
+            			dataType : 'json',
+            			data : {
+            				saleOrderId : saleOrderId,
+                        },
+            			success : function(data) {
+            				return data;
+            			}
+            		});
+        }
+
+
 	function addSaleDetailsByID(productId,customerId,quantity,salePrice,saleOrderId) {
 
     		$.getJSON('AddBillItem', {
@@ -206,6 +256,7 @@
     				saleOrderId :saleOrderId
     			},
     			success : function(data) {
+    			    $("saleOrderId").val(data.sale.id);
     				return data;
     			}
     		});
@@ -242,6 +293,10 @@
 				$("#mobileNo").val(data.mobileNo);
 				$("#address").val(data.address);
 				document.getElementById("customerName").focus();
+			},
+			error : function(data) {
+			    alert("कृपया ग्राहक नोंद करा");
+			    document.getElementById("mobileNo").focus();
 			}
 		});
 	}
@@ -268,6 +323,8 @@ function getProductDetailsByCatId(id) {
 				id : id
 			},
 			success : function(data) {
+			var defaultOption = '<option>select Product</option>';
+            $('#productNames').append(defaultOption);
                  $(data).each(function()
                   {
                       //this refers to the current item being iterated over
@@ -277,6 +334,8 @@ function getProductDetailsByCatId(id) {
 
                       $('#productNames').append(option);
                   });
+
+
 
 				/* $("#productId").val(data.id);
 				$("#productCode").val(data.productCode);
@@ -290,6 +349,12 @@ function getProductDetailsByCatId(id) {
 
 				document.getElementById("salePrice").focus();*/
 
+			},
+			error: function(data) {
+			// if user select 'select category' option
+			$('#productNames').find("option").remove();
+			    var defaultOption = '<option>select Product</option>';
+                            $('#productNames').append(defaultOption);
 			}
 		});
 	}
@@ -321,6 +386,14 @@ function getProductDetailsByCatId(id) {
 				$("#availableQuantity").val(data.quantity);
 
 				document.getElementById("salePrice").focus();
+
+			},
+			error : function(data) {
+			    // if user select default option 'select product'
+			    // clear all existing product details
+			    $("#salePrice").val("");
+			    $("#availableQuantity").val("");
+			    $("#quantity").val("");
 
 			}
 		});
@@ -393,9 +466,6 @@ function getProductDetailsByCatId(id) {
 				<h1 class="page-header">Sale Bill</h1>
 			</div>
 		</div>
-		<form:form class="mws-form" Commandname="addBillAndPrint"
-        						name="addProductForm" id="myForm" modelAttribute="addProduct"
-        						action="addBillAndPrint" method="post">
 		<!-- Accordian Start -->
 		<div class="bs-example">
 			<div class="panel-group" id="accordion">
@@ -467,6 +537,7 @@ function getProductDetailsByCatId(id) {
 						<div class="panel-body">
 							<div class="col-xs-3">
 								<label>Product Category</label> <select id="productCategory" onchange="getProductDetailsByCatId(this.value)">
+									<option>select Category</option>
 									<c:forEach varStatus="theCount" items="${categoryList}"
 										var="category">
 										<option value="${category.categoryId}">${category.categoryName}</option>
@@ -477,14 +548,14 @@ function getProductDetailsByCatId(id) {
 							</div>
 							<div class="col-xs-3">
 								<label>Product Name</label> <select id="productNames" onchange="getProductDetailsById(this.value)">
-                                 <option>select Value</option>
+                                 <option>select Product</option>
 								</select>
 								<input type="hidden" name="productName" id="productName">
 								<input type="hidden" name="productCode" id="productCode">
 								<input type="hidden" name="vat" id="vat">
 								<input type="hidden" name="unit" id="unit">
 								<input type="hidden" name="allRow" id="allRow">
-								<input type="hidden" name="saleOrderId" id="saleOrderId">
+								<input type="hidden" name="saleOrderId" id="saleOrderId" value="0">
 							</div>
 
 							<div class="col-xs-3">
@@ -512,8 +583,8 @@ function getProductDetailsByCatId(id) {
 								<spring:message code="label.page.saveButton" />
 							</button>
 
-							<button type="reset" class="btn btn-info">
-								<spring:message code="label.page.clear" />
+							<button type="button" class="btn btn-info" onclick="clearProductDetailNew()">
+								<spring:message code="label.page.clear"/>
 							</button>
 
 
@@ -571,6 +642,10 @@ function getProductDetailsByCatId(id) {
 					<label>Paid Amount</label> <input type="text" id="paidAmount"
 						name="paidAmount" class="form-control " placeholder="Paid Amount">
 				</div>
+				<div class="col-xs-9 PO">
+                   <label>Balance Amount</label> <input type="text" id="balanceAmount"
+                        name="paidAmount" class="form-control " placeholder="Paid Amount">
+               </div>
 
 
 			</div>
@@ -624,15 +699,41 @@ function getProductDetailsByCatId(id) {
 
 	</div>
 	<div>
-		<input type="submit" value="Submit" class="btn btn-success">
+		<input type="submit" value="save" class="btn btn-success" onclick("save()")>
+		<input type="submit" value="print" class="btn btn-success" onclick("print()")>
 	</div>
 	</table>
-    </form:form>
+
 	<!-- /.col-lg-12 -->
 
 	<script>
 	var saleData  = [];
+	    function save(){
+	        var saleOrderIdText=$("saleOrderId").val();
+	        var totalAmountText=$("totalAmount").val();
+	        var netAmountText=$("netAmount").val();
+	        var paidAmountText=$("paidAmount").val();
+	        var balanceAmountText=$("balanceAmount").val();
+	        var data=saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText);
+	    }
+
+	    function print(){
+        	        var saleOrderIdText=$("saleOrderId").val();
+        	        var data=printSale(saleOrderIdText);
+        	    }
+
+       function clearProductDetailNew() {
+            $("#salePrice").val("");
+            $("#availableQuantity").val("");
+            $("#quantity").val("");
+            $("#productCategory").val("select Category");
+            $("#productNames").val("select Product");
+       }
+
 		function addrow() {
+
+            if($("#mobileNo").val() != '' && $("#mobileNo").val() != undefined) {
+
 
 			var productIdText = $("#productId").val();
 			var productCodeText = $("#productCode").val();
@@ -642,6 +743,10 @@ function getProductDetailsByCatId(id) {
 			var quantityText = $("#quantity").val();
 			var salePriceText = $("#salePrice").val();
 			var saleOrderIdText=$("saleOrderId").val();
+			if(saleOrderIdText == undefined) {
+			 saleOrderIdText = 0;
+			}
+
 			var customerIdText=$("#customerId").val()
 			total = Math.round((quantityText * salePriceText) * 100) / 100;
 
@@ -650,7 +755,8 @@ function getProductDetailsByCatId(id) {
 
 			var vatAmountRs = Math
 					.round((total - totalAmountDeductedVatAmount) * 100) / 100;
-            var data=addSaleDetailsByID(productIdText,customerIdText,quantityText,salePriceText,saleOrderIdText)
+            var data=addSaleDetailsByID(productIdText,customerIdText,quantityText,salePriceText,saleOrderIdText);
+
 			var table = document.getElementById("table2");
 			var rowCount = table.rows.length;
 			var row1 = rowCount;
@@ -716,6 +822,16 @@ function getProductDetailsByCatId(id) {
 					source : availableTags
 				});
 			});*/
+
+			   $("#productNames").val("select product");
+                $("#salePrice").val("");
+                $("#availableQuantity").val("");
+                $("#quantity").val("");
+                $("#productNames").focus();
+
+            } else {
+                alert("Please select Customer");
+            }
 
 		}
 		function deleterow(o) {

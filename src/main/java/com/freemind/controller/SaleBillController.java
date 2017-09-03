@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.freemind.model.Sale;
 import com.freemind.model.SaleDetails;
+import com.freemind.print.BillPrint;
 import com.freemind.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -110,6 +111,15 @@ public class SaleBillController {
 			sale.setBalanceAmount(netAmount-paidAmount);
 			saleService.save(sale);
 			return sale;
+	}
+
+	@RequestMapping(value = "/printBill", method = RequestMethod.GET, produces = "application/json")
+	public
+	@ResponseBody
+	Sale printBill(@RequestParam("saleOrderId") int saleOrderId) {
+		Sale sale = saleService.getSaleById(saleOrderId);
+		new BillPrint().addBillDetails(sale);
+		return sale;
 	}
 
 	@RequestMapping(value = "/deleteBillItem", method = RequestMethod.GET, produces = "application/json")
