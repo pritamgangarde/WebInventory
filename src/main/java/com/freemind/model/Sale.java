@@ -39,6 +39,7 @@ public class Sale implements Serializable {
 	}
 
 	@Column(name = "NET_AMOUNT")
+
 	double netAmount;
 
 	@Column(name = "BALANCE_AMOUNT")
