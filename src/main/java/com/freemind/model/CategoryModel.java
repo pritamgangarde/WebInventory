@@ -99,4 +99,11 @@ public class CategoryModel {
 		this.lastModifyDate = lastModifyDate;
 	}
 
+	@Override
+	public String toString() {
+		return "CategoryModel [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
+				+ categoryDescription + ", active=" + active + ", createdBy=" + createdBy + ", modifyBy=" + modifyBy
+				+ ", insertionDate=" + insertionDate + ", lastModifyDate=" + lastModifyDate + "]";
+	}
+
 }

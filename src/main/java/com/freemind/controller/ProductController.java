@@ -48,68 +48,75 @@ public class ProductController {
 	VatService vatService;
 	@Autowired
 	CategoryService categoryService;
-	
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 
 		binder.setRequiredFields(new String[] { "categoryModel" });
-      
-		binder.registerCustomEditor(CategoryModel.class,
-				new CategoryPropertyEditors(categoryService));
+
+		binder.registerCustomEditor(CategoryModel.class, new CategoryPropertyEditors(categoryService));
 
 		binder.setRequiredFields(new String[] { "unitModel" });
-		binder.registerCustomEditor(Unit.class,
-				new UnitPropertyEditor(unitService));
+		binder.registerCustomEditor(Unit.class, new UnitPropertyEditor(unitService));
 		binder.setRequiredFields(new String[] { "vat" });
-		binder.registerCustomEditor(Vat.class,
-				new VatPropertyEditor(vatService));
+		binder.registerCustomEditor(Vat.class, new VatPropertyEditor(vatService));
 	}
-	private Model setModel(Model model){
+
+	private Model setModel(Model model) {
 		model.addAttribute("productList", productService.getAllProductList());
-		model.addAttribute("categoryList",categoryService.listCategory());
+		model.addAttribute("categoryList", categoryService.listCategory());
 		model.addAttribute("godownList", godownService.getAllGodownList());
 		model.addAttribute("unitList", unitService.getAllUnitList());
 		model.addAttribute("vatList", vatService.getAllVatList());
 		return model;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showProducts(Model uimodel, ModelMap model,
-			HttpServletRequest httpServletRequest) {
+	public ModelAndView showProducts(Model uimodel, ModelMap model, HttpServletRequest httpServletRequest) {
 		uimodel.addAttribute("product", new Product());
-		uimodel=setModel(uimodel);
+		uimodel = setModel(uimodel);
 		return new ModelAndView("Inventory/Product");
 	}
 
-	
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView addProduct(
-			@ModelAttribute("Product") @Valid Product product,
-			BindingResult bindingResult, Model model,
-			HttpServletRequest httpServletRequest,
-			RedirectAttributes redirectAttributes, Locale locale) {
+	public ModelAndView addProduct(@ModelAttribute("Product") @Valid Product product, BindingResult bindingResult,
+			Model model, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 		if (bindingResult.hasErrors()) {
 
 		}
-		productService.save(product);
-		model=setModel(model);
-		model.addAttribute("msgType", "1");
-		model.addAttribute("msg", "Product added Successfully....!!!!");
+
+		if (product.getProductName() == null || product.getProductName().trim().isEmpty()) {
+			model.addAttribute("msgType", "2");
+			model.addAttribute("msg", "उत्पादनाचे नाव आवश्यक आहे.");
+		} else if (product.getCategoryModel() == null || product.getCategoryModel().getCategoryId() == -1) {
+			model.addAttribute("msgType", "2");
+			model.addAttribute("msg", "श्रेणी निवडणे आवश्यक आहे.");
+		} else if (product.getUnitModel() == null || product.getUnitModel().getId() == -1) {
+			model.addAttribute("msgType", "2");
+			model.addAttribute("msg", "एकक निवडणे आवश्यक आहे.");
+		} else if (product.getVat() == null || product.getVat().getId() == -1) {
+			model.addAttribute("msgType", "2");
+			model.addAttribute("msg", "जी. एस. टी.  निवडणे आवश्यक आहे.");
+		} else {
+			productService.save(product);
+			model.addAttribute("msgType", "1");
+			model.addAttribute("msg", "उत्पादन जतन केले आहे.");
+		}
+
+		model = setModel(model);
 		return new ModelAndView("Inventory/Product");
 	}
 
-
 	@RequestMapping(value = "{id}", params = "DeleteProduct", method = RequestMethod.GET)
-	public ModelAndView deleteProduct(@PathVariable("id") Integer id,
-			Model uiModel, HttpServletRequest httpServletRequest) {
+	public ModelAndView deleteProduct(@PathVariable("id") Integer id, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 		Product productModel = productService.getProductById(id);
-		 productModel.setActivityStatus(false);
+		productModel.setActivityStatus(false);
 		productService.save(productModel);
-		uiModel=setModel(uiModel);
-		
+		uiModel = setModel(uiModel);
+
 		uiModel.addAttribute("msgType", "1");
-		uiModel.addAttribute("msg", "Product Deleted Successfully....!!!!");
+		uiModel.addAttribute("msg", "उत्पादन काढून टाकले आहे.");
 		return new ModelAndView("Inventory/Godown");
 
 	}

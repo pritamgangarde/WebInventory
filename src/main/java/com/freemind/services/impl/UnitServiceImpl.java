@@ -40,4 +40,9 @@ public class UnitServiceImpl implements UnitService {
 		unitDao.deleteUnitById(id, status);
 	}
 
+	@Override
+	public Unit getUnitByName(String unitName) {
+		return unitDao.getUnitByName(unitName);
+	}
+
 }

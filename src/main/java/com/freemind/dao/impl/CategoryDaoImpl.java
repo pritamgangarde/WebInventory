@@ -123,7 +123,6 @@ public class CategoryDaoImpl implements CategoryDao {
 			Criteria criteria=session.createCriteria(CategoryModel.class);
 			criteria.add(Restrictions.eq("categoryName", categoryName));
 			categoryModel=(CategoryModel)criteria.uniqueResult();
-			session.close();
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();

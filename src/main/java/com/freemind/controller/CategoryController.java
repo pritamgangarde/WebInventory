@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -19,20 +18,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.freemind.services.CategoryService;
 import com.freemind.model.CategoryModel;
+import com.freemind.services.CategoryService;
 
 @Controller
 @RequestMapping("/addcategory")
 public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
-	@Autowired
-	private MessageSource messageSource;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView showCategory(Model uiModel, ModelMap model,
-			HttpServletRequest httpServletRequest) {
+	public ModelAndView showCategory(Model uiModel, ModelMap model, HttpServletRequest httpServletRequest) {
 		System.out.println(uiModel);
 		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);
@@ -40,30 +36,40 @@ public class CategoryController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView addCategory(
-			@ModelAttribute("addCategory") @Valid CategoryModel categorymodel,
-			BindingResult bindingResult, Model uiModel,
-			HttpServletRequest httpServletRequest,
+	public ModelAndView addCategory(@ModelAttribute("addCategory") @Valid CategoryModel categorymodel,
+			BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,
 			RedirectAttributes redirectAttributes, Locale locale) {
-		System.out.println("abc :: "+categorymodel);
-		categoryService.saveCategory(categorymodel);
+		System.err.println("abc :: " + categorymodel);
+
+		CategoryModel categoryModelExists = categoryService.getCategoryByName(categorymodel.getCategoryName());
+
+		if (categorymodel.getCategoryName() == null || categorymodel.getCategoryName().trim().isEmpty()) {
+			uiModel.addAttribute("msgType", "2");
+			uiModel.addAttribute("msg", "श्रेणी चे नाव आवश्यक आहे.");
+		} else if (categoryModelExists == null) {
+			categoryService.saveCategory(categorymodel);
+			uiModel.addAttribute("msgType", "1");
+			uiModel.addAttribute("msg", "श्रेणी जतन केली आहे.");
+		} else {
+			uiModel.addAttribute("msgType", "1");
+			uiModel.addAttribute("msg", "श्रेणी आधीच उपलब्ध आहे.");
+		}
 		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);
-		uiModel.addAttribute("msgType", "1");
-		uiModel.addAttribute("msg", "Category Added Successfully....!!!!");
 		return new ModelAndView("Inventory/Category");
+
 	}
 
 	@RequestMapping(value = "{id}", params = "Deletecategorye", method = RequestMethod.GET)
-	public ModelAndView deleteCompany(@PathVariable("id") Integer id,
-			Model uiModel, HttpServletRequest httpServletRequest) {
+	public ModelAndView deleteCompany(@PathVariable("id") Integer id, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 		CategoryModel categorymodel = categoryService.categoryListById(id);
 		categorymodel.setActive(true);
 		categoryService.updateCategory(categorymodel);
 		List<CategoryModel> addCategorylist = categoryService.listCategory();
 		uiModel.addAttribute("addCategorylist", addCategorylist);
-		uiModel.addAttribute("msgType", "3");
-		uiModel.addAttribute("msg", "Category Deleted Successfully....!!!!");
+		uiModel.addAttribute("msgType", "1");
+		uiModel.addAttribute("msg", "श्रेणी काढून टाकली आहे.");
 		return new ModelAndView("Inventory/Category");
 
 	}

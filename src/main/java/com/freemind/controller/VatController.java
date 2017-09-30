@@ -46,7 +46,7 @@ public class VatController {
 		List<Vat> vatlist = vatService.getAllVatList();
 		uiModel.addAttribute("vatlist", vatlist);
 		uiModel.addAttribute("msgType", "1");
-		uiModel.addAttribute("msg", "Vat Added Successfully....!!!!");
+		uiModel.addAttribute("msg", "जी. एस. टी. जतन केला आहे");
 		return new ModelAndView("Inventory/Vat");
 	}
 
@@ -59,7 +59,7 @@ public class VatController {
 		vatService.save(godownmodel);
 		uiModel.addAttribute("vatlist", vatService.getAllVatList());
 		uiModel.addAttribute("msgType", "1");
-		uiModel.addAttribute("msg", "Vat Deleted Successfully....!!!!");
+		uiModel.addAttribute("msg", "जी. एस. टी. काढून टाकला आहे.");
 		return new ModelAndView("Inventory/Vat");
 
 	}

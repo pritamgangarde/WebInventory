@@ -83,4 +83,15 @@ public class UnitDaoImpl implements UnitDao {
 		session.close();
 
 	}
+
+	@Override
+	public Unit getUnitByName(String unitName) {
+		Session session;
+		session = sessionFactory.openSession();
+		Criteria criteria = session.createCriteria(Unit.class);
+		criteria.add(Restrictions.eq("unitName", unitName));
+		Unit unit = (Unit) criteria.uniqueResult();
+
+		return unit;
+	}
 }

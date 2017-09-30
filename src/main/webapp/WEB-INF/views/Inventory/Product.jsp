@@ -44,7 +44,7 @@ https://github.com/lightswitch05/table-to-json
 						<div class="col-xs-3">
 							<label><spring:message code="label.page.categoryName"/></label>
 							  <select name="categoryModel" id="categoryModel" class="form-control" style="width:90%;">
-														    <option>---Select Category---- </option>
+														    <option value="-1">---Select Category---- </option>
 													<c:forEach var="category" items="${categoryList}">
 													    <option value="${category.categoryId}">${category.categoryName} </option>
 													</c:forEach>
@@ -55,7 +55,7 @@ https://github.com/lightswitch05/table-to-json
 							<label><spring:message code="label.page.unitName"/></label>
 							
 							<select name= "unitModel" id="unitModel" class="form-control" style="width:90%;">
-														    <option>---Select Unit---- </option>
+														    <option value="-1">---Select Unit---- </option>
 													<c:forEach var="unit" items="${unitList}">
 													 <option value="${unit.id}">${unit.unitName} </option>
 													</c:forEach>
@@ -195,6 +195,8 @@ https://github.com/lightswitch05/table-to-json
 
 
 		 	};
+		 	
+		 	
 </script>
 <!-- /#wrapper -->
 

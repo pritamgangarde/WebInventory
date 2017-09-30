@@ -14,4 +14,6 @@ public interface UnitService {
 	public void update(Unit unit);
 
 	public void deleteUnitById(int id, boolean status);
+	
+	public Unit getUnitByName(String unitName);
 }

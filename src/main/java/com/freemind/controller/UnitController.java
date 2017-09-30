@@ -32,44 +32,56 @@ public class UnitController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/addUnit")
-	public ModelAndView addUnit(
-			@ModelAttribute("addUnit") @Valid Unit unitModel,
-			BindingResult bindingResult, Model uiModel,
-			HttpServletRequest httpServletRequest,
-			RedirectAttributes redirectedAttributes, Locale locale) {
-		unitService.save(unitModel);
+	public ModelAndView addUnit(@ModelAttribute("addUnit") @Valid Unit unitModel, BindingResult bindingResult,
+			Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectedAttributes,
+			Locale locale) {
 
-		uiModel.addAttribute("msgType1", "1");
-		uiModel.addAttribute("msg", "Unit Added Successfully!!!");
+		Unit unitExits = unitService.getUnitByName(unitModel.getUnitName());
 
-		return new ModelAndView("redirect:/showUnit");
+		if (unitModel.getUnitName() == null || unitModel.getUnitName().trim().isEmpty()) {
+			uiModel.addAttribute("msgType", "2");
+			uiModel.addAttribute("msg", "एकक चे नाव आवश्यक आहे.");
+
+		} else if (unitExits != null) {
+			uiModel.addAttribute("msgType", "2");
+			uiModel.addAttribute("msg", "एकक आधीच उपलब्ध आहे..");
+
+		} else {
+			unitService.save(unitModel);
+			uiModel.addAttribute("msgType", "1");
+			uiModel.addAttribute("msg", "एकक जतन केले आहे.");
+		}
+		uiModel.addAttribute("unitList", unitService.getAllUnitList());
+
+		return new ModelAndView("Inventory/Unit");
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "updateUnit/{id}/{status}")
-	public ModelAndView updateUnit(@PathVariable("id") Integer id,
-			@PathVariable("status") boolean status, Model uiModel,
-			HttpServletRequest httpServletRequest) {
+	public ModelAndView updateUnit(@PathVariable("id") Integer id, @PathVariable("status") boolean status,
+			Model uiModel, HttpServletRequest httpServletRequest) {
+
 		if (status == true)
 			unitService.deleteUnitById(id, false);
 		else
 			unitService.deleteUnitById(id, true);
 
-		uiModel.addAttribute("msgType1", "1");
-		uiModel.addAttribute("msg", "Unit Updated Successfully!!!");
-
-		return new ModelAndView("redirect:/showUnit");
+		uiModel.addAttribute("msgType", "1");
+		uiModel.addAttribute("msg", "एकक मध्ये सुधारणा  झाली आहे.");
+		uiModel.addAttribute("unitList", unitService.getAllUnitList());
+		return new ModelAndView("Inventory/Unit");
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "deleteUnit/{id}")
-	public ModelAndView deleteUnit(@PathVariable("id") Integer id,
-			Model uiModel, HttpServletRequest httpServletRequest) {
+	public ModelAndView deleteUnit(@PathVariable("id") Integer id, Model uiModel,
+			HttpServletRequest httpServletRequest) {
 
 		unitService.deleteUnitById(id, false);
 
-		uiModel.addAttribute("msgType1", "1");
-		uiModel.addAttribute("msg", "Unit Deleted Successfully!!!");
+		uiModel.addAttribute("msgType", "1");
+		uiModel.addAttribute("msg", "एकक काढून टाकले आहे.");
+		uiModel.addAttribute("unitList", unitService.getAllUnitList());
 
-		return new ModelAndView("redirect:/showUnit");
+		return new ModelAndView("Inventory/Unit");
 	}
 
 }
