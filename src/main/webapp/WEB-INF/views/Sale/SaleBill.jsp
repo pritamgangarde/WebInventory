@@ -229,87 +229,91 @@
 </script>
 
 <script type="text/javascript">
-	function saveSale(saleOrderId, totalAmount, netAmount, paidAmount,
-			balanceAmount) {
+	function saveSale(saleOrderId,totalAmount,netAmount,paidAmount,balanceAmount,customerId){
 
-		$.getJSON('saveBill', {
-			saleOrderId : saleOrderId,
-			totalAmount : totalAmount,
-			netAmount : netAmount,
-			paidAmount : paidAmount,
-			balanceAmount : balanceAmount
-		}, function(data) {
-			//alert(data);
-		});
+        		$.getJSON('saveBill', {
+        			saleOrderId : saleOrderId,
+        			totalAmount:totalAmount,
+                    netAmount : netAmount,
+                    paidAmount : paidAmount,
+                    balanceAmount :balanceAmount,
+                    customerId:customerId
+        		}, function(data) {
+        			//alert(data);
+        		});
 
-		$.ajax({
-			method : 'GET',
-			url : 'saveBill',
-			dataType : 'json',
-			data : {
-				saleOrderId : saleOrderId,
-				totalAmount : totalAmount,
-				netAmount : netAmount,
-				paidAmount : paidAmount,
-				balanceAmount : balanceAmount
-			},
-			success : function(data) {
-				return data;
-			}
-		});
-	}
+        		$.ajax({
+        			method : 'GET',
+        			url : 'saveBill',
+        			dataType : 'json',
+        			data : {
+        				saleOrderId : saleOrderId,
+                        totalAmount:totalAmount,
+                        netAmount : netAmount,
+                        paidAmount : paidAmount,
+                        balanceAmount :balanceAmount,
+                        customerId:customerId
+        			},
+        			success : function(data) {
+        				return data;
 
-	function printSale(saleOrderId) {
 
-		$.getJSON('printBill', {
-			saleOrderId : saleOrderId
-		}, function(data) {
-			//alert(data);
-		});
+        			}
+        		});
+    }
 
-		$.ajax({
-			method : 'GET',
-			url : 'printBill',
-			dataType : 'json',
-			data : {
-				saleOrderId : saleOrderId,
-			},
-			success : function(data) {
-				return data;
-			}
-		});
-	}
+    function printSale(saleOrderId){
 
-	function addSaleDetailsByID(productId, customerId, quantity, salePrice,
-			saleOrderId) {
+            		$.getJSON('printBill', {
+            			saleOrderId : saleOrderId
+            		}, function(data) {
+            			//alert(data);
+            		});
 
-		$.getJSON('AddBillItem', {
-			productId : productId,
-			customerId : customerId,
-			quantity : quantity,
-			salePrice : salePrice,
-			saleOrderId : saleOrderId
-		}, function(data) {
-			//alert(data);
-		});
+            		$.ajax({
+            			method : 'GET',
+            			url : 'printBill',
+            			dataType : 'json',
+            			data : {
+            				saleOrderId : saleOrderId,
+                        },
+            			success : function(data) {
+            				return data;
+            			}
+            		});
+        }
 
-		$.ajax({
-			method : 'GET',
-			url : 'AddBillItem',
-			dataType : 'json',
-			data : {
-				productId : productId,
-				customerId : customerId,
-				quantity : quantity,
-				salePrice : salePrice,
-				saleOrderId : saleOrderId
-			},
-			success : function(data) {
-				$("saleOrderId").val(data.sale.id);
-				return data;
-			}
-		});
-	}
+
+	function addSaleDetailsByID(productId,customerId,quantity,salePrice,saleOrderId) {
+
+    		$.getJSON('AddBillItem', {
+    			productId : productId,
+    			customerId:customerId,
+                quantity : quantity,
+                salePrice : salePrice,
+                saleOrderId :saleOrderId
+    		}, function(data) {
+    			//alert(data);
+    		});
+
+    		$.ajax({
+    			method : 'GET',
+    			url : 'AddBillItem',
+    			dataType : 'json',
+    			data : {
+    				productId : productId,
+    				customerId:customerId,
+    				quantity : quantity,
+    				salePrice : salePrice,
+    				saleOrderId :saleOrderId
+    			},
+    			success : function(data) {
+    			    $("#saleOrderId").val(data.sale.id);
+    				return data;
+    			}
+    		});
+}
+
 
 	function getCustomerDetailsById(id) {
 
@@ -805,16 +809,43 @@
 
 
 	<script>
-		var saleData = [];
-		function saveBill() {
-			var saleOrderIdText = $("saleOrderId").val();
-			var totalAmountText = $("totalAmount").val();
-			var netAmountText = $("netAmount").val();
-			var paidAmountText = $("paidAmount").val();
-			var balanceAmountText = $("balanceAmount").val();
-			saveSale(saleOrderIdText, totalAmountText, netAmountText,
-					paidAmountText, balanceAmountText);
-		}
+	var saleData  = [];
+	    function saveBill(){
+	        var saleOrderIdText=$("#saleOrderId").val();
+	        var totalAmountText=$("#totalAmount").val();
+	        var netAmountText=$("#netAmount").val();
+	        var paidAmountText=$("#paidAmount").val();
+	        var balanceAmountText=$("#balanceAmount").val();
+	        var customerIdText=$("#customerId").val();
+	        saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText,customerIdText);
+	    }
+
+	    function print(){
+        	        var saleOrderIdText=$("#saleOrderId").val();
+        	        var data=printSale(saleOrderIdText);
+        	    }
+
+       function clearProductDetailNew() {
+            $("#salePrice").val("");
+            $("#availableQuantity").val("");
+            $("#quantity").val("");
+            $("#productCategory").val("select Category");
+            $('#productNames').val("select Product");
+            //var defaultOption = '<option>select Product</option>';
+            //$('#productNames').append(defaultOption);
+       }
+
+       function calculateBalanceAmount() {
+
+             if(parseFloat($("#netAmount").val()) > 0 && parseFloat($("#paidAmount").val()) > 0) {
+                var balanceAmt = 0;
+                balanceAmt = parseFloat($("#netAmount").val()) - parseFloat($("#paidAmount").val());
+                $("#balanceAmount").val(balanceAmt);
+             } else {
+                alert("NetAmount  and / or PaidAmount is not correct");
+             }
+        }
+
 
 		function print() {
 			var saleOrderIdText = $("saleOrderId").val();

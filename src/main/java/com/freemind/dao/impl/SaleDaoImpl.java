@@ -36,7 +36,8 @@ public class SaleDaoImpl implements SaleDao {
 	@Override
 	public Sale getSaleById(int id) {
 		Session session;
-		session = sessionFactory.openSession();
+			session=sessionFactory.openSession();
+
 		Criteria criteria = session.createCriteria(Sale.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
 		Sale sale = (Sale) criteria.uniqueResult();
@@ -47,37 +48,40 @@ public class SaleDaoImpl implements SaleDao {
 	@Override
 	public void save(Sale sale) {
 		Session session;
-		session = sessionFactory.openSession();
+		session=sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.save(sale);
+		session.saveOrUpdate(sale);
 		transaction.commit();
 		session.clear();
-		session.close();
+
 
 	}
 
 	@Override
 	public void update(Sale sale) {
 		Session session;
-		session = sessionFactory.openSession();
+			session=sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.update(sale);
+		session.merge(sale);
 		transaction.commit();
 		session.clear();
-		session.close();
+
 	}
 
 	@Override
 	public void deleteSaleById(int id) {
 		Session session;
-		session = sessionFactory.openSession();
+		session = sessionFactory.getCurrentSession();
+		if(session==null){
+			session=sessionFactory.openSession();
+		}
 		Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(Sale.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
 		session.delete((Unit) criteria.uniqueResult());
 		transaction.commit();
 		session.clear();
-		session.close();
+
 
 	}
 

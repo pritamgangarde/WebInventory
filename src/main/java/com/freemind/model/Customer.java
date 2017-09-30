@@ -36,7 +36,7 @@ public class Customer {
 	@Column(name = "MODIFIED_BY")
 	int modifyBy;
 
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
 	List<Sale> listSaleDetails;
 
 	@Column(name = "INSERTION_DATE")

@@ -97,19 +97,25 @@ public class SaleBillController {
 		saleDetails.setSaleRate(salePrice);
 		saleDetails.setSale(sale);
 		saleDetailsService.save(saleDetails);
+		saleService.update(sale);
 		return saleDetails;
 	}
 
 	@RequestMapping(value = "/saveBill", method = RequestMethod.GET, produces = "application/json")
 	public
 	@ResponseBody
-	Sale saveBill(@RequestParam("saleOrderId") int saleOrderId,@RequestParam("totalAmount") double totalAmount,@RequestParam("netAmount") double netAmount,@RequestParam("paidAmount") double paidAmount) {
-			Sale sale = saleService.getSaleById(saleOrderId);
-			sale.setTotalAmount(paidAmount);
+	Sale saveBill(@RequestParam("saleOrderId") int saleOrderId,@RequestParam("totalAmount") double totalAmount,@RequestParam("netAmount") double netAmount,@RequestParam("paidAmount") double paidAmount,@RequestParam("customerId") int customerId) {
+			/*Sale sale = saleService.getSaleById(saleOrderId);
+		sale.*/
+		Customer customer=customerService.getCustomerById(customerId);
+			Sale sale =new Sale();
+			sale.setId(saleOrderId);
+			sale.setTotalAmount(totalAmount);
 			sale.setNetAmount(netAmount);
 			sale.setPaidAmount(paidAmount);
 			sale.setBalanceAmount(netAmount-paidAmount);
-			saleService.save(sale);
+			sale.setCustomer(customer);
+			saleService.update(sale);
 			return sale;
 	}
 

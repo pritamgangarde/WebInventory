@@ -21,11 +21,11 @@ public class BillPrint {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Map<String, Object> parameters = new HashMap<String, Object>();
                 parameters.put("billDate", simpleDateFormat.format(new Date()));
-                parameters.put("bilNo", sale.getId() );
+                parameters.put("bilNo", ""+sale.getId() );
                 parameters.put("customerName", sale.getCustomer().getCustomerName());
                 parameters.put("shopName", "माऊली हाय-टेक रोपवाटिका");
                 parameters.put("shopAddress", "आंबेगाव ता. कडेगांव, जि. सांगली.");
-                parameters.put("customerMobileNo", sale.getCustomer().getMobileNo());
+                parameters.put("customerMobileNo", ""+sale.getCustomer().getMobileNo());
                 parameters.put("termsAndCondition", "विकलेली झाडे परत घेतली जाणार नाहीत");
                 parameters.put("Notes", "विकलेली झाडे परत घेतली जाणार नाहीत");
                 parameters.put("discountRs", "" + 000);
@@ -43,11 +43,10 @@ public class BillPrint {
                 }
 
                 JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(billDetailsList);
-                InputStream in = BillPrint.class
-                        .getResourceAsStream("/com/freemind/print/jrxml/3InchPrint.jrxml");
+                InputStream in = BillPrint.class.getResourceAsStream("/3InchPrint.jrxml");
                 JasperReport jasperReport = JasperCompileManager.compileReport(in);
                 JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, beanColDataSource);
-                JasperPrintManager.printReport(jasperPrint, false);
+                JasperPrintManager.printReport(jasperPrint, true);
 
             } catch (Exception e) {
                 e.printStackTrace();
