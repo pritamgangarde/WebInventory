@@ -182,14 +182,15 @@
 </script>
 
 <script type="text/javascript">
-	function saveSale(saleOrderId,totalAmount,netAmount,paidAmount,balanceAmount){
+	function saveSale(saleOrderId,totalAmount,netAmount,paidAmount,balanceAmount,customerId){
 
         		$.getJSON('saveBill', {
         			saleOrderId : saleOrderId,
         			totalAmount:totalAmount,
                     netAmount : netAmount,
                     paidAmount : paidAmount,
-                    balanceAmount :balanceAmount
+                    balanceAmount :balanceAmount,
+                    customerId:customerId
         		}, function(data) {
         			//alert(data);
         		});
@@ -203,10 +204,13 @@
                         totalAmount:totalAmount,
                         netAmount : netAmount,
                         paidAmount : paidAmount,
-                        balanceAmount :balanceAmount
+                        balanceAmount :balanceAmount,
+                        customerId:customerId
         			},
         			success : function(data) {
         				return data;
+
+
         			}
         		});
     }
@@ -257,7 +261,7 @@
     				saleOrderId :saleOrderId
     			},
     			success : function(data) {
-    			    $("saleOrderId").val(data.sale.id);
+    			    $("#saleOrderId").val(data.sale.id);
     				return data;
     			}
     		});
@@ -364,7 +368,7 @@ function getProductDetailsByCatId(id) {
 		$.getJSON('getProductDetails', {
 			id : id
 		}, function(data) {
-			alert(data);
+			//alert(data);
 		});
 
 		$.ajax({
@@ -710,16 +714,17 @@ function getProductDetailsByCatId(id) {
 	<script>
 	var saleData  = [];
 	    function saveBill(){
-	        var saleOrderIdText=$("saleOrderId").val();
-	        var totalAmountText=$("totalAmount").val();
-	        var netAmountText=$("netAmount").val();
-	        var paidAmountText=$("paidAmount").val();
-	        var balanceAmountText=$("balanceAmount").val();
-	        saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText);
+	        var saleOrderIdText=$("#saleOrderId").val();
+	        var totalAmountText=$("#totalAmount").val();
+	        var netAmountText=$("#netAmount").val();
+	        var paidAmountText=$("#paidAmount").val();
+	        var balanceAmountText=$("#balanceAmount").val();
+	        var customerIdText=$("#customerId").val();
+	        saveSale(saleOrderIdText,totalAmountText,netAmountText,paidAmountText,balanceAmountText,customerIdText);
 	    }
 
 	    function print(){
-        	        var saleOrderIdText=$("saleOrderId").val();
+        	        var saleOrderIdText=$("#saleOrderId").val();
         	        var data=printSale(saleOrderIdText);
         	    }
 
@@ -735,16 +740,14 @@ function getProductDetailsByCatId(id) {
 
        function calculateBalanceAmount() {
 
-             if($("#netAmount").val() > 0 && $("#paidAmount").val() > 0) {
+             if(parseFloat($("#netAmount").val()) > 0 && parseFloat($("#paidAmount").val()) > 0) {
                 var balanceAmt = 0;
-                balanceAmt = Integer.parseInt($("#netAmount").val()) - Integer.parseInt($("#paidAmount").val());
+                balanceAmt = parseFloat($("#netAmount").val()) - parseFloat($("#paidAmount").val());
                 $("#balanceAmount").val(balanceAmt);
              } else {
                 alert("NetAmount  and / or PaidAmount is not correct");
              }
-
-
-       }
+        }
 
 		function addrow() {
 
