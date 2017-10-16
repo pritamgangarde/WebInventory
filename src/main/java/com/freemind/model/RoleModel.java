@@ -6,15 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 public class RoleModel {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
-	private String role;
 
+	private String role;
 
 	public Integer getId() {
 		return id;
@@ -32,7 +31,4 @@ public class RoleModel {
 		this.role = role;
 	}
 
-
-	
-	
 }

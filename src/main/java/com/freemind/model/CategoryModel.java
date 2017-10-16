@@ -1,11 +1,14 @@
 package com.freemind.model;
 
 import java.sql.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name = "CATEGORIES")
 public class CategoryModel {
@@ -35,8 +38,11 @@ public class CategoryModel {
 	@Column(name = "LAST_MODIFIED_DATE")
 	Date lastModifyDate;
 
+	@OneToMany(mappedBy = "categoryModel", cascade = CascadeType.ALL)
+	List<Product> productList;
+
 	public boolean isActive() {
-		return active=true;
+		return active = true;
 	}
 
 	public void setActive(boolean active) {
@@ -99,11 +105,12 @@ public class CategoryModel {
 		this.lastModifyDate = lastModifyDate;
 	}
 
-	@Override
-	public String toString() {
-		return "CategoryModel [categoryId=" + categoryId + ", categoryName=" + categoryName + ", categoryDescription="
-				+ categoryDescription + ", active=" + active + ", createdBy=" + createdBy + ", modifyBy=" + modifyBy
-				+ ", insertionDate=" + insertionDate + ", lastModifyDate=" + lastModifyDate + "]";
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
 	}
 
 }

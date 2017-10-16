@@ -23,7 +23,7 @@ public class Unit {
 	String description;
 
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active=true;
+	boolean active = true;
 
 	public int getId() {
 		return id;

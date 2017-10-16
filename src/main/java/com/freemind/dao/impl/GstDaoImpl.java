@@ -11,60 +11,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.freemind.dao.VatDao;
-import com.freemind.model.Vat;
+import com.freemind.dao.GstDao;
+import com.freemind.model.GST;
 
-@Repository("VatDao")
+@Repository("GstDao")
 @Transactional
-public class VatDaoImpl implements VatDao {
+public class GstDaoImpl implements GstDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 
 	@Override
-	public List<Vat> getAllVatList() {
+	public List<GST> getAllGstList() {
 		Session session;
 		session = sessionFactory.openSession();
-		
-		Criteria queryCriteria=session.createCriteria(Vat.class);
+
+		Criteria queryCriteria = session.createCriteria(GST.class);
 		queryCriteria.add(Restrictions.eq("active", true));
 		@SuppressWarnings("unchecked")
-		List<Vat> listVat =queryCriteria.list();
-		return listVat;
+		List<GST> listGst = queryCriteria.list();
+		return listGst;
 	}
 
 	@Override
-	public Vat getVatById(int id) {
+	public GST getGstById(int id) {
 		Session session;
 		session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(Vat.class);
+		Criteria criteria = session.createCriteria(GST.class);
 		criteria.add(Restrictions.eq("id", new Integer(id)));
-		Vat vat = (Vat) criteria.uniqueResult();
+		GST Gst = (GST) criteria.uniqueResult();
 
-		return vat;
+		return Gst;
 	}
 
 	@Override
-	public void save(Vat vat) {
+	public void save(GST Gst) {
 		Session session;
 		session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
-		session.saveOrUpdate(vat);
-		transaction.commit();
-		session.clear();
-		session.close();
-
-	}
-
-
-	@Override
-	public void deleteVatById(int id) {
-		Session session;
-		session = sessionFactory.openSession();
-		Transaction transaction = session.beginTransaction();
-		Criteria criteria = session.createCriteria(Vat.class);
-		criteria.add(Restrictions.eq("id", new Integer(id)));
-		session.delete((Vat) criteria.uniqueResult());
+		session.saveOrUpdate(Gst);
 		transaction.commit();
 		session.clear();
 		session.close();
@@ -72,9 +57,23 @@ public class VatDaoImpl implements VatDao {
 	}
 
 	@Override
-	public void update(Vat vat) {
+	public void deleteGstById(int id) {
+		Session session;
+		session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		Criteria criteria = session.createCriteria(GST.class);
+		criteria.add(Restrictions.eq("id", new Integer(id)));
+		session.delete((GST) criteria.uniqueResult());
+		transaction.commit();
+		session.clear();
+		session.close();
+
+	}
+
+	@Override
+	public void update(GST Gst) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -2,6 +2,7 @@ package com.freemind.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
@@ -28,8 +29,8 @@ public class PurchasePaymentDetails implements Serializable {
 	@JoinColumn(name = "PURCHASE_ID")
 	Purchase purchase;
 
-	@OneToOne(mappedBy = "purchasePaymentDetails", cascade = CascadeType.ALL)
-	private PaymentDetails paymentDetail;
+	@OneToMany(mappedBy = "purchasePaymentDetails", cascade = CascadeType.ALL)
+	List<PaymentDetails> listPaymentDetails;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
@@ -59,12 +60,12 @@ public class PurchasePaymentDetails implements Serializable {
 		this.purchase = purchase;
 	}
 
-	public PaymentDetails getPaymentDetail() {
-		return paymentDetail;
+	public List<PaymentDetails> getListPaymentDetails() {
+		return listPaymentDetails;
 	}
 
-	public void setPaymentDetail(PaymentDetails paymentDetail) {
-		this.paymentDetail = paymentDetail;
+	public void setListPaymentDetails(List<PaymentDetails> listPaymentDetails) {
+		this.listPaymentDetails = listPaymentDetails;
 	}
 
 	public int getCreatedBy() {

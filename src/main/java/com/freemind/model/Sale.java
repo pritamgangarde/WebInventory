@@ -1,6 +1,8 @@
 package com.freemind.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -20,11 +22,36 @@ public class Sale implements Serializable {
 	@Column(name = "SALE_ORDER_NO")
 	int saleOrderNo;
 
+	@Column(name = "BILL_DATE")
+	private Date billDate;
+	
+	@Column(name = "DELIVERY_DATE")
+	private Date deliveryDate;
+
 	@Column(name = "TOTAL_AMOUNT")
 	double totalAmount;
 
 	@Column(name = "PAID_AMOUNT")
 	double paidAmount;
+
+	@Column(name = "NET_AMOUNT")
+	double netAmount;
+
+	@Column(name = "BALANCE_AMOUNT")
+	double balanceAmount;
+
+	@Column(name = "DISCOUNT_PERC")
+	double discountPerc;
+
+	@Column(name = "DISCOUNT_RS")
+	double discountRs;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CUSTOMER_ID", nullable = true)
+	Customer customer;
+
+	@OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+	List<SaleDetails> listSaleDetails = new ArrayList<SaleDetails>();
 
 	public double getPaidAmount() {
 		return paidAmount;
@@ -38,12 +65,6 @@ public class Sale implements Serializable {
 		this.netAmount = netAmount;
 	}
 
-	@Column(name = "NET_AMOUNT")
-	double netAmount;
-
-	@Column(name = "BALANCE_AMOUNT")
-	double balanceAmount;
-
 	public double getBalanceAmount() {
 		return balanceAmount;
 	}
@@ -56,29 +77,13 @@ public class Sale implements Serializable {
 		return netAmount;
 	}
 
-	@Column(name = "DISCOUNT_PERC")
-	double discountPerc;
-
-	@Column(name = "DISCOUNT_RS")
-	double discountRs;
-
 	public Customer getCustomer() {
 		return customer;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = true)
-	Customer customer;
-
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-
-	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<SaleDetails> listSaleDetails;
-
-	@OneToMany(mappedBy = "sale", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<SalePaymentDetails> listSalePaymentDetails;
 
 	public int getId() {
 		return id;
@@ -136,13 +141,20 @@ public class Sale implements Serializable {
 		this.listSaleDetails = listSaleDetails;
 	}
 
-	public List<SalePaymentDetails> getListSalePaymentDetails() {
-		return listSalePaymentDetails;
+	public Date getBillDate() {
+		return billDate;
 	}
 
-	public void setListSalePaymentDetails(
-			List<SalePaymentDetails> listSalePaymentDetails) {
-		this.listSalePaymentDetails = listSalePaymentDetails;
+	public void setBillDate(Date billDate) {
+		this.billDate = billDate;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 }

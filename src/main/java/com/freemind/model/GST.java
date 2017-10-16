@@ -10,19 +10,19 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "VAT")
-public class Vat {
+@Table(name = "GST")
+public class GST {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
 	int id;
 
-	@Column(name = "VAT_PERCENT")
-	double vatPercent;
+	@Column(name = "GST_PERCENT")
+	double gstPercentage;
 
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active=true;
+	boolean active = true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
@@ -38,12 +38,12 @@ public class Vat {
 		this.id = id;
 	}
 
-	public double getVatPercent() {
-		return vatPercent;
+	public double getGstPercentage() {
+		return gstPercentage;
 	}
 
-	public void setVatPercent(double vatPercent) {
-		this.vatPercent = vatPercent;
+	public void setGstPercentage(double gstPercentage) {
+		this.gstPercentage = gstPercentage;
 	}
 
 	public boolean isActive() {

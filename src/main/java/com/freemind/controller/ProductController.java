@@ -20,19 +20,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.freemind.model.CategoryModel;
-import com.freemind.model.Godown;
 import com.freemind.model.Product;
 import com.freemind.model.Unit;
-import com.freemind.model.Vat;
+import com.freemind.model.GST;
 import com.freemind.property.editors.CategoryPropertyEditors;
-import com.freemind.property.editors.GodownPropertyEditor;
 import com.freemind.property.editors.UnitPropertyEditor;
-import com.freemind.property.editors.VatPropertyEditor;
+import com.freemind.property.editors.GstPropertyEditor;
 import com.freemind.services.CategoryService;
 import com.freemind.services.GodownService;
 import com.freemind.services.ProductService;
 import com.freemind.services.UnitService;
-import com.freemind.services.VatService;
+import com.freemind.services.GstService;
 
 @Controller
 @RequestMapping("addProduct")
@@ -45,7 +43,7 @@ public class ProductController {
 	@Autowired
 	UnitService unitService;
 	@Autowired
-	VatService vatService;
+	GstService vatService;
 	@Autowired
 	CategoryService categoryService;
 
@@ -59,7 +57,7 @@ public class ProductController {
 		binder.setRequiredFields(new String[] { "unitModel" });
 		binder.registerCustomEditor(Unit.class, new UnitPropertyEditor(unitService));
 		binder.setRequiredFields(new String[] { "vat" });
-		binder.registerCustomEditor(Vat.class, new VatPropertyEditor(vatService));
+		binder.registerCustomEditor(GST.class, new GstPropertyEditor(vatService));
 	}
 
 	private Model setModel(Model model) {
@@ -67,7 +65,7 @@ public class ProductController {
 		model.addAttribute("categoryList", categoryService.listCategory());
 		model.addAttribute("godownList", godownService.getAllGodownList());
 		model.addAttribute("unitList", unitService.getAllUnitList());
-		model.addAttribute("vatList", vatService.getAllVatList());
+		model.addAttribute("gstList", vatService.getAllGstList());
 		return model;
 	}
 
@@ -91,10 +89,10 @@ public class ProductController {
 		} else if (product.getCategoryModel() == null || product.getCategoryModel().getCategoryId() == -1) {
 			model.addAttribute("msgType", "2");
 			model.addAttribute("msg", "श्रेणी निवडणे आवश्यक आहे.");
-		} else if (product.getUnitModel() == null || product.getUnitModel().getId() == -1) {
+		} else if ((product.getUnitName() == null) || (product.getUnitName().trim().isEmpty())) {
 			model.addAttribute("msgType", "2");
 			model.addAttribute("msg", "एकक निवडणे आवश्यक आहे.");
-		} else if (product.getVat() == null || product.getVat().getId() == -1) {
+		} else if (product.getGstPerc() == null) {
 			model.addAttribute("msgType", "2");
 			model.addAttribute("msg", "जी. एस. टी.  निवडणे आवश्यक आहे.");
 		} else {

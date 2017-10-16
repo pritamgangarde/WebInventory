@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer {
@@ -20,24 +22,24 @@ public class Customer {
 	@Column(name = "ADDRESS")
 	String address;
 
-
 	@Column(name = "MOBILE_NO")
 	String mobileNo;
 
-	@Column(name = "DEFAULTER",nullable = false, columnDefinition = "boolean default false")
-	boolean defaulter=false;
+	@Column(name = "DEFAULTER", nullable = false, columnDefinition = "boolean default false")
+	boolean defaulter = false;
 
-	@Column(name = "IS_ACTIVE",nullable = false, columnDefinition = "boolean default true")
-	boolean active=true;
+	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
+	boolean active = true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;
 
 	@Column(name = "MODIFIED_BY")
 	int modifyBy;
-
-	@OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
-	List<Sale> listSaleDetails;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	List<Sale> listSale;
 
 	@Column(name = "INSERTION_DATE")
 	Timestamp insertionDate = new Timestamp(new java.util.Date().getTime());
@@ -76,7 +78,6 @@ public class Customer {
 	public void setMobileNo(String mobileNo) {
 		this.mobileNo = mobileNo;
 	}
-
 
 	public boolean isDefaulter() {
 		return defaulter;
@@ -124,6 +125,14 @@ public class Customer {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public List<Sale> getListSale() {
+		return listSale;
+	}
+
+	public void setListSale(List<Sale> listSale) {
+		this.listSale = listSale;
 	}
 
 }

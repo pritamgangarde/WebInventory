@@ -2,7 +2,6 @@ package com.freemind.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,22 +21,25 @@ public class SaleDetails implements Serializable {
 	@Column(name = "ID")
 	int id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SALE_ID", nullable = true)
 	Sale sale;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUCT_ID", nullable = true)
 	Product product;
 
 	@Column(name = "QUANTITY")
-	int quantity;
+	double quantity;
 
 	@Column(name = "UNIT")
 	String unit;
 
-	@Column(name = "VAT_PERC")
-	double vatPerc;
+	@Column(name = "GST_PERC")
+	double getPerc;
+
+	@Column(name = "GST_RS")
+	double getRs;
 
 	@Column(name = "SERVICE_TAX")
 	double serviceTax;
@@ -69,11 +71,11 @@ public class SaleDetails implements Serializable {
 		this.product = product;
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
 
@@ -85,12 +87,20 @@ public class SaleDetails implements Serializable {
 		this.unit = unit;
 	}
 
-	public double getVatPerc() {
-		return vatPerc;
+	public double getGetPerc() {
+		return getPerc;
 	}
 
-	public void setVatPerc(double vatPerc) {
-		this.vatPerc = vatPerc;
+	public void setGetPerc(double getPerc) {
+		this.getPerc = getPerc;
+	}
+
+	public double getGetRs() {
+		return getRs;
+	}
+
+	public void setGetRs(double getRs) {
+		this.getRs = getRs;
 	}
 
 	public double getServiceTax() {

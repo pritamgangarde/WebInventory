@@ -9,8 +9,7 @@
 <jsp:include page="/WEB-INF/views/body.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/menu.jsp"></jsp:include>
 
-<spring:url value="/addVat" var="addVatUrl" />
-<spring:url value="/addvat" var="vatDeleteurl" />
+<spring:url value="/addGst" var="addGstUrl" />
 </head>
 
 <body>
@@ -22,9 +21,9 @@
 		<!-- Page Content -->
 		<div id="page-wrapper">
 			<div class="container-fluid">
-				<form:form class="mws-form" Commandname="addVat" name="addVatForm"
-					id="myForm" modelAttribute="addVat" method="POST"
-					action="${addVatUrl}">
+				<form:form class="mws-form" Commandname="addGst" name="addGstForm"
+					id="myForm" modelAttribute="addGst" method="POST"
+					action="${addGstUrl}">
 					<div class="row">
 						<div class="col-lg-12">
 							<h1 class="page-header">
@@ -36,7 +35,7 @@
 
 							<div class="col-xs-3">
 								<label><spring:message code="label.page.addVat" />(%)</label><input
-									type="text" id="vatPercent" name="vatPercent"
+									type="text" id="gstPercentage" name="gstPercentage"
 									class="form-control"
 									placeholder="<spring:message code="label.page.addVat" /> %">
 							</div>
@@ -66,7 +65,7 @@
 
 
 					</div>
-					<input type="text" id="vatId" name="vatId" class="form-control"
+					<input type="text" id="gstId" name="gstId" class="form-control"
 						style="visibility: hidden">
 
 					<!-- /.row -->
@@ -91,12 +90,12 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${vatlist}" varStatus="theCount" var="vat">
+										<c:forEach items="${gstlist}" varStatus="theCount" var="gst">
 											<tr class="gradeA odd" role="row">
 												<td class="sorting_1">${theCount.count}</td>
-												<td>${vat.vatPercent}</td>
-												<td>${vat.active == true ? 'Active' : 'Inactive'}</td>
-												<td class="center"><a href="#"> ${vat.active == true ? 'Inactive' : 'Active'}</a>
+												<td>${gst.gstPercentage}</td>
+												<td>${gst.active == true ? 'Active' : 'Inactive'}</td>
+												<td class="center"><a href="#"> ${gst.active == true ? 'Inactive' : 'Active'}</a>
 												</td>
 											</tr>
 

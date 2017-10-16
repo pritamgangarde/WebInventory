@@ -22,7 +22,7 @@ public class ServiceTax {
 	double serviceTaxPercent;
 
 	@Column(name = "IS_ACTIVE", nullable = false, columnDefinition = "boolean default true")
-	boolean active=true;
+	boolean active = true;
 
 	@Column(name = "CREATED_BY")
 	int createdBy;

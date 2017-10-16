@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "PRODUCT")
@@ -38,21 +40,21 @@ public class Product implements Serializable {
 	@Column(name = "QUANTITY")
 	int quantity;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "UNIT_ID", nullable = true)
-	Unit unitModel;
+	@Column(name = "UNIT_NAME")
+	String unitName;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "VAT_ID", nullable = true)
-	Vat vat;
+	@Column(name = "GST_PERC")
+	Double gstPerc;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SERVICE_TAX_ID", nullable = true)
-	ServiceTax serviceTax;
-
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GODWAN_ID", nullable = true)
-	 Godown godowanModel;
+	@JsonIgnore
+	Godown godowanModel;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CATEGORY_ID", nullable = true)
+	@JsonIgnore
+	CategoryModel categoryModel;
 
 	@Column(name = "SALE_RATE")
 	double saleRate;
@@ -69,22 +71,34 @@ public class Product implements Serializable {
 	@Column(name = "LAST_MODIFIED_DATE")
 	Date lastModifyDate;
 
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CATEGORY_ID", nullable = true)
-	CategoryModel categoryModel;
-
 	@Column(name = "ACTIVITY_STATUS", nullable = false, columnDefinition = "boolean default true")
 	boolean activityStatus = true;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<Item> listItems;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<SaleOrderDetails> saleOrderDetailsList;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	List<SaleDetails> saleDetails;
+
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	List<PurchaseDetails> purchaseDetailsList;
+
+	public Double getGstPerc() {
+		return gstPerc;
+	}
+
+	public void setGstPerc(Double gstPerc) {
+		this.gstPerc = gstPerc;
+	}
 
 	public Godown getGodowanModel() {
 		return godowanModel;
@@ -182,12 +196,19 @@ public class Product implements Serializable {
 		this.activityStatus = activityStatus;
 	}
 
+	public List<SaleDetails> getSaleDetails() {
+		return saleDetails;
+	}
+
+	public void setSaleDetails(List<SaleDetails> saleDetails) {
+		this.saleDetails = saleDetails;
+	}
+
 	public List<SaleOrderDetails> getSaleOrderDetailsList() {
 		return saleOrderDetailsList;
 	}
 
-	public void setSaleOrderDetailsList(
-			List<SaleOrderDetails> saleOrderDetailsList) {
+	public void setSaleOrderDetailsList(List<SaleOrderDetails> saleOrderDetailsList) {
 		this.saleOrderDetailsList = saleOrderDetailsList;
 	}
 
@@ -207,28 +228,12 @@ public class Product implements Serializable {
 		this.productDescription = productDescription;
 	}
 
-	public Unit getUnitModel() {
-		return unitModel;
+	public String getUnitName() {
+		return unitName;
 	}
 
-	public void setUnitModel(Unit unitModel) {
-		this.unitModel = unitModel;
-	}
-
-	public Vat getVat() {
-		return vat;
-	}
-
-	public void setVat(Vat vat) {
-		this.vat = vat;
-	}
-
-	public ServiceTax getServiceTax() {
-		return serviceTax;
-	}
-
-	public void setServiceTax(ServiceTax serviceTax) {
-		this.serviceTax = serviceTax;
+	public void setUnitName(String unitName) {
+		this.unitName = unitName;
 	}
 
 	public CategoryModel getCategoryModel() {

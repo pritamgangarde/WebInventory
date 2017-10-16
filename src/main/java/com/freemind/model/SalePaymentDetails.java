@@ -1,7 +1,9 @@
 package com.freemind.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,26 +24,26 @@ public class SalePaymentDetails implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID")
-	int id;
+	private int id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "SALE_ID", nullable = true)
-	Sale sale;
-
-	@OneToOne(mappedBy = "salePaymentDetails", cascade = CascadeType.ALL)
-	private PaymentDetails paymentDetail;
+	private Sale sale;
 
 	@Column(name = "CREATED_BY")
-	int createdBy;
+	private int createdBy;
 
 	@Column(name = "MODIFIED_BY")
-	int modifyBy;
+	private int modifyBy;
 
 	@Column(name = "INSERTION_DATE")
-	Date insertionDate;
+	private Date insertionDate;
 
 	@Column(name = "LAST_MODIFIED_DATE")
-	Date lastModifyDate;
+	private Date lastModifyDate;
+
+	@OneToMany(mappedBy = "salePaymentDetails", cascade = CascadeType.ALL)
+	List<PaymentDetails> listPaymentDetails=new ArrayList<PaymentDetails>();
 
 	public int getId() {
 		return id;
@@ -59,12 +61,12 @@ public class SalePaymentDetails implements Serializable {
 		this.sale = sale;
 	}
 
-	public PaymentDetails getPaymentDetail() {
-		return paymentDetail;
+	public List<PaymentDetails> getListPaymentDetails() {
+		return listPaymentDetails;
 	}
 
-	public void setPaymentDetail(PaymentDetails paymentDetail) {
-		this.paymentDetail = paymentDetail;
+	public void setListPaymentDetails(List<PaymentDetails> listPaymentDetails) {
+		this.listPaymentDetails = listPaymentDetails;
 	}
 
 	public int getCreatedBy() {
@@ -98,4 +100,5 @@ public class SalePaymentDetails implements Serializable {
 	public void setLastModifyDate(Date lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
 	}
+
 }

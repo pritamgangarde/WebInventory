@@ -1,12 +1,15 @@
 package com.freemind.model;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +40,9 @@ public class Godown {
 
 	@Column(name = "LAST_MODIFIED_DATE")
 	Timestamp lastModifyDate = new Timestamp(new java.util.Date().getTime());
+
+	@OneToMany(mappedBy = "godowanModel", cascade = CascadeType.ALL)
+	List<Product> productList;
 
 	public int getId() {
 		return id;
@@ -100,6 +106,14 @@ public class Godown {
 
 	public void setLastModifyDate(Timestamp lastModifyDate) {
 		this.lastModifyDate = lastModifyDate;
+	}
+
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
 	}
 
 }

@@ -47,15 +47,6 @@ public class Purchase implements Serializable {
 	@Column(name = "PURCHASE_ORDER_NO")
 	int puchaseOrderNo;
 
-	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<PurchaseTaxDetails> listPurchaseTaxDetails;
-
-	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<PurchaseDetails> listPurchaseDetails;
-
-	@OneToMany(mappedBy = "purchase", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<PurchasePaymentDetails> listPurchasePaymentDetails;
-
 	@Column(name = "CREATED_BY")
 	int createdBy;
 
@@ -67,6 +58,15 @@ public class Purchase implements Serializable {
 
 	@Column(name = "LAST_MODIFIED_DATE")
 	Date lastModifyDate;
+
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+	List<PurchaseTaxDetails> listPurchaseTaxDetails;
+
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+	List<PurchaseDetails> listPurchaseDetails;
+
+	@OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+	List<PurchasePaymentDetails> listPurchasePaymentDetails;
 
 	public int getId() {
 		return id;
@@ -128,8 +128,7 @@ public class Purchase implements Serializable {
 		return listPurchaseTaxDetails;
 	}
 
-	public void setListPurchaseTaxDetails(
-			List<PurchaseTaxDetails> listPurchaseTaxDetails) {
+	public void setListPurchaseTaxDetails(List<PurchaseTaxDetails> listPurchaseTaxDetails) {
 		this.listPurchaseTaxDetails = listPurchaseTaxDetails;
 	}
 
@@ -177,8 +176,7 @@ public class Purchase implements Serializable {
 		return listPurchasePaymentDetails;
 	}
 
-	public void setListPurchasePaymentDetails(
-			List<PurchasePaymentDetails> listPurchasePaymentDetails) {
+	public void setListPurchasePaymentDetails(List<PurchasePaymentDetails> listPurchasePaymentDetails) {
 		this.listPurchasePaymentDetails = listPurchasePaymentDetails;
 	}
 

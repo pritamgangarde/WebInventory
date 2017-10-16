@@ -14,4 +14,10 @@ public interface SaleService {
 	public void update(Sale sale);
 
 	public void deleteSaleById(int id);
+	
+	public boolean saveAll(com.freemind.command.Sale sale);
+	
+	public Integer getSaleBillNo();
+	
+	public Sale getBillByBillNo(int billNo);
 }

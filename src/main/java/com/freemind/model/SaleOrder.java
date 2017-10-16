@@ -47,9 +47,6 @@ public class SaleOrder implements Serializable {
 	@Column(name = "DISCOUNT_RS")
 	double discountRs;
 
-	@OneToMany(mappedBy = "saleOrder", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	List<SaleOrderDetails> listSaleOrderDetails;
-
 	@Column(name = "CREATED_BY")
 	int createdBy;
 
@@ -64,6 +61,9 @@ public class SaleOrder implements Serializable {
 
 	@Column(name = "ORDER_STATUS")
 	String orderStatus;
+
+	@OneToMany(mappedBy = "saleOrder", cascade = CascadeType.ALL)
+	List<SaleOrderDetails> listSaleOrderDetails;
 
 	public int getId() {
 		return id;
@@ -133,8 +133,7 @@ public class SaleOrder implements Serializable {
 		return listSaleOrderDetails;
 	}
 
-	public void setListSaleOrderDetails(
-			List<SaleOrderDetails> listSaleOrderDetails) {
+	public void setListSaleOrderDetails(List<SaleOrderDetails> listSaleOrderDetails) {
 		this.listSaleOrderDetails = listSaleOrderDetails;
 	}
 
